@@ -1,4 +1,4 @@
-const CACHE_NAME = 'gestion-chantiers-v1';
+const CACHE_NAME = 'gestion-chantiers-v2';
 const APP_SHELL = ['./', './index.html', './manifest.json', './icons/logo-icon.svg'];
 
 self.addEventListener('install', (event) => {
@@ -17,21 +17,18 @@ self.addEventListener('activate', (event) => {
   self.clients.claim();
 });
 
-// Cache-first pour les fichiers de l'app, réseau sinon (avec repli sur le cache si hors-ligne)
+// Réseau en priorité (toujours la dernière version en ligne), cache seulement en repli hors-ligne
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
   event.respondWith(
-    caches.match(event.request).then((cached) => {
-      const network = fetch(event.request)
-        .then((response) => {
-          if (response && response.status === 200) {
-            const clone = response.clone();
-            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
-          }
-          return response;
-        })
-        .catch(() => cached);
-      return cached || network;
-    })
+    fetch(event.request)
+      .then((response) => {
+        if (response && response.status === 200) {
+          const clone = response.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
+        }
+        return response;
+      })
+      .catch(() => caches.match(event.request))
   );
 });
