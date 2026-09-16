@@ -1,0 +1,24 @@
+<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#8FD3FF" />
+      <stop offset="45%" stop-color="#3B9AE0" />
+      <stop offset="100%" stop-color="#1476C4" />
+    </linearGradient>
+  </defs>
+
+  <g transform="translate(0,20)">
+    <!-- Losange niché dans le creux du toit -->
+    <rect x="185" y="30" width="30" height="30" rx="2" fill="none" stroke="url(#grad)" stroke-width="9" transform="rotate(45 200 45)" />
+
+    <!-- Toiture à deux pics qui se croisent -->
+    <polyline points="86,175 155,106 200,151 245,106 314,175" fill="none" stroke="url(#grad)" stroke-width="17" stroke-linecap="round" stroke-linejoin="round" />
+
+    <!-- Deux maisons jumelles, silhouette ouverte -->
+    <path d="M 92 175 L 92 272 L 172 272 L 172 175" fill="none" stroke="url(#grad)" stroke-width="17" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M 228 175 L 228 272 L 308 272 L 308 175" fill="none" stroke="url(#grad)" stroke-width="17" stroke-linecap="round" stroke-linejoin="round" />
+  </g>
+
+  <text x="200" y="342" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="46" letter-spacing="4" fill="url(#grad)">GESTION</text>
+  <text x="200" y="374" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="600" font-size="22" letter-spacing="9" fill="#3B9AE0">CHANTIERS</text>
+</svg>
