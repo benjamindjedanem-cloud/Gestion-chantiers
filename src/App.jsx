@@ -344,14 +344,10 @@ export default function App() {
   return (
     <div className="gc-root min-h-screen" style={{ background: C.bg }}>
       <style>{FONT_STYLE}</style>
-      <div className="max-w-md lg:max-w-6xl mx-auto min-h-screen lg:flex" style={{ background: C.bg }}>
-        <Sidebar tab={tab} setTab={(t) => { setTab(t); setSearch(''); if (t !== 'entrees') setSelEntree(''); if (t !== 'sorties') setSelSortie(''); }} />
+      <div className="max-w-md lg:max-w-xl mx-auto min-h-screen flex flex-col" style={{ background: C.bg, borderLeft: `1px solid ${C.border}`, borderRight: `1px solid ${C.border}` }}>
+        {tab === 'dashboard' && <Header totaux={totaux} saveError={saveError} />}
 
-        <div className="flex flex-col min-h-screen lg:flex-1 lg:min-w-0" style={{ background: C.bg, borderLeft: `1px solid ${C.border}`, borderRight: `1px solid ${C.border}` }}>
-          {tab === 'dashboard' && <Header totaux={totaux} saveError={saveError} />}
-
-          <main className="flex-1 overflow-y-auto gc-scroll pb-24 lg:pb-10 px-4" style={{ paddingTop: 18 }}>
-            <div className="lg:max-w-2xl lg:mx-auto">
+        <main className="flex-1 overflow-y-auto gc-scroll pb-24 px-4" style={{ paddingTop: 18 }}>
             {tab === 'dashboard' && <Dashboard stats={stats} search={search} setSearch={setSearch} />}
 
             {tab === 'chantiers' && (
@@ -416,11 +412,9 @@ export default function App() {
                 />
               )
             )}
-            </div>
           </main>
 
           <BottomNav tab={tab} setTab={(t) => { setTab(t); setSearch(''); if (t !== 'entrees') setSelEntree(''); if (t !== 'sorties') setSelSortie(''); }} />
-        </div>
       </div>
 
       {modal === 'chantier' && <ChantierForm onClose={() => setModal(null)} onSave={(c) => { addChantier(c); setModal(null); }} />}
@@ -504,7 +498,7 @@ const NAV_ITEMS = [
 
 function BottomNav({ tab, setTab }) {
   return (
-    <nav className="lg:hidden max-w-md mx-auto w-full fixed bottom-0 left-0 right-0 z-40 px-3 pb-3 pointer-events-none">
+    <nav className="max-w-md lg:max-w-xl mx-auto w-full fixed bottom-0 left-0 right-0 z-40 px-3 pb-3 pointer-events-none">
       <div className="pointer-events-auto rounded-2xl shadow-lg" style={{ background: 'rgba(255,255,255,.96)', border: `1px solid ${C.border}`, boxShadow: '0 12px 30px rgba(15,23,42,.10)', backdropFilter: 'blur(14px)' }}>
         <div className="flex p-1.5">
           {NAV_ITEMS.map((it) => { const Icon = it.icon; const active = tab === it.id; return (
@@ -516,35 +510,6 @@ function BottomNav({ tab, setTab }) {
         </div>
       </div>
     </nav>
-  );
-}
-
-function Sidebar({ tab, setTab }) {
-  return (
-    <aside className="hidden lg:flex lg:flex-col lg:w-64 lg:shrink-0 lg:sticky lg:top-0 lg:h-screen px-4 py-6" style={{ borderRight: `1px solid ${C.border}` }}>
-      <div className="flex items-center gap-2.5 px-2 mb-8">
-        <div className="w-10 h-10 rounded-xl flex items-center justify-center p-1.5" style={{ background: C.brandTint }}>
-          <img src="./icons/logo-icon.svg" alt="Gestion Chantiers" style={{ width: '100%', height: '100%' }} />
-        </div>
-        <div>
-          <p className="gc-display text-base leading-tight">Gestion Chantiers</p>
-          <p className="text-[11px]" style={{ color: C.textMuted }}>Pilotage financier</p>
-        </div>
-      </div>
-      <nav className="flex flex-col gap-1">
-        {NAV_ITEMS.map((it) => { const Icon = it.icon; const active = tab === it.id; return (
-          <button
-            key={it.id}
-            onClick={() => setTab(it.id)}
-            className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold text-left"
-            style={{ color: active ? C.brand : C.textMuted, background: active ? C.brandTint : 'transparent' }}
-          >
-            <Icon size={18} strokeWidth={active ? 2.4 : 1.8} />
-            {it.label}
-          </button>
-        ); })}
-      </nav>
-    </aside>
   );
 }
 
