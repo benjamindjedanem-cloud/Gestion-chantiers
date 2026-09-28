@@ -1,0 +1,90 @@
+/* Gestion Chantiers — responsive utility layer
+   The app was authored with Tailwind utility class names but did not ship Tailwind.
+   This file provides the required utilities locally so the deployed PWA renders
+   consistently without depending on a CDN. */
+
+*, *::before, *::after { box-sizing: border-box; }
+html, body, #root { margin: 0; min-height: 100%; width: 100%; }
+body { overflow-x: hidden; background: #F5F7FA; }
+button, input, select, textarea { font: inherit; }
+button { border: 0; cursor: pointer; }
+img { max-width: 100%; }
+
+.block{display:block}.flex{display:flex}.grid{display:grid}.relative{position:relative}.fixed{position:fixed}.sticky{position:sticky}
+.flex-1{flex:1 1 0%}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-center{align-items:center}.items-end{align-items:flex-end}.items-start{align-items:flex-start}.justify-between{justify-content:space-between}.justify-center{justify-content:center}.shrink-0{flex-shrink:0}.min-w-0{min-width:0}.min-h-screen{min-height:100vh}.w-full{width:100%}
+.grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}.grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.gap-1{gap:.25rem}.gap-1\.5{gap:.375rem}.gap-2{gap:.5rem}.gap-2\.5{gap:.625rem}.gap-3{gap:.75rem}.gap-3\.5{gap:.875rem}.gap-x-5{column-gap:1.25rem}.gap-y-3{row-gap:.75rem}
+
+.p-0{padding:0}.p-1{padding:.25rem}.p-1\.5{padding:.375rem}.p-2{padding:.5rem}.p-2\.5{padding:.625rem}.p-3{padding:.75rem}.p-4{padding:1rem}.p-5{padding:1.25rem}
+.px-1{padding-left:.25rem;padding-right:.25rem}.px-2\.5{padding-left:.625rem;padding-right:.625rem}.px-3{padding-left:.75rem;padding-right:.75rem}.px-3\.5{padding-left:.875rem;padding-right:.875rem}.px-4{padding-left:1rem;padding-right:1rem}.px-5{padding-left:1.25rem;padding-right:1.25rem}
+.py-1{padding-top:.25rem;padding-bottom:.25rem}.py-2{padding-top:.5rem;padding-bottom:.5rem}.py-2\.5{padding-top:.625rem;padding-bottom:.625rem}.py-3{padding-top:.75rem;padding-bottom:.75rem}.py-4{padding-top:1rem;padding-bottom:1rem}.py-5{padding-top:1.25rem;padding-bottom:1.25rem}.py-12{padding-top:3rem;padding-bottom:3rem}
+.pt-2\.5{padding-top:.625rem}.pt-3\.5{padding-top:.875rem}.pt-5{padding-top:1.25rem}.pb-3{padding-bottom:.75rem}.pb-4{padding-bottom:1rem}.pb-24{padding-bottom:6rem}.pl-2{padding-left:.5rem}
+
+.m-auto{margin:auto}.mx-auto{margin-left:auto;margin-right:auto}.mb-1{margin-bottom:.25rem}.mb-1\.5{margin-bottom:.375rem}.mb-3{margin-bottom:.75rem}.mb-4{margin-bottom:1rem}.mb-5{margin-bottom:1.25rem}.mt-0\.5{margin-top:.125rem}.mt-1{margin-top:.25rem}.mt-1\.5{margin-top:.375rem}.mt-2{margin-top:.5rem}.mt-3{margin-top:.75rem}.mt-4{margin-top:1rem}.m-0{margin:0}.p-0{padding:0}.-m-2{margin:-.5rem}-mt-2{margin-top:-.5rem}-mx-1{margin-left:-.25rem;margin-right:-.25rem}
+
+.h-1\.5{height:.375rem}.h-2{height:.5rem}.h-8{height:2rem}.h-9{height:2.25rem}.h-11{height:2.75rem}.h-12{height:3rem}.w-1\.5{width:.375rem}.w-2{width:.5rem}.w-8{width:2rem}.w-9{width:2.25rem}.w-11{width:2.75rem}.w-12{width:3rem}
+.max-w-md{max-width:28rem}.overflow-hidden{overflow:hidden}.overflow-y-auto{overflow-y:auto}.truncate{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rounded-lg{border-radius:.5rem}.rounded-xl{border-radius:.75rem}.rounded-2xl{border-radius:1rem}.rounded-full{border-radius:9999px}
+.shadow-sm{box-shadow:0 1px 2px rgba(15,23,42,.06)}.shadow-lg{box-shadow:0 10px 25px rgba(15,23,42,.12)}
+
+.font-medium{font-weight:500}.font-semibold{font-weight:600}.font-bold{font-weight:700}.text-left{text-align:left}.text-center{text-align:center}.text-right{text-align:right}.uppercase{text-transform:uppercase}
+.text-xs{font-size:.75rem;line-height:1rem}.text-sm{font-size:.875rem;line-height:1.25rem}.text-base{font-size:1rem;line-height:1.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}
+.text-\[10px\]{font-size:10px}.text-\[11px\]{font-size:11px}.text-\[17px\]{font-size:17px}.text-\[24px\]{font-size:24px}.text-\[25px\]{font-size:25px}
+.leading-none{line-height:1}.leading-tight{line-height:1.25}.leading-relaxed{line-height:1.625}
+.tracking-\[0\.08em\]{letter-spacing:.08em}.tracking-\[0\.14em\]{letter-spacing:.14em}.tracking-\[0\.16em\]{letter-spacing:.16em}
+
+.inset-0{inset:0}.top-0{top:0}.bottom-0{bottom:0}.left-0{left:0}.right-0{right:0}.z-10{z-index:10}.z-40{z-index:40}.z-50{z-index:50}
+.pointer-events-auto{pointer-events:auto}.pointer-events-none{pointer-events:none}
+
+.first\:pt-3:first-child{padding-top:.75rem}
+
+/* Mobile/tablet defaults */
+.gc-root { width:100%; min-height:100vh; }
+.gc-root main { width:100%; min-width:0; }
+.gc-root input, .gc-root select, .gc-root textarea { max-width:100%; }
+
+/* Desktop: use the screen instead of keeping the whole app at phone width. */
+@media (min-width: 768px) {
+  .gc-root > div:first-of-type {
+    max-width: 1180px !important;
+    min-height: 100vh;
+    box-shadow: 0 0 35px rgba(15,23,42,.045);
+  }
+  .gc-root main { padding-left: 28px !important; padding-right: 28px !important; padding-top: 28px !important; }
+  .gc-root header { padding-left: 28px !important; padding-right: 28px !important; }
+  .gc-root .gc-card { box-shadow: 0 8px 24px rgba(15,23,42,.045); }
+  .gc-root .fixed.bottom-0 { left:50%; right:auto; transform:translateX(-50%); width:min(calc(100% - 40px), 1120px); }
+}
+
+@media (min-width: 1024px) {
+  .gc-root main { padding-left: 36px !important; padding-right: 36px !important; }
+  .gc-root header { padding-left: 36px !important; padding-right: 36px !important; }
+}
+
+@media (max-width: 380px) {
+  .gc-root main { padding-left: 12px !important; padding-right: 12px !important; }
+  .gc-root header { padding-left: 14px !important; padding-right: 14px !important; }
+  .text-\[25px\]{font-size:23px}
+  .text-3xl{font-size:1.55rem;line-height:2rem}
+}
+
+@media (min-width: 640px) {
+  .sm\:items-center{align-items:center}.sm\:max-w-md{max-width:28rem}.sm\:p-4{padding:1rem}
+}
+
+@media (min-width: 1024px) {
+  .lg\:max-w-xl{max-width:1180px}
+}
+
+/* Prevent long FCFA values/descriptions from breaking cards. */
+.gc-tabular { overflow-wrap:anywhere; }
+
+/* Better touch targets on phones. */
+@media (max-width: 767px) {
+  .gc-root button { -webkit-tap-highlight-color: transparent; }
+}
+
+@media (min-width: 900px) {
+  .gc-dashboard-list { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); align-items:start; }
+  .gc-chantiers-list { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); align-items:start; }
+}

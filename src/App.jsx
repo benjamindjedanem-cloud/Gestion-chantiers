@@ -563,7 +563,7 @@ function Dashboard({ stats, search, setSearch }) {
       </div>
 
       {filtered.length === 0 && <EmptyState text="Aucun chantier ne correspond à cette recherche." />}
-      <div className="flex flex-col gap-3.5">
+      <div className="gc-dashboard-list flex flex-col gap-3.5">
         {filtered.map((c) => <DashboardCard key={c.id} c={c} />)}
       </div>
     </div>
@@ -672,7 +672,7 @@ function ChantiersTab({ chantiers, stats, onAdd, onRemove, onChangeStatut, onCha
       </div>
 
       {chantiers.length === 0 && <EmptyState text="Aucun chantier pour l'instant." cta="Ajouter le premier chantier" onCta={onAdd} />}
-      <div className="flex flex-col gap-3">
+      <div className="gc-chantiers-list flex flex-col gap-3">
         {stats.map((c) => (
           <div key={c.id} className="rounded-2xl p-4" style={{ background: C.surface, border: `1px solid ${C.border}`, boxShadow: '0 4px 16px rgba(15,23,42,.03)' }}>
             <div className="flex items-start justify-between gap-3">

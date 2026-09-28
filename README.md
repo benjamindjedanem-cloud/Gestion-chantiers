@@ -87,3 +87,16 @@ L'app s'installe avec son icône, s'ouvre en plein écran sans barre de navigate
 
 - Les données sont stockées **localement sur l'appareil** (dans le navigateur), pas sur un serveur — donc pas de synchronisation automatique entre plusieurs téléphones pour l'instant. Si plusieurs personnes doivent voir les mêmes chantiers depuis des appareils différents, il faudra ajouter une base de données partagée (ex. Supabase, Firebase) dans une prochaine étape.
 - Le logo est dans `public/icons/` et `public/logo.svg` — modifiable à tout moment sans toucher au code de l'app.
+
+## Correctif responsive / déploiement
+
+Le projet inclut maintenant `src/responsive.css`, une couche CSS locale qui fournit les classes utilitaires utilisées par l'interface. Cela évite que l'application dépende d'un Tailwind CSS absent au moment du déploiement.
+
+Avant déploiement :
+
+```bash
+npm install
+npm run build
+```
+
+Le cache du service worker a également été incrémenté afin que les utilisateurs récupèrent la nouvelle version.

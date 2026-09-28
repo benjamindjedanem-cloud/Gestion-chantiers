@@ -1,4 +1,4 @@
-const CACHE_NAME = 'gestion-chantiers-v2';
+const CACHE_NAME = 'gestion-chantiers-v3';
 const APP_SHELL = ['./', './index.html', './manifest.json', './icons/logo-icon.svg'];
 
 self.addEventListener('install', (event) => {
