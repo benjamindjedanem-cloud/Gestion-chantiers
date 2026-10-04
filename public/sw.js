@@ -1,5 +1,5 @@
-const CACHE_NAME = 'gestion-chantiers-v10';
-const APP_SHELL = ['./', './index.html', './manifest.json', './gc-icon-v10.ico', './icons/gc-icon-v10-16.png', './icons/gc-icon-v10-32.png', './icons/gc-icon-v10-48.png', './icons/gc-icon-v10-96.png', './icons/gc-icon-v10-144.png', './icons/gc-icon-v10-192.png', './icons/gc-icon-v10-256.png', './icons/gc-icon-v10-384.png', './icons/gc-icon-v10-512.png', './icons/gc-icon-v10-1024.png', './icons/gc-icon-v10-180.png', './icons/gc-icon-v10-maskable-512.png', './icons/gc-logo-v10-header.png'];
+const CACHE_NAME = 'gestion-chantiers-v12';
+const APP_SHELL = ['./', './index.html', './manifest.json', './gc-icon-v12.ico', './icons/gc-icon-v12-16.png', './icons/gc-icon-v12-24.png', './icons/gc-icon-v12-32.png', './icons/gc-icon-v12-48.png', './icons/gc-icon-v12-64.png', './icons/gc-icon-v12-96.png', './icons/gc-icon-v12-128.png', './icons/gc-icon-v12-144.png', './icons/gc-icon-v12-180.png', './icons/gc-icon-v12-192.png', './icons/gc-icon-v12-256.png', './icons/gc-icon-v12-384.png', './icons/gc-icon-v12-512.png', './icons/gc-icon-v12-1024.png', './icons/gc-icon-v12-maskable-512.png', './icons/gc-logo-v12-header.png'];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
@@ -17,7 +17,7 @@ self.addEventListener('activate', (event) => {
   self.clients.claim();
 });
 
-// Réseau en priorité (toujours la dernière version en ligne), cache seulement en repli hors-ligne
+// Réseau en priorité; cache seulement en repli hors-ligne.
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
   event.respondWith(
