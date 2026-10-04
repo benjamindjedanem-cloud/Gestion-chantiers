@@ -1,5 +1,5 @@
-const CACHE_NAME = 'gestion-chantiers-v9';
-const APP_SHELL = ['./', './index.html', './manifest.json', './gc-icon-v9.ico', './icons/gc-icon-v9-16.png', './icons/gc-icon-v9-32.png', './icons/gc-icon-v9-48.png', './icons/gc-icon-v9-96.png', './icons/gc-icon-v9-144.png', './icons/gc-icon-v9-192.png', './icons/gc-icon-v9-256.png', './icons/gc-icon-v9-512.png', './icons/gc-icon-v9-maskable-512.png', './icons/gc-logo-v9-header.png'];
+const CACHE_NAME = 'gestion-chantiers-v10';
+const APP_SHELL = ['./', './index.html', './manifest.json', './gc-icon-v10.ico', './icons/gc-icon-v10-16.png', './icons/gc-icon-v10-32.png', './icons/gc-icon-v10-48.png', './icons/gc-icon-v10-96.png', './icons/gc-icon-v10-144.png', './icons/gc-icon-v10-192.png', './icons/gc-icon-v10-256.png', './icons/gc-icon-v10-384.png', './icons/gc-icon-v10-512.png', './icons/gc-icon-v10-1024.png', './icons/gc-icon-v10-180.png', './icons/gc-icon-v10-maskable-512.png', './icons/gc-logo-v10-header.png'];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(

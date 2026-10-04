@@ -86,7 +86,7 @@ L'app s'installe avec son icône, s'ouvre en plein écran sans barre de navigate
 ## À savoir
 
 - Les données sont stockées **localement sur l'appareil** (dans le navigateur), pas sur un serveur — donc pas de synchronisation automatique entre plusieurs téléphones pour l'instant. Si plusieurs personnes doivent voir les mêmes chantiers depuis des appareils différents, il faudra ajouter une base de données partagée (ex. Supabase, Firebase) dans une prochaine étape.
-- Le logo est dans `public/icons/` et `public/logo.svg` — modifiable à tout moment sans toucher au code de l'app.
+- Les icônes de l’application sont dans `public/icons/` avec plusieurs déclinaisons (PWA, Android maskable, Apple, navigateur et Windows). Le projet utilise une version dédiée de ces icônes dans le manifest, le favicon, le service worker et l’en-tête de l’application.
 
 ## Correctif responsive / déploiement
 
