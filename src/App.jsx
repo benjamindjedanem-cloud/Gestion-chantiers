@@ -407,7 +407,33 @@ export default function App() {
   };
   const addPaiement = (sortieId, p) =>
     persist({ ...data, sorties: data.sorties.map((s) => (s.id === sortieId ? { ...s, paiements: [...(s.paiements || []), { ...p, id: uid('p') }] } : s)) });
-  const updateSortie = (id, patch) => persist({ ...data, sorties: data.sorties.map((s) => (s.id === id ? { ...s, ...patch } : s)) });
+  const updateSortie = (id, patch) => {
+    const current = data.sorties.find((s) => s.id === id);
+    if (!current) return;
+
+    const nextMontantDu = Object.prototype.hasOwnProperty.call(patch, 'montantDu')
+      ? Number(patch.montantDu)
+      : Number(current.montantDu || 0);
+
+    const paiements = current.paiements || [];
+    // Une sortie créée comme « payée en totalité » contient un seul paiement
+    // dont le montant correspond à la somme due. Dans ce cas, modifier la
+    // somme de la sortie doit aussi modifier ce paiement initial, sinon
+    // « Total payé » reste sur l'ancienne valeur.
+    const sortieInitialementPayeeEnTotalite =
+      paiements.length === 1 && Number(paiements[0].montant || 0) === Number(current.montantDu || 0);
+
+    const nextPaiements = sortieInitialementPayeeEnTotalite && Object.prototype.hasOwnProperty.call(patch, 'montantDu')
+      ? [{ ...paiements[0], montant: nextMontantDu }]
+      : paiements;
+
+    persist({
+      ...data,
+      sorties: data.sorties.map((s) => (s.id === id
+        ? { ...s, ...patch, montantDu: nextMontantDu, paiements: nextPaiements }
+        : s)),
+    });
+  };
   const updatePaiement = (sortieId, paiementId, patch) =>
     persist({ ...data, sorties: data.sorties.map((s) => (s.id === sortieId ? { ...s, paiements: (s.paiements || []).map((p) => (p.id === paiementId ? { ...p, ...patch } : p)) } : s)) });
   const removePaiement = (sortieId, paiementId) => {
