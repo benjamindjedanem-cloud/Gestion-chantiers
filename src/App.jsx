@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import {
   LayoutDashboard, Building2, ArrowDownCircle, ArrowUpCircle,
   Plus, X, Search, AlertTriangle, ChevronDown, ChevronRight, ChevronLeft, Trash2, CheckCircle2, Pencil, Check,
@@ -260,6 +260,81 @@ export default function App() {
   const [selSortie, setSelSortie] = useState('');
   const [paiementFor, setPaiementFor] = useState(null); // sortie id
   const [editSortieId, setEditSortieId] = useState(null); // sortie id en cours de modification
+  const [editChantierId, setEditChantierId] = useState(null); // chantier id en cours de modification
+  const [editEntreeId, setEditEntreeId] = useState(null); // entrée id en cours de modification
+  const [backHint, setBackHint] = useState(false);
+  const navPoppingRef = useRef(false);
+  const backTimerRef = useRef(null);
+  const allowExitRef = useRef(false);
+  const navInitializedRef = useRef(false);
+
+  // Navigation interne + double retour sur l'accueil.
+  // Un état sentinelle est placé sous l'accueil afin que le premier retour
+  // puisse être intercepté sans casser la navigation entre les écrans.
+  useEffect(() => {
+    const url = window.location.href;
+    if (!navInitializedRef.current) {
+      window.history.replaceState({ appSentinel: true }, '', url);
+      window.history.pushState({ appNav: true, tab: 'dashboard', selEntree: '', selSortie: '' }, '', url);
+      navInitializedRef.current = true;
+    }
+
+    const onPopState = (event) => {
+      if (allowExitRef.current) {
+        allowExitRef.current = false;
+        return;
+      }
+
+      const state = event.state;
+
+      // Retour vers un écran interne : on restaure exactement l'écran précédent.
+      if (state?.appNav) {
+        navPoppingRef.current = true;
+        setTab(state.tab || 'dashboard');
+        setSelEntree(state.selEntree || '');
+        setSelSortie(state.selSortie || '');
+        setSearch('');
+        return;
+      }
+
+      // Nous sommes sur la sentinelle sous l'accueil : premier retour = avertissement,
+      // deuxième retour rapproché = sortie de l'application.
+      if (state?.appSentinel) {
+        if (backTimerRef.current) {
+          clearTimeout(backTimerRef.current);
+          backTimerRef.current = null;
+          setBackHint(false);
+          allowExitRef.current = true;
+          window.history.back();
+        } else {
+          setBackHint(true);
+          backTimerRef.current = setTimeout(() => {
+            backTimerRef.current = null;
+            setBackHint(false);
+          }, 1600);
+          window.history.pushState({ appNav: true, tab: 'dashboard', selEntree: '', selSortie: '' }, '', url);
+        }
+      }
+    };
+
+    window.addEventListener('popstate', onPopState);
+    return () => {
+      window.removeEventListener('popstate', onPopState);
+      if (backTimerRef.current) clearTimeout(backTimerRef.current);
+    };
+  }, []);
+
+  useEffect(() => {
+    // Le premier état dashboard est déjà poussé par l'effet d'initialisation.
+    // Après un popstate, l'entrée d'historique existe déjà : inutile d'en créer une autre.
+    if (navPoppingRef.current) {
+      navPoppingRef.current = false;
+      return;
+    }
+    const current = window.history.state;
+    if (current?.appNav && current.tab === tab && current.selEntree === selEntree && current.selSortie === selSortie) return;
+    window.history.pushState({ appNav: true, tab, selEntree, selSortie }, '', window.location.href);
+  }, [tab, selEntree, selSortie]);
 
   useEffect(() => {
     try {
@@ -287,7 +362,26 @@ export default function App() {
   }, []);
 
   const addChantier = (c) => persist({ ...data, chantiers: [...data.chantiers, { ...c, id: uid('c') }] });
-  const removeChantier = (id) => persist({ ...data, chantiers: data.chantiers.filter((c) => c.id !== id) });
+  const removeChantier = (id) => {
+    const chantier = data.chantiers.find((c) => c.id === id);
+    if (!chantier) return;
+    if (!window.confirm(`Supprimer le chantier « ${chantier.nom} » ? Cette action est irréversible.`)) return;
+    persist({ ...data, chantiers: data.chantiers.filter((c) => c.id !== id) });
+  };
+  const updateChantier = (id, patch) => {
+    const current = data.chantiers.find((c) => c.id === id);
+    const nextChantier = { ...current, ...patch };
+    const oldNom = current?.nom;
+    const newNom = nextChantier.nom;
+    persist({
+      ...data,
+      chantiers: data.chantiers.map((c) => (c.id === id ? nextChantier : c)),
+      ...(oldNom && newNom && oldNom !== newNom ? {
+        entrees: data.entrees.map((e) => (e.chantier === oldNom ? { ...e, chantier: newNom } : e)),
+        sorties: data.sorties.map((s) => (s.chantier === oldNom ? { ...s, chantier: newNom } : s)),
+      } : {}),
+    });
+  };
   const updateStatutChantier = (id, statut) =>
     persist({
       ...data,
@@ -297,16 +391,32 @@ export default function App() {
     });
   const updateDateFinReelle = (id, dateFinReelle) => persist({ ...data, chantiers: data.chantiers.map((c) => (c.id === id ? { ...c, dateFinReelle } : c)) });
   const addEntree = (e) => persist({ ...data, entrees: [{ ...e, id: uid('e') }, ...data.entrees] });
-  const removeEntree = (id) => persist({ ...data, entrees: data.entrees.filter((e) => e.id !== id) });
+  const removeEntree = (id) => {
+    const entree = data.entrees.find((e) => e.id === id);
+    if (!entree) return;
+    if (!window.confirm(`Supprimer cet encaissement de ${fcfa(entree.montant)} ? Cette action est irréversible.`)) return;
+    persist({ ...data, entrees: data.entrees.filter((e) => e.id !== id) });
+  };
+  const updateEntree = (id, patch) => persist({ ...data, entrees: data.entrees.map((e) => (e.id === id ? { ...e, ...patch } : e)) });
   const addSortie = (s) => persist({ ...data, sorties: [{ ...s, id: uid('s') }, ...data.sorties] });
-  const removeSortie = (id) => persist({ ...data, sorties: data.sorties.filter((s) => s.id !== id) });
+  const removeSortie = (id) => {
+    const sortie = data.sorties.find((s) => s.id === id);
+    if (!sortie) return;
+    if (!window.confirm(`Supprimer cette sortie de ${fcfa(sortie.montantDu)} pour « ${sortie.beneficiaire || 'ce bénéficiaire'} » ? Cette action est irréversible.`)) return;
+    persist({ ...data, sorties: data.sorties.filter((s) => s.id !== id) });
+  };
   const addPaiement = (sortieId, p) =>
     persist({ ...data, sorties: data.sorties.map((s) => (s.id === sortieId ? { ...s, paiements: [...(s.paiements || []), { ...p, id: uid('p') }] } : s)) });
   const updateSortie = (id, patch) => persist({ ...data, sorties: data.sorties.map((s) => (s.id === id ? { ...s, ...patch } : s)) });
   const updatePaiement = (sortieId, paiementId, patch) =>
     persist({ ...data, sorties: data.sorties.map((s) => (s.id === sortieId ? { ...s, paiements: (s.paiements || []).map((p) => (p.id === paiementId ? { ...p, ...patch } : p)) } : s)) });
-  const removePaiement = (sortieId, paiementId) =>
+  const removePaiement = (sortieId, paiementId) => {
+    const sortie = data.sorties.find((s) => s.id === sortieId);
+    const paiement = sortie?.paiements?.find((p) => p.id === paiementId);
+    if (!sortie || !paiement) return;
+    if (!window.confirm(`Supprimer ce versement de ${fcfa(paiement.montant)} ? Cette action est irréversible.`)) return;
     persist({ ...data, sorties: data.sorties.map((s) => (s.id === sortieId ? { ...s, paiements: (s.paiements || []).filter((p) => p.id !== paiementId) } : s)) });
+  };
 
   const stats = useMemo(() => {
     if (!data) return [];
@@ -351,7 +461,7 @@ export default function App() {
             {tab === 'dashboard' && <Dashboard stats={stats} search={search} setSearch={setSearch} />}
 
             {tab === 'chantiers' && (
-              <ChantiersTab chantiers={data.chantiers} stats={stats} onAdd={() => setModal('chantier')} onRemove={removeChantier} onChangeStatut={updateStatutChantier} onChangeDateFin={updateDateFinReelle} />
+              <ChantiersTab chantiers={data.chantiers} stats={stats} onAdd={() => setModal('chantier')} onEdit={setEditChantierId} onRemove={removeChantier} onChangeStatut={updateStatutChantier} onChangeDateFin={updateDateFinReelle} />
             )}
 
             {tab === 'entrees' && (
@@ -378,6 +488,7 @@ export default function App() {
                   onBack={() => setSelEntree('')}
                   onAdd={() => setModal('entree')}
                   onRemove={removeEntree}
+                  onEdit={setEditEntreeId}
                 />
               )
             )}
@@ -417,9 +528,30 @@ export default function App() {
           <BottomNav tab={tab} setTab={(t) => { setTab(t); setSearch(''); if (t !== 'entrees') setSelEntree(''); if (t !== 'sorties') setSelSortie(''); }} />
       </div>
 
+      {backHint && (
+        <div className="fixed bottom-24 left-1/2 -translate-x-1/2 z-[60] px-4 py-2.5 rounded-full text-xs font-semibold shadow-lg" style={{ background: 'rgba(15,23,42,.92)', color: '#fff' }}>
+          Appuyez encore une fois pour quitter
+        </div>
+      )}
+
       {modal === 'chantier' && <ChantierForm onClose={() => setModal(null)} onSave={(c) => { addChantier(c); setModal(null); }} />}
+      {editChantierId && (data.chantiers.find((c) => c.id === editChantierId)) && (
+        <ChantierForm
+          chantier={data.chantiers.find((c) => c.id === editChantierId)}
+          onClose={() => setEditChantierId(null)}
+          onSave={(patch) => { updateChantier(editChantierId, patch); setEditChantierId(null); }}
+        />
+      )}
       {modal === 'entree' && (
         <EntreeForm chantier={selEntree} onClose={() => setModal(null)} onSave={(e) => { addEntree(e); setModal(null); }} />
+      )}
+      {editEntreeId && (data.entrees.find((e) => e.id === editEntreeId)) && (
+        <EntreeForm
+          entree={data.entrees.find((e) => e.id === editEntreeId)}
+          chantier={data.entrees.find((e) => e.id === editEntreeId)?.chantier || selEntree}
+          onClose={() => setEditEntreeId(null)}
+          onSave={(patch) => { updateEntree(editEntreeId, patch); setEditEntreeId(null); }}
+        />
       )}
       {modal === 'sortie' && (
         <SortieForm chantier={selSortie} existingBeneficiaires={existingBeneficiaires} onClose={() => setModal(null)} onSave={(s) => { addSortie(s); setModal(null); }} />
@@ -653,7 +785,7 @@ function Stat({ label, value, valueColor }) {
 /* Chantiers tab                                                      */
 /* ---------------------------------------------------------------- */
 
-function ChantiersTab({ chantiers, stats, onAdd, onRemove, onChangeStatut, onChangeDateFin }) {
+function ChantiersTab({ chantiers, stats, onAdd, onEdit, onRemove, onChangeStatut, onChangeDateFin }) {
   const counts = {
     total: chantiers.length,
     active: chantiers.filter((c) => c.statut === 'En cours').length,
@@ -683,7 +815,10 @@ function ChantiersTab({ chantiers, stats, onAdd, onRemove, onChangeStatut, onCha
                 </div>
                 <p className="text-xs mt-1 truncate" style={{ color: C.textMuted }}>{c.client}</p>
               </div>
-              <button onClick={() => onRemove(c.id)} aria-label="Supprimer" className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style={{ color: C.textMuted, background: C.surfaceSoft }}><Trash2 size={14} /></button>
+              <div className="flex items-center gap-2 shrink-0">
+                <button onClick={() => onEdit(c.id)} aria-label="Modifier le chantier" title="Modifier" className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ color: C.brand, background: C.brandTint }}><Pencil size={14} /></button>
+                <button onClick={() => onRemove(c.id)} aria-label="Supprimer" title="Supprimer" className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ color: C.textMuted, background: C.surfaceSoft }}><Trash2 size={14} /></button>
+              </div>
             </div>
 
             <div className="grid grid-cols-2 gap-3 mt-4 pt-3.5" style={{ borderTop: `1px solid ${C.border}` }}>
@@ -732,12 +867,17 @@ function StatutSelect({ statut, onChange }) {
   );
 }
 
-function ChantierForm({ onClose, onSave }) {
-  const [f, setF] = useState({ nom: '', client: '', adresse: '', dateDebut: '', dateFin: '', budget: '', statut: 'En cours' });
-  const set = (k) => (e) => setF({ ...f, [k]: e.target.value });
+function ChantierForm({ chantier, onClose, onSave }) {
+  const [f, setF] = useState(() => chantier ? {
+    ...chantier,
+    budget: chantier.budget ?? '',
+    statut: chantier.statut || 'En cours',
+  } : { nom: '', client: '', adresse: '', dateDebut: '', dateFin: '', budget: '', statut: 'En cours' });
+  const isEdit = Boolean(chantier);
+  const set = (k) => (e) => setF((prev) => ({ ...prev, [k]: e.target.value }));
   const valid = f.nom.trim() && f.client.trim() && f.budget;
   return (
-    <Modal title="Nouveau chantier" onClose={onClose}>
+    <Modal title={isEdit ? 'Modifier le chantier' : 'Nouveau chantier'} onClose={onClose}>
       <Field label="Nom du chantier"><TextInput value={f.nom} onChange={set('nom')} placeholder="Ex. VILLA NGARBA" /></Field>
       <Field label="Client"><TextInput value={f.client} onChange={set('client')} placeholder="Nom du client" /></Field>
       <Field label="Adresse (optionnel)"><TextInput value={f.adresse} onChange={set('adresse')} placeholder="Quartier, ville" /></Field>
@@ -748,7 +888,7 @@ function ChantierForm({ onClose, onSave }) {
       <Field label="Budget prévu (FCFA)"><TextInput type="number" value={f.budget} onChange={set('budget')} placeholder="0" /></Field>
       <Field label="Statut"><Select value={f.statut} onChange={set('statut')}>{STATUTS.map((s) => <option key={s} value={s}>{s}</option>)}</Select></Field>
       <div className="mt-2">
-        <PrimaryButton disabled={!valid} style={{ opacity: valid ? 1 : 0.5 }} onClick={() => valid && onSave({ ...f, budget: Number(f.budget) })}>Enregistrer le chantier</PrimaryButton>
+        <PrimaryButton disabled={!valid} style={{ opacity: valid ? 1 : 0.5 }} onClick={() => valid && onSave({ ...f, budget: Number(f.budget) })}>{isEdit ? 'Enregistrer les modifications' : 'Enregistrer le chantier'}</PrimaryButton>
       </div>
     </Modal>
   );
@@ -758,7 +898,7 @@ function ChantierForm({ onClose, onSave }) {
 /* Entrées                                                            */
 /* ---------------------------------------------------------------- */
 
-function EntreeDetail({ chantier, budget, entrees, onBack, onAdd, onRemove }) {
+function EntreeDetail({ chantier, budget, entrees, onBack, onAdd, onRemove, onEdit }) {
   const total = entrees.reduce((a, e) => a + Number(e.montant || 0), 0);
   const isSolde = budget > 0 && total >= budget;
   return (
@@ -783,7 +923,10 @@ function EntreeDetail({ chantier, budget, entrees, onBack, onAdd, onRemove }) {
             </div>
             <div className="flex flex-col items-end gap-1.5">
               <p className="gc-tabular font-semibold text-sm" style={{ color: C.green }}>+{fcfa(e.montant)}</p>
-              <button onClick={() => onRemove(e.id)} aria-label="Supprimer" style={{ color: C.textMuted }}><Trash2 size={14} /></button>
+              <div className="flex items-center gap-2">
+                <button onClick={() => onEdit(e.id)} aria-label="Modifier l'entrée" title="Modifier" style={{ color: C.brand, background: C.brandTint, width: 30, height: 30, borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Pencil size={14} /></button>
+                <button onClick={() => onRemove(e.id)} aria-label="Supprimer" title="Supprimer" style={{ color: C.textMuted, background: C.surfaceSoft, width: 30, height: 30, borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Trash2 size={14} /></button>
+              </div>
             </div>
           </div>
         ))}
@@ -792,19 +935,20 @@ function EntreeDetail({ chantier, budget, entrees, onBack, onAdd, onRemove }) {
   );
 }
 
-function EntreeForm({ chantier, onClose, onSave }) {
-  const [f, setF] = useState({ date: today(), chantier, versePar: '', description: '', mode: 'Espèces', montant: '' });
-  const set = (k) => (e) => setF({ ...f, [k]: e.target.value });
+function EntreeForm({ chantier, entree, onClose, onSave }) {
+  const [f, setF] = useState(() => entree ? { ...entree, montant: entree.montant ?? '' } : { date: today(), chantier, versePar: '', description: '', mode: 'Espèces', montant: '' });
+  const isEdit = Boolean(entree);
+  const set = (k) => (e) => setF((prev) => ({ ...prev, [k]: e.target.value }));
   const valid = f.date && f.montant;
   return (
-    <Modal title={`Nouvelle entrée — ${chantier}`} onClose={onClose}>
+    <Modal title={`${isEdit ? 'Modifier l’entrée' : 'Nouvelle entrée'} — ${f.chantier || chantier}`} onClose={onClose}>
       <Field label="Date"><TextInput type="date" value={f.date} onChange={set('date')} /></Field>
       <Field label="Versé par"><TextInput value={f.versePar} onChange={set('versePar')} placeholder="Nom de la personne ou de l'entreprise qui verse" /></Field>
       <Field label="Description"><TextInput value={f.description} onChange={set('description')} placeholder="Ex. 2e paiement" /></Field>
       <Field label="Mode de paiement"><Select value={f.mode} onChange={set('mode')}>{MODES.map((m) => <option key={m} value={m}>{m}</option>)}</Select></Field>
       <Field label="Montant reçu (FCFA)"><TextInput type="number" value={f.montant} onChange={set('montant')} placeholder="0" /></Field>
       <div className="mt-2">
-        <PrimaryButton disabled={!valid} style={{ opacity: valid ? 1 : 0.5 }} onClick={() => valid && onSave({ ...f, montant: Number(f.montant) })}>Enregistrer l'entrée</PrimaryButton>
+        <PrimaryButton disabled={!valid} style={{ opacity: valid ? 1 : 0.5 }} onClick={() => valid && onSave({ ...f, montant: Number(f.montant) })}>{isEdit ? 'Enregistrer les modifications' : 'Enregistrer l’entrée'}</PrimaryButton>
       </div>
     </Modal>
   );
