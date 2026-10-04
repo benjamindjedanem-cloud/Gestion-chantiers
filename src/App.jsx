@@ -626,8 +626,8 @@ function Header({ totaux, saveError }) {
           <p className="text-[10px] uppercase tracking-[0.16em] font-bold" style={{ color: '#BFDBFE' }}>Pilotage financier</p>
           <p className="gc-display text-xl mt-1">Gestion Chantiers</p>
         </div>
-        <div className="w-16 h-16 flex items-center justify-center -mr-1">
-          <img src="./icons/app-logo-ui.png" alt="Gestion Chantiers" className="w-full h-full object-contain" />
+        <div className="w-12 h-12 flex items-center justify-center">
+          <img src="./icons/gc-logo-v9-header.png" alt="Gestion Chantiers" className="w-full h-full object-contain" />
         </div>
       </div>
       <div className="mt-4 p-4 rounded-2xl" style={{ background: 'rgba(255,255,255,.10)', border: '1px solid rgba(255,255,255,.12)', backdropFilter: 'blur(8px)' }}>

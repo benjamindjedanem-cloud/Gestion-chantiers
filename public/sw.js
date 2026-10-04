@@ -1,5 +1,5 @@
-const CACHE_NAME = 'gestion-chantiers-v8';
-const APP_SHELL = ['./', './index.html', './manifest.json', './favicon.ico', './icons/icon-16.png', './icons/icon-32.png', './icons/icon-48.png', './icons/icon-96.png', './icons/icon-144.png', './icons/icon-192.png', './icons/icon-256.png', './icons/icon-512.png', './icons/icon-maskable-512.png', './icons/app-logo.png', './icons/app-logo-ui.png'];
+const CACHE_NAME = 'gestion-chantiers-v9';
+const APP_SHELL = ['./', './index.html', './manifest.json', './gc-icon-v9.ico', './icons/gc-icon-v9-16.png', './icons/gc-icon-v9-32.png', './icons/gc-icon-v9-48.png', './icons/gc-icon-v9-96.png', './icons/gc-icon-v9-144.png', './icons/gc-icon-v9-192.png', './icons/gc-icon-v9-256.png', './icons/gc-icon-v9-512.png', './icons/gc-icon-v9-maskable-512.png', './icons/gc-logo-v9-header.png'];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
