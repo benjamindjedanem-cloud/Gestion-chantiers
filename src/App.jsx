@@ -1,8 +1,11 @@
-import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import {
   LayoutDashboard, Building2, ArrowDownCircle, ArrowUpCircle,
-  Plus, X, Search, AlertTriangle, ChevronDown, ChevronRight, ChevronLeft, Trash2, CheckCircle2, Pencil, Check,
+  Plus, X, Search, AlertTriangle, ChevronDown, ChevronRight, ChevronLeft, Trash2, CheckCircle2, Pencil, Check, LogOut, Cloud, CloudOff, RefreshCw,
 } from 'lucide-react';
+import { STATUTS, MODES, TYPES_SORTIE, FONCTIONS_BENEFICIAIRE, fcfa, dateFR, today, paye, reste, statutSortie, byDateDesc } from './lib.js';
+import { useAppData, clearLocalUserData } from './store.js';
+import { supabase } from './supabase.js';
 
 /* ---------------------------------------------------------------- */
 /* Design tokens                                                     */
@@ -26,91 +29,6 @@ const C = {
   red: '#B91C1C',
   redTint: '#FEF2F2',
 };
-
-const FONT_STYLE = `
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
-.gc-root { font-family: 'DM Sans', sans-serif; color: ${C.text}; background: ${C.bg}; }
-.gc-display { font-family: 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: -0.02em; }
-.gc-tabular { font-variant-numeric: tabular-nums; }
-.gc-scroll::-webkit-scrollbar { width: 5px; height: 5px; }
-.gc-scroll::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 999px; }
-.gc-scroll { scrollbar-width: thin; scrollbar-color: #CBD5E1 transparent; }
-button, input, select { -webkit-tap-highlight-color: transparent; }
-.gc-card { box-shadow: 0 5px 18px rgba(15,23,42,0.035); }
-.gc-card-hover { transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease; }
-.gc-card-hover:active { transform: scale(.992); }
-.gc-section-label { letter-spacing: .12em; text-transform: uppercase; font-size: 10px; font-weight: 700; }
-.gc-divider { border-top: 1px solid ${C.border}; }
-`;
-
-const STATUTS = ['En cours', 'Terminé', 'En pause'];
-const MODES = ['Espèces', 'Mobile Money', 'Virement bancaire', 'Chèque'];
-const TYPES_SORTIE = ["Main d'œuvre", 'Matériaux', 'Transport', 'Location matériel', 'Autre'];
-const FONCTIONS_BENEFICIAIRE = ['Maçon', 'Carreleur', 'Électricien', 'Plombier', 'Ferrailleur', 'Peintre', 'Menuisier', 'Chef de chantier', 'Fournisseur', 'Transporteur', 'Autre'];
-const STORAGE_KEY = 'gestion-chantiers-data-v2';
-
-/* ---------------------------------------------------------------- */
-/* Seed data — reprend les 3 chantiers du fichier Excel               */
-/* Chaque sortie est modélisée comme une dette : montantDu + paiements */
-/* ---------------------------------------------------------------- */
-
-function paidInFull(date, montant) {
-  return { montantDu: montant, paiements: [{ id: uid('p'), date, montant }] };
-}
-
-const SEED_DATA = {
-  chantiers: [
-    { id: 'c1', nom: 'ANGABO', client: 'Commissaire Mht', adresse: '', dateDebut: '2026-03-25', dateFin: '', budget: 6500000, statut: 'En cours' },
-    { id: 'c2', nom: 'ROND-POINT HAMAM', client: 'ABDERAMANE', adresse: '', dateDebut: '2026-05-10', dateFin: '', budget: 20000000, statut: 'En cours' },
-    { id: 'c3', nom: 'CHARI-BAB', client: 'Dr ABDELSALAM', adresse: '', dateDebut: '2026-07-31', dateFin: '', budget: 15750000, statut: 'En cours' },
-  ],
-  entrees: [
-    { id: 'e1', date: '2026-03-25', chantier: 'ANGABO', versePar: 'Commissaire Mht', description: 'Total signature devis', mode: 'Espèces', montant: 6500000 },
-    { id: 'e2', date: '2026-05-10', chantier: 'ROND-POINT HAMAM', versePar: 'ABDERAMANE', description: '1er paiement', mode: 'Espèces', montant: 500000 },
-    { id: 'e3', date: '2026-07-31', chantier: 'CHARI-BAB', versePar: 'Dr ABDELSALAM', description: '1er paiement', mode: 'Espèces', montant: 4725000 },
-  ],
-  sorties: [
-    { id: 's1', date: '2026-01-20', chantier: 'ANGABO', beneficiaire: 'HERVE (maçon)', type: "Main d'œuvre", description: 'Semaine 1,2,3,4 et 5', mode: 'Espèces', ...paidInFull('2026-01-20', 1760000) },
-    { id: 's2', date: '2026-01-25', chantier: 'ANGABO', beneficiaire: 'OLIVIER (maçon)', type: 'Matériaux', description: 'Semaine 1,2,3 et 4', mode: 'Espèces', ...paidInFull('2026-01-25', 684000) },
-    { id: 's3', date: '2026-02-05', chantier: 'ANGABO', beneficiaire: 'YOUSSOUF (électricien)', type: "Main d'œuvre", description: 'Installation électrique', mode: 'Espèces', ...paidInFull('2026-02-05', 400000) },
-    { id: 's4', date: '2026-02-05', chantier: 'ANGABO', beneficiaire: 'ANICET (plombier)', type: "Main d'œuvre", description: 'Installation tuyau PVC et PPR', mode: 'Espèces', ...paidInFull('2026-02-05', 100000) },
-    { id: 's5', date: '2026-02-05', chantier: 'ANGABO', beneficiaire: 'HASSAN (crépissage)', type: "Main d'œuvre", description: 'Semaine 1,2,3,4', mode: 'Espèces', ...paidInFull('2026-02-05', 1950000) },
-    { id: 's6', date: '2026-02-15', chantier: 'ROND-POINT HAMAM', beneficiaire: 'HERVE (maçon)', type: "Main d'œuvre", description: 'Semaine 1,2', mode: 'Espèces', ...paidInFull('2026-02-15', 160000) },
-    { id: 's7', date: '2026-02-15', chantier: 'ROND-POINT HAMAM', beneficiaire: 'ERIC (maçon)', type: "Main d'œuvre", description: 'Semaine 1,2,3', mode: 'Espèces', ...paidInFull('2026-02-15', 400000) },
-    { id: 's8', date: '2026-07-31', chantier: 'CHARI-BAB', beneficiaire: 'OLIVIER (maçon)', type: "Main d'œuvre", description: 'Semaine 1,2,3', mode: 'Espèces', ...paidInFull('2026-07-31', 560000) },
-  ],
-};
-
-/* ---------------------------------------------------------------- */
-/* Helpers                                                            */
-/* ---------------------------------------------------------------- */
-
-function fcfa(n) {
-  return new Intl.NumberFormat('fr-FR').format(Math.round(n || 0)) + ' FCFA';
-}
-function dateFR(s) {
-  if (!s) return '—';
-  const d = new Date(s);
-  if (isNaN(d.getTime())) return s;
-  return d.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' });
-}
-function uid(p) {
-  return p + '_' + Math.random().toString(36).slice(2, 9);
-}
-function today() {
-  return new Date().toISOString().slice(0, 10);
-}
-function paye(sortie) {
-  return (sortie.paiements || []).reduce((a, p) => a + Number(p.montant || 0), 0);
-}
-function reste(sortie) {
-  return Number(sortie.montantDu || 0) - paye(sortie);
-}
-function statutSortie(sortie) {
-  const r = reste(sortie);
-  if (r <= 0) return 'Soldé';
-  return paye(sortie) > 0 ? 'Partiel' : 'À régler';
-}
 
 /* ---------------------------------------------------------------- */
 /* Small reusable UI bits                                            */
@@ -137,7 +55,9 @@ const inputStyle = {
 };
 
 function TextInput(props) {
-  return <input {...props} style={{ ...inputStyle, ...(props.style || {}) }} onFocus={(e) => { e.target.style.borderColor = C.brand; props.onFocus && props.onFocus(e); }} onBlur={(e) => { e.target.style.borderColor = C.border; props.onBlur && props.onBlur(e); }} />;
+  // Montants : clavier numérique sur mobile et pas de valeurs négatives.
+  const numberProps = props.type === 'number' ? { inputMode: 'numeric', min: 0 } : null;
+  return <input {...numberProps} {...props} style={{ ...inputStyle, ...(props.style || {}) }} onFocus={(e) => { e.target.style.borderColor = C.brand; props.onFocus && props.onFocus(e); }} onBlur={(e) => { e.target.style.borderColor = C.border; props.onBlur && props.onBlur(e); }} />;
 }
 function Select(props) {
   return <select {...props} style={{ ...inputStyle, ...(props.style || {}) }}>{props.children}</select>;
@@ -164,6 +84,13 @@ function PaiementPill({ statut }) {
 }
 
 function Modal({ title, onClose, children }) {
+  useEffect(() => {
+    const onKey = (e) => { if (e.key === 'Escape') onClose(); };
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden'; // empêche la page de défiler derrière la fenêtre
+    window.addEventListener('keydown', onKey);
+    return () => { window.removeEventListener('keydown', onKey); document.body.style.overflow = prevOverflow; };
+  }, [onClose]);
   return (
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4" style={{ background: 'rgba(15,23,42,0.52)', backdropFilter: 'blur(5px)' }} onClick={onClose}>
       <div className="w-full sm:max-w-md overflow-y-auto gc-scroll" style={{ background: C.surface, borderRadius: '24px 24px 0 0', maxHeight: '92vh', boxShadow: '0 -20px 60px rgba(15,23,42,.18)' }} onClick={(e) => e.stopPropagation()}>
@@ -224,7 +151,7 @@ function ChantierPicker({ chantiers, getSubtitle, onSelect, emptyText }) {
         return (
           <button
             key={c.id}
-            onClick={() => onSelect(c.nom)}
+            onClick={() => onSelect(c.id)}
             className="text-left p-4 flex items-center justify-between rounded-2xl"
             style={{ background: C.surface, border: `1px solid ${C.border}`, boxShadow: '0 4px 16px rgba(15,23,42,.025)' }}
           >
@@ -249,16 +176,14 @@ function ChantierPicker({ chantiers, getSubtitle, onSelect, emptyText }) {
 /* App                                                                */
 /* ---------------------------------------------------------------- */
 
-export default function App() {
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [saveError, setSaveError] = useState(false);
+export default function App({ user }) {
+  const { data, saveError, syncStatus, pendingCount, syncNow, actions } = useAppData(user.id);
   const [tab, setTab] = useState('dashboard');
   const [modal, setModal] = useState(null);
   const [search, setSearch] = useState('');
-  const [selEntree, setSelEntree] = useState('');
-  const [selSortie, setSelSortie] = useState('');
-  const [paiementFor, setPaiementFor] = useState(null); // sortie id
+  const [selEntree, setSelEntree] = useState(''); // id du chantier ouvert dans Entrées
+  const [selSortie, setSelSortie] = useState(''); // id du chantier ouvert dans Sorties
+  const [paiementFor, setPaiementFor] = useState(null); // id de la sortie à payer
   const [editSortieId, setEditSortieId] = useState(null); // sortie id en cours de modification
   const [editChantierId, setEditChantierId] = useState(null); // chantier id en cours de modification
   const [editEntreeId, setEditEntreeId] = useState(null); // entrée id en cours de modification
@@ -336,124 +261,24 @@ export default function App() {
     window.history.pushState({ appNav: true, tab, selEntree, selSortie }, '', window.location.href);
   }, [tab, selEntree, selSortie]);
 
-  useEffect(() => {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) setData(JSON.parse(raw));
-      else {
-        setData(SEED_DATA);
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(SEED_DATA));
-      }
-    } catch (e) {
-      setData(SEED_DATA);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
-  const persist = useCallback((next) => {
-    setData(next);
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
-      setSaveError(false);
-    } catch (e) {
-      setSaveError(true);
-    }
-  }, []);
-
-  const addChantier = (c) => persist({ ...data, chantiers: [...data.chantiers, { ...c, id: uid('c') }] });
-  const removeChantier = (id) => {
-    const chantier = data.chantiers.find((c) => c.id === id);
-    if (!chantier) return;
-    if (!window.confirm(`Supprimer le chantier « ${chantier.nom} » ? Cette action est irréversible.`)) return;
-    persist({ ...data, chantiers: data.chantiers.filter((c) => c.id !== id) });
-  };
-  const updateChantier = (id, patch) => {
-    const current = data.chantiers.find((c) => c.id === id);
-    const nextChantier = { ...current, ...patch };
-    const oldNom = current?.nom;
-    const newNom = nextChantier.nom;
-    persist({
-      ...data,
-      chantiers: data.chantiers.map((c) => (c.id === id ? nextChantier : c)),
-      ...(oldNom && newNom && oldNom !== newNom ? {
-        entrees: data.entrees.map((e) => (e.chantier === oldNom ? { ...e, chantier: newNom } : e)),
-        sorties: data.sorties.map((s) => (s.chantier === oldNom ? { ...s, chantier: newNom } : s)),
-      } : {}),
-    });
-  };
-  const updateStatutChantier = (id, statut) =>
-    persist({
-      ...data,
-      chantiers: data.chantiers.map((c) =>
-        c.id === id ? { ...c, statut, dateFinReelle: statut === 'Terminé' ? (c.dateFinReelle || today()) : '' } : c
-      ),
-    });
-  const updateDateFinReelle = (id, dateFinReelle) => persist({ ...data, chantiers: data.chantiers.map((c) => (c.id === id ? { ...c, dateFinReelle } : c)) });
-  const addEntree = (e) => persist({ ...data, entrees: [{ ...e, id: uid('e') }, ...data.entrees] });
-  const removeEntree = (id) => {
-    const entree = data.entrees.find((e) => e.id === id);
-    if (!entree) return;
-    if (!window.confirm(`Supprimer cet encaissement de ${fcfa(entree.montant)} ? Cette action est irréversible.`)) return;
-    persist({ ...data, entrees: data.entrees.filter((e) => e.id !== id) });
-  };
-  const updateEntree = (id, patch) => persist({ ...data, entrees: data.entrees.map((e) => (e.id === id ? { ...e, ...patch } : e)) });
-  const addSortie = (s) => persist({ ...data, sorties: [{ ...s, id: uid('s') }, ...data.sorties] });
-  const removeSortie = (id) => {
-    const sortie = data.sorties.find((s) => s.id === id);
-    if (!sortie) return;
-    if (!window.confirm(`Supprimer cette sortie de ${fcfa(sortie.montantDu)} pour « ${sortie.beneficiaire || 'ce bénéficiaire'} » ? Cette action est irréversible.`)) return;
-    persist({ ...data, sorties: data.sorties.filter((s) => s.id !== id) });
-  };
-  const addPaiement = (sortieId, p) =>
-    persist({ ...data, sorties: data.sorties.map((s) => (s.id === sortieId ? { ...s, paiements: [...(s.paiements || []), { ...p, id: uid('p') }] } : s)) });
-  const updateSortie = (id, patch) => {
-    const current = data.sorties.find((s) => s.id === id);
-    if (!current) return;
-
-    const nextMontantDu = Object.prototype.hasOwnProperty.call(patch, 'montantDu')
-      ? Number(patch.montantDu)
-      : Number(current.montantDu || 0);
-
-    const paiements = current.paiements || [];
-    // Une sortie créée comme « payée en totalité » contient un seul paiement
-    // dont le montant correspond à la somme due. Dans ce cas, modifier la
-    // somme de la sortie doit aussi modifier ce paiement initial, sinon
-    // « Total payé » reste sur l'ancienne valeur.
-    const sortieInitialementPayeeEnTotalite =
-      paiements.length === 1 && Number(paiements[0].montant || 0) === Number(current.montantDu || 0);
-
-    const nextPaiements = sortieInitialementPayeeEnTotalite && Object.prototype.hasOwnProperty.call(patch, 'montantDu')
-      ? [{ ...paiements[0], montant: nextMontantDu }]
-      : paiements;
-
-    persist({
-      ...data,
-      sorties: data.sorties.map((s) => (s.id === id
-        ? { ...s, ...patch, montantDu: nextMontantDu, paiements: nextPaiements }
-        : s)),
-    });
-  };
-  const updatePaiement = (sortieId, paiementId, patch) =>
-    persist({ ...data, sorties: data.sorties.map((s) => (s.id === sortieId ? { ...s, paiements: (s.paiements || []).map((p) => (p.id === paiementId ? { ...p, ...patch } : p)) } : s)) });
-  const removePaiement = (sortieId, paiementId) => {
-    const sortie = data.sorties.find((s) => s.id === sortieId);
-    const paiement = sortie?.paiements?.find((p) => p.id === paiementId);
-    if (!sortie || !paiement) return;
-    if (!window.confirm(`Supprimer ce versement de ${fcfa(paiement.montant)} ? Cette action est irréversible.`)) return;
-    persist({ ...data, sorties: data.sorties.map((s) => (s.id === sortieId ? { ...s, paiements: (s.paiements || []).filter((p) => p.id !== paiementId) } : s)) });
-  };
-
+  // Agrégats calculés en une seule passe sur les entrées et les sorties.
   const stats = useMemo(() => {
-    if (!data) return [];
-    return data.chantiers.map((c) => {
-      const sortiesC = data.sorties.filter((s) => s.chantier === c.nom);
-      const totalEntrees = data.entrees.filter((e) => e.chantier === c.nom).reduce((a, e) => a + Number(e.montant || 0), 0);
-      const totalSorties = sortiesC.reduce((a, s) => a + paye(s), 0);
-      const totalReste = sortiesC.reduce((a, s) => a + Math.max(reste(s), 0), 0);
-      const solde = totalEntrees - totalSorties;
-      const pct = c.budget > 0 ? totalSorties / c.budget : 0;
-      return { ...c, totalEntrees, totalSorties, totalReste, solde, pct };
+    const acc = new Map(data.chantiers.map((c) => [c.id, { totalEntrees: 0, totalSorties: 0, totalReste: 0 }]));
+    for (const e of data.entrees) {
+      const a = acc.get(e.chantierId);
+      if (a) a.totalEntrees += Number(e.montant || 0);
+    }
+    for (const s of data.sorties) {
+      const a = acc.get(s.chantierId);
+      if (!a) continue;
+      a.totalSorties += paye(s);
+      a.totalReste += Math.max(reste(s), 0);
+    }
+    return [...data.chantiers].sort(parDateDebut).map((c) => {
+      const a = acc.get(c.id);
+      const solde = a.totalEntrees - a.totalSorties;
+      const pct = c.budget > 0 ? a.totalSorties / c.budget : 0;
+      return { ...c, ...a, solde, pct };
     });
   }, [data]);
 
@@ -461,46 +286,57 @@ export default function App() {
     () => stats.reduce((a, s) => ({ budget: a.budget + Number(s.budget || 0), entrees: a.entrees + s.totalEntrees, sorties: a.sorties + s.totalSorties, solde: a.solde + s.solde, reste: a.reste + s.totalReste }), { budget: 0, entrees: 0, sorties: 0, solde: 0, reste: 0 }),
     [stats]
   );
+  const statsById = useMemo(() => new Map(stats.map((s) => [s.id, s])), [stats]);
 
-  if (loading || !data) {
-    return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: C.bg }}>
-        <style>{FONT_STYLE}</style>
-        <p className="gc-display text-lg" style={{ color: C.textMuted }}>Chargement…</p>
-      </div>
-    );
-  }
+  const entreesDuChantier = useMemo(
+    () => (selEntree ? data.entrees.filter((e) => e.chantierId === selEntree).sort(byDateDesc) : []),
+    [data.entrees, selEntree]
+  );
+  const sortiesDuChantier = useMemo(
+    () => (selSortie ? data.sorties.filter((s) => s.chantierId === selSortie) : []),
+    [data.sorties, selSortie]
+  );
+  const existingBeneficiaires = useMemo(
+    () => [...new Set(sortiesDuChantier.map((s) => s.beneficiaire).filter(Boolean))].sort(),
+    [sortiesDuChantier]
+  );
 
+  const chantierEntree = statsById.get(selEntree);
+  const chantierSortie = statsById.get(selSortie);
   const paiementForSortie = paiementFor ? data.sorties.find((s) => s.id === paiementFor) : null;
   const editSortieObj = editSortieId ? data.sorties.find((s) => s.id === editSortieId) : null;
-  const existingBeneficiaires = selSortie
-    ? [...new Set(data.sorties.filter((s) => s.chantier === selSortie).map((s) => s.beneficiaire).filter(Boolean))].sort()
-    : [];
+  const editChantierObj = editChantierId ? data.chantiers.find((c) => c.id === editChantierId) : null;
+  const editEntreeObj = editEntreeId ? data.entrees.find((e) => e.id === editEntreeId) : null;
+  const nomChantier = (id) => statsById.get(id)?.nom || '';
+
+  const logout = async () => {
+    if (pendingCount > 0 && !window.confirm(`${pendingCount} modification(s) n’ont pas encore été envoyées en ligne (pas de réseau). Si vous vous déconnectez maintenant, elles seront perdues. Continuer ?`)) return;
+    clearLocalUserData(user.id); // ne rien laisser sur un téléphone partagé
+    await supabase.auth.signOut({ scope: 'local' });
+  };
 
   return (
     <div className="gc-root min-h-screen" style={{ background: C.bg }}>
-      <style>{FONT_STYLE}</style>
       <div className="max-w-md lg:max-w-xl mx-auto min-h-screen flex flex-col" style={{ background: C.bg, borderLeft: `1px solid ${C.border}`, borderRight: `1px solid ${C.border}` }}>
-        {tab === 'dashboard' && <Header totaux={totaux} saveError={saveError} />}
+        {tab === 'dashboard' && <Header totaux={totaux} saveError={saveError} email={user.email} syncStatus={syncStatus} pendingCount={pendingCount} onSync={syncNow} onLogout={logout} />}
 
         <main className="flex-1 overflow-y-auto gc-scroll pb-24 px-4" style={{ paddingTop: 18 }}>
             {tab === 'dashboard' && <Dashboard stats={stats} search={search} setSearch={setSearch} />}
 
             {tab === 'chantiers' && (
-              <ChantiersTab chantiers={data.chantiers} stats={stats} onAdd={() => setModal('chantier')} onEdit={setEditChantierId} onRemove={removeChantier} onChangeStatut={updateStatutChantier} onChangeDateFin={updateDateFinReelle} />
+              <ChantiersTab chantiers={data.chantiers} stats={stats} onAdd={() => setModal('chantier')} onEdit={setEditChantierId} onRemove={actions.removeChantier} onChangeStatut={actions.updateStatutChantier} onChangeDateFin={actions.updateDateFinReelle} />
             )}
 
             {tab === 'entrees' && (
-              selEntree === '' ? (
+              !chantierEntree ? (
                 <div>
                   <PageIntro eyebrow="Suivi financier" title="Entrées" subtitle="Les paiements reçus, chantier par chantier" />
                   <ChantierPicker
-                    chantiers={data.chantiers}
+                    chantiers={stats}
                     emptyText="Ajoutez un chantier pour commencer à enregistrer des entrées."
                     getSubtitle={(c) => {
-                      const total = data.entrees.filter((e) => e.chantier === c.nom).reduce((a, e) => a + Number(e.montant || 0), 0);
-                      const lines = [{ label: fcfa(total), color: C.green }];
-                      if (c.budget > 0 && total >= c.budget) lines.push({ label: 'Soldé', color: C.green });
+                      const lines = [{ label: fcfa(c.totalEntrees), color: C.green }];
+                      if (c.budget > 0 && c.totalEntrees >= c.budget) lines.push({ label: 'Soldé', color: C.green });
                       return lines;
                     }}
                     onSelect={setSelEntree}
@@ -508,28 +344,27 @@ export default function App() {
                 </div>
               ) : (
                 <EntreeDetail
-                  chantier={selEntree}
-                  budget={data.chantiers.find((c) => c.nom === selEntree)?.budget || 0}
-                  entrees={data.entrees.filter((e) => e.chantier === selEntree).sort((a, b) => (a.date < b.date ? 1 : -1))}
+                  chantier={chantierEntree.nom}
+                  budget={chantierEntree.budget || 0}
+                  entrees={entreesDuChantier}
                   onBack={() => setSelEntree('')}
                   onAdd={() => setModal('entree')}
-                  onRemove={removeEntree}
+                  onRemove={actions.removeEntree}
                   onEdit={setEditEntreeId}
                 />
               )
             )}
 
             {tab === 'sorties' && (
-              selSortie === '' ? (
+              !chantierSortie ? (
                 <div>
                   <PageIntro eyebrow="Suivi financier" title="Sorties" subtitle="Les dépenses et paiements à suivre" />
                   <ChantierPicker
-                    chantiers={data.chantiers}
+                    chantiers={stats}
                     emptyText="Ajoutez un chantier pour commencer à enregistrer des sorties."
                     getSubtitle={(c) => {
-                      const st = stats.find((s) => s.id === c.id);
-                      const lines = [{ label: fcfa(st?.totalSorties || 0), color: C.textMuted }];
-                      if (st?.totalReste > 0) lines.push({ label: `Reste ${fcfa(st.totalReste)}`, color: C.red });
+                      const lines = [{ label: fcfa(c.totalSorties), color: C.textMuted }];
+                      if (c.totalReste > 0) lines.push({ label: `Reste ${fcfa(c.totalReste)}`, color: C.red });
                       return lines;
                     }}
                     onSelect={setSelSortie}
@@ -537,15 +372,15 @@ export default function App() {
                 </div>
               ) : (
                 <SortieDetail
-                  chantier={selSortie}
-                  sorties={data.sorties.filter((s) => s.chantier === selSortie)}
+                  chantier={chantierSortie.nom}
+                  sorties={sortiesDuChantier}
                   onBack={() => setSelSortie('')}
                   onAdd={() => setModal('sortie')}
-                  onRemove={removeSortie}
-                  onPay={(id) => setPaiementFor(id)}
-                  onEdit={(id) => setEditSortieId(id)}
-                  onEditPaiement={updatePaiement}
-                  onRemovePaiement={removePaiement}
+                  onRemove={actions.removeSortie}
+                  onPay={setPaiementFor}
+                  onEdit={setEditSortieId}
+                  onEditPaiement={actions.updatePaiement}
+                  onRemovePaiement={actions.removePaiement}
                 />
               )
             )}
@@ -560,33 +395,34 @@ export default function App() {
         </div>
       )}
 
-      {modal === 'chantier' && <ChantierForm onClose={() => setModal(null)} onSave={(c) => { addChantier(c); setModal(null); }} />}
-      {editChantierId && (data.chantiers.find((c) => c.id === editChantierId)) && (
+      {modal === 'chantier' && <ChantierForm onClose={() => setModal(null)} onSave={(c) => { actions.addChantier(c); setModal(null); }} />}
+      {editChantierObj && (
         <ChantierForm
-          chantier={data.chantiers.find((c) => c.id === editChantierId)}
+          chantier={editChantierObj}
           onClose={() => setEditChantierId(null)}
-          onSave={(patch) => { updateChantier(editChantierId, patch); setEditChantierId(null); }}
+          onSave={(patch) => { actions.updateChantier(editChantierObj.id, patch); setEditChantierId(null); }}
         />
       )}
-      {modal === 'entree' && (
-        <EntreeForm chantier={selEntree} onClose={() => setModal(null)} onSave={(e) => { addEntree(e); setModal(null); }} />
+      {modal === 'entree' && chantierEntree && (
+        <EntreeForm chantierId={chantierEntree.id} chantierNom={chantierEntree.nom} onClose={() => setModal(null)} onSave={(e) => { actions.addEntree(e); setModal(null); }} />
       )}
-      {editEntreeId && (data.entrees.find((e) => e.id === editEntreeId)) && (
+      {editEntreeObj && (
         <EntreeForm
-          entree={data.entrees.find((e) => e.id === editEntreeId)}
-          chantier={data.entrees.find((e) => e.id === editEntreeId)?.chantier || selEntree}
+          entree={editEntreeObj}
+          chantierId={editEntreeObj.chantierId}
+          chantierNom={nomChantier(editEntreeObj.chantierId)}
           onClose={() => setEditEntreeId(null)}
-          onSave={(patch) => { updateEntree(editEntreeId, patch); setEditEntreeId(null); }}
+          onSave={(patch) => { actions.updateEntree(editEntreeObj.id, patch); setEditEntreeId(null); }}
         />
       )}
-      {modal === 'sortie' && (
-        <SortieForm chantier={selSortie} existingBeneficiaires={existingBeneficiaires} onClose={() => setModal(null)} onSave={(s) => { addSortie(s); setModal(null); }} />
+      {modal === 'sortie' && chantierSortie && (
+        <SortieForm chantierId={chantierSortie.id} chantierNom={chantierSortie.nom} existingBeneficiaires={existingBeneficiaires} onClose={() => setModal(null)} onSave={(s) => { actions.addSortie(s); setModal(null); }} />
       )}
       {paiementForSortie && (
-        <PaiementForm sortie={paiementForSortie} onClose={() => setPaiementFor(null)} onSave={(p) => { addPaiement(paiementForSortie.id, p); setPaiementFor(null); }} />
+        <PaiementForm sortie={paiementForSortie} onClose={() => setPaiementFor(null)} onSave={(p) => { actions.addPaiement(paiementForSortie.id, p); setPaiementFor(null); }} />
       )}
       {editSortieObj && (
-        <SortieEditForm sortie={editSortieObj} onClose={() => setEditSortieId(null)} onSave={(patch) => { updateSortie(editSortieObj.id, patch); setEditSortieId(null); }} />
+        <SortieEditForm sortie={editSortieObj} onClose={() => setEditSortieId(null)} onSave={(patch) => { actions.updateSortie(editSortieObj.id, patch); setEditSortieId(null); }} />
       )}
     </div>
   );
@@ -617,7 +453,28 @@ function PageIntro({ eyebrow, title, subtitle, action, onAction }) {
 /* Header + Nav                                                      */
 /* ---------------------------------------------------------------- */
 
-function Header({ totaux, saveError }) {
+// Chantiers les plus récents en premier ; sans date de début à la fin.
+function parDateDebut(a, b) {
+  if (a.dateDebut !== b.dateDebut) return !a.dateDebut ? 1 : !b.dateDebut ? -1 : a.dateDebut < b.dateDebut ? 1 : -1;
+  return (a.nom || '').localeCompare(b.nom || '', 'fr');
+}
+
+function SyncBadge({ status, pendingCount, onSync }) {
+  const map = {
+    synced: { Icon: Cloud, label: 'Sauvegardé en ligne' },
+    syncing: { Icon: RefreshCw, label: 'Synchronisation…' },
+    offline: { Icon: CloudOff, label: pendingCount > 0 ? `Hors ligne · ${pendingCount} modif. en attente` : 'Hors ligne' },
+    error: { Icon: CloudOff, label: 'Échec de la synchro · réessayer' },
+  };
+  const { Icon, label } = map[status] || map.syncing;
+  return (
+    <button onClick={onSync} className="flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 rounded-full" style={{ background: 'rgba(255,255,255,.12)', color: status === 'error' ? '#FECACA' : '#DBEAFE' }}>
+      <Icon size={12} /> {label}
+    </button>
+  );
+}
+
+function Header({ totaux, saveError, email, syncStatus, pendingCount, onSync, onLogout }) {
   const balancePositive = totaux.solde >= 0;
   return (
     <header className="px-5 pt-5 pb-4" style={{ background: `linear-gradient(145deg, ${C.brandDark} 0%, #1E3A8A 55%, ${C.brand} 100%)`, color: '#fff' }}>
@@ -627,11 +484,17 @@ function Header({ totaux, saveError }) {
           <p className="gc-display text-xl mt-1">Gestion Chantiers</p>
         </div>
         <div className="flex items-center justify-center" style={{ width: 44, height: 44 }}>
-          <img src="./icons/gc-logo-v12-header.png" alt="Gestion Chantiers" className="w-full h-full object-contain" />
+          <img src="./icons/gc-icon-v12-128.png" alt="Gestion Chantiers" width="44" height="44" className="w-full h-full object-contain" />
         </div>
       </div>
+      <div className="flex items-center justify-between gap-2 mt-3">
+        <SyncBadge status={syncStatus} pendingCount={pendingCount} onSync={onSync} />
+        <button onClick={onLogout} title={email} className="flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 rounded-full min-w-0" style={{ background: 'rgba(255,255,255,.12)', color: '#DBEAFE' }}>
+          <LogOut size={12} /> Déconnexion
+        </button>
+      </div>
       <div className="mt-4 p-4 rounded-2xl" style={{ background: 'rgba(255,255,255,.10)', border: '1px solid rgba(255,255,255,.12)', backdropFilter: 'blur(8px)' }}>
-        <p className="text-xs" style={{ color: '#BFDBFE' }}>{saveError ? 'Synchronisation indisponible' : 'Solde global'}</p>
+        <p className="text-xs" style={{ color: '#BFDBFE' }}>{saveError ? 'Mémoire du téléphone pleine : enregistrement local impossible' : 'Solde global'}</p>
         <p className="gc-display gc-tabular text-3xl mt-1" style={{ color: balancePositive ? '#D1FAE5' : '#FECACA' }}>{fcfa(totaux.solde)}</p>
         <div className="grid grid-cols-3 gap-2 mt-4">
           <MiniHeaderStat label="Entrées" value={totaux.entrees} />
@@ -901,7 +764,7 @@ function ChantierForm({ chantier, onClose, onSave }) {
   } : { nom: '', client: '', adresse: '', dateDebut: '', dateFin: '', budget: '', statut: 'En cours' });
   const isEdit = Boolean(chantier);
   const set = (k) => (e) => setF((prev) => ({ ...prev, [k]: e.target.value }));
-  const valid = f.nom.trim() && f.client.trim() && f.budget;
+  const valid = f.nom.trim() && f.client.trim() && Number(f.budget) > 0;
   return (
     <Modal title={isEdit ? 'Modifier le chantier' : 'Nouveau chantier'} onClose={onClose}>
       <Field label="Nom du chantier"><TextInput value={f.nom} onChange={set('nom')} placeholder="Ex. VILLA NGARBA" /></Field>
@@ -961,13 +824,13 @@ function EntreeDetail({ chantier, budget, entrees, onBack, onAdd, onRemove, onEd
   );
 }
 
-function EntreeForm({ chantier, entree, onClose, onSave }) {
-  const [f, setF] = useState(() => entree ? { ...entree, montant: entree.montant ?? '' } : { date: today(), chantier, versePar: '', description: '', mode: 'Espèces', montant: '' });
+function EntreeForm({ chantierId, chantierNom, entree, onClose, onSave }) {
+  const [f, setF] = useState(() => entree ? { ...entree, montant: entree.montant ?? '' } : { date: today(), chantierId, versePar: '', description: '', mode: 'Espèces', montant: '' });
   const isEdit = Boolean(entree);
   const set = (k) => (e) => setF((prev) => ({ ...prev, [k]: e.target.value }));
-  const valid = f.date && f.montant;
+  const valid = f.date && Number(f.montant) > 0;
   return (
-    <Modal title={`${isEdit ? 'Modifier l’entrée' : 'Nouvelle entrée'} — ${f.chantier || chantier}`} onClose={onClose}>
+    <Modal title={`${isEdit ? 'Modifier l’entrée' : 'Nouvelle entrée'} — ${chantierNom}`} onClose={onClose}>
       <Field label="Date"><TextInput type="date" value={f.date} onChange={set('date')} /></Field>
       <Field label="Versé par"><TextInput value={f.versePar} onChange={set('versePar')} placeholder="Nom de la personne ou de l'entreprise qui verse" /></Field>
       <Field label="Description"><TextInput value={f.description} onChange={set('description')} placeholder="Ex. 2e paiement" /></Field>
@@ -1170,7 +1033,7 @@ function AutocompleteInput({ value, onChange, onSelect, options, placeholder }) 
   );
 }
 
-function SortieForm({ chantier, existingBeneficiaires = [], onClose, onSave }) {
+function SortieForm({ chantierId, chantierNom, existingBeneficiaires = [], onClose, onSave }) {
   const parsedPersons = useMemo(() => existingBeneficiaires.map((full) => {
     const m = full.match(/^(.*?)\s*\(([^)]+)\)\s*$/);
     return m ? { nom: m[1].trim(), fonction: m[2].trim() } : { nom: full.trim(), fonction: '' };
@@ -1178,11 +1041,11 @@ function SortieForm({ chantier, existingBeneficiaires = [], onClose, onSave }) {
   const nomsUniques = useMemo(() => [...new Set(parsedPersons.map((p) => p.nom))].filter(Boolean).sort(), [parsedPersons]);
 
   const [f, setF] = useState({
-    date: today(), chantier, beneficiaireNom: '', beneficiaireFonction: '', beneficiaireFonctionAutre: '',
+    date: today(), beneficiaireNom: '', beneficiaireFonction: '', beneficiaireFonctionAutre: '',
     type: TYPES_SORTIE[0], description: '', mode: 'Espèces',
     statutPaiement: 'Payé en totalité', montant: '', montantDu: '', montantPayeInitial: '',
   });
-  const set = (k) => (e) => setF({ ...f, [k]: e.target.value });
+  const set = (k) => (e) => setF((prev) => ({ ...prev, [k]: e.target.value }));
   const isCredit = f.statutPaiement === 'À crédit';
 
   const handleSelectNom = (nom) => {
@@ -1199,28 +1062,28 @@ function SortieForm({ chantier, existingBeneficiaires = [], onClose, onSave }) {
 
   const fonctionFinale = f.beneficiaireFonction === 'Autre' ? f.beneficiaireFonctionAutre.trim() : f.beneficiaireFonction;
   const beneficiaireFinal = fonctionFinale ? `${f.beneficiaireNom.trim()} (${fonctionFinale})` : f.beneficiaireNom.trim();
-  const valid = f.date && f.beneficiaireNom.trim() && (isCredit ? f.montantDu : f.montant);
+  const valid = f.date && f.beneficiaireNom.trim() && Number(isCredit ? f.montantDu : f.montant) > 0;
 
   const submit = () => {
     if (!valid) return;
     if (isCredit) {
       const montantDu = Number(f.montantDu);
       const initial = Number(f.montantPayeInitial || 0);
-      const paiements = initial > 0 ? [{ id: uid('p'), date: f.date, montant: initial }] : [];
-      onSave({ date: f.date, chantier: f.chantier, beneficiaire: beneficiaireFinal, type: f.type, description: f.description, mode: f.mode, montantDu, paiements });
+      const paiements = initial > 0 ? [{ date: f.date, montant: initial }] : [];
+      onSave({ date: f.date, chantierId, beneficiaire: beneficiaireFinal, type: f.type, description: f.description, mode: f.mode, montantDu, paiements });
     } else {
       const montant = Number(f.montant);
-      onSave({ date: f.date, chantier: f.chantier, beneficiaire: beneficiaireFinal, type: f.type, description: f.description, mode: f.mode, montantDu: montant, paiements: [{ id: uid('p'), date: f.date, montant }] });
+      onSave({ date: f.date, chantierId, beneficiaire: beneficiaireFinal, type: f.type, description: f.description, mode: f.mode, montantDu: montant, paiements: [{ date: f.date, montant }] });
     }
   };
 
   return (
-    <Modal title={`Nouvelle sortie — ${chantier}`} onClose={onClose}>
+    <Modal title={`Nouvelle sortie — ${chantierNom}`} onClose={onClose}>
       <Field label="Date"><TextInput type="date" value={f.date} onChange={set('date')} /></Field>
       <Field label="Bénéficiaire">
         <AutocompleteInput
           value={f.beneficiaireNom}
-          onChange={(v) => setF({ ...f, beneficiaireNom: v })}
+          onChange={(v) => setF((prev) => ({ ...prev, beneficiaireNom: v }))}
           onSelect={handleSelectNom}
           options={nomsUniques}
           placeholder="Ex. Hervé"
@@ -1241,7 +1104,7 @@ function SortieForm({ chantier, existingBeneficiaires = [], onClose, onSave }) {
       <Field label="Mode de paiement"><Select value={f.mode} onChange={set('mode')}>{MODES.map((m) => <option key={m} value={m}>{m}</option>)}</Select></Field>
 
       <Field label="Statut du paiement">
-        <ToggleGroup options={['Payé en totalité', 'À crédit']} value={f.statutPaiement} onChange={(v) => setF({ ...f, statutPaiement: v })} />
+        <ToggleGroup options={['Payé en totalité', 'À crédit']} value={f.statutPaiement} onChange={(v) => setF((prev) => ({ ...prev, statutPaiement: v }))} />
       </Field>
 
       {!isCredit ? (
@@ -1265,7 +1128,7 @@ function SortieEditForm({ sortie, onClose, onSave }) {
     date: sortie.date, beneficiaire: sortie.beneficiaire, type: sortie.type,
     description: sortie.description, mode: sortie.mode, montantDu: String(sortie.montantDu),
   });
-  const set = (k) => (e) => setF({ ...f, [k]: e.target.value });
+  const set = (k) => (e) => setF((prev) => ({ ...prev, [k]: e.target.value }));
   const dejaPayeAuDela = paye(sortie);
   const valid = f.date && f.beneficiaire.trim() && Number(f.montantDu) >= 0;
 
