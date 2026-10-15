@@ -85,8 +85,26 @@ L'app s'installe avec son icône, s'ouvre en plein écran sans barre de navigate
 
 ## À savoir
 
-- Les données sont stockées **localement sur l'appareil** (dans le navigateur), pas sur un serveur — donc pas de synchronisation automatique entre plusieurs téléphones pour l'instant. Si plusieurs personnes doivent voir les mêmes chantiers depuis des appareils différents, il faudra ajouter une base de données partagée (ex. Supabase, Firebase) dans une prochaine étape.
 - Les icônes de l’application sont dans `public/icons/` avec plusieurs déclinaisons (PWA, Android maskable, Apple, navigateur et Windows). Le projet utilise une version dédiée de ces icônes dans le manifest, le favicon, le service worker et l’en-tête de l’application.
+
+## Comptes utilisateurs et sauvegarde en ligne (Supabase)
+
+Chaque personne se connecte avec son e-mail et son mot de passe. Ses chantiers sont sauvegardés en ligne dans le projet Supabase **gestion-chantiers** (région Paris) : en changeant de téléphone, il suffit de se reconnecter pour tout retrouver.
+
+- **Confidentialité** : chaque compte ne voit que ses propres données. C'est garanti par la base elle-même (règles RLS), pas seulement par l'application.
+- **Hors ligne** : l'app continue de fonctionner sans réseau. Les modifications sont gardées sur le téléphone et envoyées automatiquement au retour du réseau (badge « Hors ligne · N modif. en attente » sur l'accueil).
+- **Anciennes données** : au premier login sur un téléphone qui contenait déjà des chantiers (version sans compte), ces données sont envoyées dans le compte.
+- **Déconnexion** : efface la copie locale du téléphone (utile sur un téléphone partagé).
+
+### Configuration
+
+Les identifiants publics du projet sont dans `.env` (`VITE_SUPABASE_URL`, `VITE_SUPABASE_PUBLISHABLE_KEY`). Ils sont publics par conception ; ne jamais y mettre la clé *secret* / *service_role*.
+
+À faire une fois dans le tableau de bord Supabase → **Authentication → URL Configuration** :
+- **Site URL** : l'adresse de l'app en ligne (ex. `https://gestion-chantiers.vercel.app`)
+- **Redirect URLs** : ajouter cette même adresse et `http://localhost:5173`
+
+Sans cela, les liens reçus par e-mail (confirmation de compte, mot de passe oublié) pointent vers une mauvaise adresse.
 
 ## Correctif responsive / déploiement
 
