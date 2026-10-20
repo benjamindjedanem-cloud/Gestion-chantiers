@@ -47,7 +47,7 @@ Angle : le point de vue du **gérant**, qui ne sait plus qui lui doit encore et 
 
 **Fin** ✅
 - Logo + « Gestion Chantiers » sur l'impact final. **Pas d'adresse web** (hébergement gratuit Vercel = usage non commercial ; le lien va dans le texte de la publication).
-- 🟡 Mention discrète « Lien dans la publication » sous le logo (à confirmer).
+- Aucune mention de lien (décision de Benjamin).
 
 ## Déroulé (≈ 30 s, à caler sur la musique)
 
@@ -64,5 +64,19 @@ Angle : le point de vue du **gérant**, qui ne sait plus qui lui doit encore et 
 ## À fournir par Benjamin
 
 - ⬜ Musique (MP3), 115–140 BPM, avec coupure / montée / drop
-- ⬜ Noms de chantiers et de corps de métier réalistes pour les données de démo
-- 🟡 Mention « Lien dans la publication » : oui / non
+- 🟡 Validation des données de démo ci-dessous
+
+## Données de démo 🟡 (inventées, style local ; aucun vrai chantier ni vrai client)
+
+- Chantiers (noms de quartiers, comme le font les utilisateurs) : **VILLA FARCHA**, **IMMEUBLE MOURSAL**, **CHAGOUA R+1**
+- Clients : M. Mahamat Saleh, Dr Hassan, Mme Achta
+- Bénéficiaires (fonctions de l'appli) : Maçon Abakar, Ets Abdelkerim (fournisseur), Ferrailleur Idriss, Transporteur Moussa
+- Geste 1 : entrée VILLA FARCHA, M. Mahamat Saleh, 2 500 000 FCFA
+- Geste 2 : sortie 50 sacs de ciment, Ets Abdelkerim (fournisseur), 850 000 FCFA
+- Geste 3 : Maçon Abakar, dû 1 200 000, payé 900 000, reste 300 000 → paiement → reste 0 → « Soldé ✓ »
+- Questions flottantes : « Dr Hassan : payé ? », « Ferrailleur : 150 000 ? », « Avance Mme Achta ? », « Transport sable : réglé ? »
+
+## Musique
+
+- Benjamin choisit (licence à son nom) : 2–3 candidats envoyés → analyse et recommandation par Claude.
+- Option : connecteur ElevenLabs complet → musique composée sur mesure (drop sur la révélation, impact sur le logo) + effets sonores.
