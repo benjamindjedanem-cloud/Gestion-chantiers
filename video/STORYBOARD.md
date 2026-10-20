@@ -99,7 +99,7 @@ Univers bleu nuit (#172554 → #0B1230), **une ligne de lumière** bleue qui str
 
 ### S8 · Geste 3 — Dette soldée — 24,53 → 27,96 s (736 → 839)
 - **Légende** : « Le reste à payer, toujours **à jour**. »
-- **Interface** : carte **Maçon Jean** en grand : dû 1 200 000, payé 900 000, **reste 300 000** en rouge lumineux (écho direct aux montants rouges du problème). Tap « Payer le reste » → la jauge de paiement se remplit → le reste **compte jusqu'à 0** et passe du rouge au vert → une bulle « … » apparaît, les points deviennent une **coche** qui pop en **pièce 3D « Soldé ✓ »** (#41).
+- **Interface** : carte **Maçon Jean** en grand : dû 1 200 000, payé 900 000, **reste 300 000** en rouge lumineux (écho direct aux montants rouges du problème). Tap « Enregistrer un paiement » (libellé réel de l'appli) → la jauge de paiement se remplit → le reste **compte jusqu'à 0** et passe du rouge au vert → une bulle « … » apparaît, les points deviennent une **coche** qui pop en **pièce 3D « Soldé ✓ »** (#41).
 - **Accent** : rouge → vert.
 - **Son** : tap ; compteur ; ding de validation ; petit impact sur la pièce.
 - **Transition vers S9** : la pièce file vers le haut ; **la musique fait sa pause** (27,96 s).
