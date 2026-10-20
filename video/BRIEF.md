@@ -63,10 +63,10 @@ Angle : le point de vue du **gérant**, qui ne sait plus qui lui doit encore et 
 
 ## À fournir par Benjamin
 
-- ⬜ Musique (MP3), 115–140 BPM, avec coupure / montée / drop
-- 🟡 Validation des données de démo ci-dessous
+- ✅ Musique : Bombinsound, « Energetic Upbeat Future Bass » (Pixabay), 140 BPM, drop à 15,45 s, coupée à 1,2 s → `public/musique.mp3` (non versionnée)
+- ✅ Données de démo validées
 
-## Données de démo 🟡 (inventées, style local, prénoms variés ; aucun vrai chantier ni vrai client)
+## Données de démo ✅ (inventées, style local, prénoms variés ; aucun vrai chantier ni vrai client)
 
 - Chantiers (noms de quartiers, comme le font les utilisateurs) : **VILLA FARCHA**, **IMMEUBLE MOURSAL**, **CHAGOUA R+1**
 - Clients : M. Mahamat Saleh, Dr Herbert, Mme Achta

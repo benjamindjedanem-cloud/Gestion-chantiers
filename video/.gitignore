@@ -1,2 +1,5 @@
 node_modules
 out
+# Musique sous licence Pixabay : ne pas redistribuer dans le dépôt
+public/musique.mp3
+public/sfx/
