@@ -158,6 +158,15 @@ Planches : `assets/refs/REF-02_*_A-EVITER.jpg`.
 12. **Fin type** : impact grave sur le logo + note qui s'éteint, après une signature (logo qui se forme ou nom manuscrit). *(REF-03, REF-04 — goût fort)*
 13. **Deux registres possibles**, tous deux appréciés : **immersif** (une couleur de marque, lumières, verre — REF-03) ou **minimaliste** (blanc/noir + un accent — REF-04). Choisir l'un des deux par vidéo, ne pas mélanger.
 
+### Règles d'écriture (retours de Benjamin sur le brief Gestion Chantiers)
+
+- **R-SOLUTION — Toujours présenter la solution** avant de la montrer : son **nom** et **à quoi elle sert** en une phrase. Ne jamais passer directement du problème aux gestes de l'appli.
+- Chaque geste montré a une **légende** qui répond à une question ou à une douleur posée dans le problème (la boucle se ferme).
+- Phrases du problème du **point de vue de la cible** (ex. le gérant qui ne sait plus qui lui doit et qui il a payé), jamais génériques.
+- Deux phrases qui disent presque la même chose → n'en garder qu'une.
+- Préférer le **concret** au poétique (« Chaque franc… sous contrôle » plutôt que « le calme dans le chaos »).
+- Pas d'adresse web à l'écran si l'hébergement ne permet pas l'usage commercial ; le lien va dans la publication.
+
 ### Structure par défaut d'une vidéo d'appli (20–30 s)
 
 | Temps | Contenu | Références |
@@ -165,9 +174,9 @@ Planches : `assets/refs/REF-02_*_A-EVITER.jpg`.
 | 0–3 s | Accroche qui nomme la cible ; premier mot énorme qui se pose | REF-02 #15, REF-03 #31 |
 | 3–12 s | Problème en cartes et texte cinétique, montée en tension (chiffres rouges) ; musique en pulsation | REF-02 #16–26, #43 |
 | ~11–12 s | Coupure + **montée** musicale pendant que le texte se construit | #42, #44 |
-| ~12 s | Transition signature **sur le drop** (fusion → logo, morph, ou objet qui devient l'appli) | REF-01 #7–14, REF-03 #38, #42 |
+| ~12 s | **Révélation de la solution sur le drop** : transition signature (fusion → logo, morph, objet) puis **nom du produit + une phrase qui dit à quoi il sert**, idéalement en écho direct à la première phrase du problème | REF-01 #7–14, REF-03 #38, #42, R-SOLUTION |
 | 12–24 s | 2 ou 3 gestes clés de l'appli, grands et en action, chiffres qui comptent, bénéfice (rouge → vert) | E2, E4, E5, R-ÉCRAN, #40 |
-| 24–30 s | Logo + **un** appel à l'action, gros et contrasté, sur l'**impact** final | E7, #44 |
+| 24–30 s | Phrase finale (le bénéfice, en écho à la tension) + logo et nom sur l'**impact** final ; **un** seul appel à l'action | E7, #44 |
 
 ---
 
@@ -188,3 +197,4 @@ Planches : `assets/refs/REF-02_*_A-EVITER.jpg`.
 - 2026-10-20 — Raisons du rejet confirmées par Benjamin : **trop statique** et **interface trop petite et lointaine** pour voir ce qui se passe → règles R-ÉCRAN et R-MOUVEMENT.
 - 2026-10-20 — REF-03 : aime l'intro jusqu'à la transition « de la 8e seconde » (précisé ensuite : **6–9 s**, pivot de la ligne + roue de mots), 15–24 s et surtout 16–18 s ; **adore la musique et les effets sonores** → section SON (#43–46).
 - 2026-10-20 — REF-04 : aime **toute la vidéo** (minimalisme blanc/noir + accent bleu, mots déposés par un arc, mot → champ de saisie, cartes → mot, écart qui se referme, nom manuscrit, musique mélodique synchronisée) → points 47–59.
+- 2026-10-20 — Brief Gestion Chantiers : Benjamin relève l'absence de présentation de la solution (nom, rôle) → règle **R-SOLUTION** ; préfère le concret (« Chaque franc de vos chantiers, sous contrôle. ») ; pas d'adresse vercel.app à l'écran.
