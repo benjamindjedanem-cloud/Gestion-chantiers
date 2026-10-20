@@ -162,6 +162,8 @@ Planches : `assets/refs/REF-02_*_A-EVITER.jpg`.
 
 - **R-SOLUTION — Toujours présenter la solution** avant de la montrer : son **nom** et **à quoi elle sert** en une phrase. Ne jamais passer directement du problème aux gestes de l'appli.
 - Chaque geste montré a une **légende** qui répond à une question ou à une douleur posée dans le problème (la boucle se ferme).
+- **Chaque geste de l'appli est une scène à part** (≈ 2 mesures), avec sa légende, son cadrage, son action et sa transition. Jamais plusieurs gestes dans un même plan.
+- Durée : Benjamin accepte jusqu'à **35 s** si le contenu le justifie.
 - Phrases du problème du **point de vue de la cible** (ex. le gérant qui ne sait plus qui lui doit et qui il a payé), jamais génériques.
 - Deux phrases qui disent presque la même chose → n'en garder qu'une.
 - Préférer le **concret** au poétique (« Chaque franc… sous contrôle » plutôt que « le calme dans le chaos »).
@@ -198,3 +200,4 @@ Planches : `assets/refs/REF-02_*_A-EVITER.jpg`.
 - 2026-10-20 — REF-03 : aime l'intro jusqu'à la transition « de la 8e seconde » (précisé ensuite : **6–9 s**, pivot de la ligne + roue de mots), 15–24 s et surtout 16–18 s ; **adore la musique et les effets sonores** → section SON (#43–46).
 - 2026-10-20 — REF-04 : aime **toute la vidéo** (minimalisme blanc/noir + accent bleu, mots déposés par un arc, mot → champ de saisie, cartes → mot, écart qui se referme, nom manuscrit, musique mélodique synchronisée) → points 47–59.
 - 2026-10-20 — Brief Gestion Chantiers : Benjamin relève l'absence de présentation de la solution (nom, rôle) → règle **R-SOLUTION** ; préfère le concret (« Chaque franc de vos chantiers, sous contrôle. ») ; pas d'adresse vercel.app à l'écran.
+- 2026-10-20 — Storyboard Gestion Chantiers validé ; Benjamin exige **un geste = une scène** (entrée, sortie, dette séparées, jamais statiques) et accepte jusqu'à 35 s.

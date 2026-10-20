@@ -1,6 +1,6 @@
 # Storyboard — vidéo promo Gestion Chantiers
 
-Format 4:5 (1080×1350) · 30 i/s · ≈ 31 s · musique : Bombinsound, *Energetic Upbeat Future Bass* (Pixabay), coupée à 1,2 s.
+Format 4:5 (1080×1350) · 30 i/s · ≈ 35 s · musique : Bombinsound, *Energetic Upbeat Future Bass* (Pixabay), coupée à 1,2 s.
 Les numéros #xx et Rxx renvoient au skill `motion-design-pro` (`references/gouts.md`).
 
 ---
@@ -42,8 +42,9 @@ Univers bleu nuit (#172554 → #0B1230), **une ligne de lumière** bleue qui str
 | **Mesure 9 : DROP** | **14,24 s** | **427** |
 | Mesures 10 à 16 (partie énergique) | 15,96 → 26,24 s | 479 → 787 |
 | **Mesure 17 : pause** | **27,96 s** | **839** |
-| **Mesure 18 : impact final (logo)** | **29,67 s** | **890** |
-| Fin (note qui s'éteint, fondu musique) | ≈ 31,4 s | ≈ 942 |
+| Mesures 18 et 19 (reprise) | 29,67 → 31,38 s | 890 → 941 |
+| **Mesure 20 : impact final (logo)** | **33,10 s** | **993** |
+| Fin (note qui s'éteint, fondu musique) | ≈ 34,8 s | ≈ 1045 |
 
 ---
 
@@ -80,35 +81,40 @@ Univers bleu nuit (#172554 → #0B1230), **une ligne de lumière** bleue qui str
 - **Son** : impact + whoosh inversé sur le drop ; tick par mot.
 - **Transition** : zoom dans l'icône du logo jusqu'à ce qu'elle devienne l'écran de l'appli (#34).
 
-### S6 · Geste 1 — Entrée — 17,67 → 20,25 s (530 → 607)
-- **Légende** : « Chaque paiement reçu, **noté**. »
-- **Interface (grande, R-ÉCRAN)** : carte du chantier **VILLA FARCHA** en gros plan. Un doigt touche « + Entrée » ; « M. Mahamat Saleh » et « 2 500 000 FCFA » s'écrivent ; validation ; le **total encaissé compte** de 6 000 000 à 8 500 000 FCFA (#40), en vert.
+> **Règle (Benjamin)** : chaque geste est **une scène à part**, avec sa propre légende, son propre cadrage, sa propre action et sa propre transition. Jamais deux gestes dans le même plan, jamais d'écran statique : la caméra suit toujours l'élément qui change.
+
+### S6 · Geste 1 — Entrée — 17,67 → 21,10 s (530 → 633)
+- **Légende** (arrive d'abord, mot par mot) : « Chaque paiement reçu, **noté**. »
+- **Interface (grande, R-ÉCRAN)** : on sort du zoom dans le logo directement **dans l'écran Entrées**. Cadrage serré sur la carte **VILLA FARCHA**. Un doigt touche « + Entrée » → le formulaire monte et remplit le cadre → « M. Mahamat Saleh » et « 2 500 000 FCFA » s'écrivent (la caméra glisse d'un champ à l'autre) → validation → retour sur la carte : le **total encaissé compte** de 6 000 000 à 8 500 000 FCFA, en vert, avec un léger zoom sur le chiffre (#40).
+- **Accent** : vert.
 - **Son** : tap ; frappe douce ; compteur ; ding.
-- **Transition** : carrousel — la carte part à gauche, la suivante entre par la droite (#22).
+- **Transition vers S7** : **carrousel** — la carte Entrée part à gauche, rognée par le cadre, l'écran Sorties entre par la droite (#22).
 
-### S7 · Geste 2 — Sortie — 20,25 → 22,82 s (607 → 684)
+### S7 · Geste 2 — Sortie — 21,10 → 24,53 s (633 → 736)
 - **Légende** : « Chaque dépense, par **bénéficiaire**. »
-- **Interface** : formulaire de sortie en grand. « Ciment × 50 sacs », la fonction **Fournisseur** se sélectionne dans la liste (vraie liste de l'appli), « Ets Abdelkerim », « 850 000 FCFA » ; la sortie s'ajoute à la liste avec une petite animation.
-- **Son** : tap ; frappe ; pop.
-- **Transition** : la carte bénéficiaire « Maçon Jean » glisse au premier plan.
+- **Interface** : cadrage sur le formulaire de sortie. « Ciment × 50 sacs » s'écrit ; tap sur « Fonction » → la **vraie liste de l'appli** se déplie (Maçon, Carreleur, Électricien… **Fournisseur**) et défile jusqu'à « Fournisseur » qui s'allume ; « Ets Abdelkerim » ; « 850 000 FCFA » ; validation → la ligne **vient se ranger dans la liste** des sorties du chantier avec un petit rebond, le total des sorties se met à jour en comptant.
+- **Accent** : bleu (ambre pour la ligne ajoutée).
+- **Son** : tap ; défilement ; frappe ; pop.
+- **Transition vers S8** : la caméra suit la liste des bénéficiaires vers le bas ; la carte « **Maçon Jean** » grossit et vient au premier plan (objet qui devient la scène suivante, #13).
 
-### S8 · Geste 3 — Dette soldée — 22,82 → 25,39 s (684 → 762)
+### S8 · Geste 3 — Dette soldée — 24,53 → 27,96 s (736 → 839)
 - **Légende** : « Le reste à payer, toujours **à jour**. »
-- **Interface** : carte **Maçon Jean** : dû 1 200 000, payé 900 000, **reste 300 000** en rouge. Tap « Payer le reste » ; le reste **compte jusqu'à 0** et passe du rouge au vert ; les « … » d'une bulle deviennent une **coche** qui pop en **pièce 3D** « Soldé ✓ » (#41).
-- **Son** : tap ; compteur ; ding de validation.
-- **Transition** : la pièce file vers le haut, l'écran se vide.
+- **Interface** : carte **Maçon Jean** en grand : dû 1 200 000, payé 900 000, **reste 300 000** en rouge lumineux (écho direct aux montants rouges du problème). Tap « Payer le reste » → la jauge de paiement se remplit → le reste **compte jusqu'à 0** et passe du rouge au vert → une bulle « … » apparaît, les points deviennent une **coche** qui pop en **pièce 3D « Soldé ✓ »** (#41).
+- **Accent** : rouge → vert.
+- **Son** : tap ; compteur ; ding de validation ; petit impact sur la pièce.
+- **Transition vers S9** : la pièce file vers le haut ; **la musique fait sa pause** (27,96 s).
 
-### S9 · Atout — 25,39 → 27,10 s (762 → 813)
+### S9 · Atout — 27,96 → 29,67 s (839 → 890)
 - **Écran** : « Même sans **réseau**. »
-- **Mouvement** : icône de réseau barrée qui clignote ; une saisie s'ajoute quand même ; l'icône devient un nuage avec une coche (« sauvegardé »).
-- **Son** : tick ; petit ding.
+- **Mouvement** : pendant la **pause musicale** (le silence évoque la coupure de réseau), une icône de réseau barrée apparaît ; une saisie s'ajoute quand même ; à la reprise de la musique (29,67 s) l'icône devient un nuage avec une coche (« sauvegardé »).
+- **Son** : tick ; à la reprise, ding.
 
-### S10 · Phrase finale — 27,10 → 29,67 s (813 → 890)
+### S10 · Phrase finale — 29,67 → 33,10 s (890 → 993)
 - **Écran** : « Chaque franc de vos chantiers, sous **contrôle**. »
-- **Mouvement** : mot par mot, « contrôle » en bleu clair lumineux en dernier ; la phrase reste lisible pendant la pause musicale (27,96 s) et dérive doucement.
-- **Son** : la pause musicale fait respirer la phrase.
+- **Mouvement** : mot par mot sur les temps, « contrôle » en bleu clair lumineux en dernier ; la phrase dérive doucement ; la ligne de lumière se redresse en horizon derrière.
+- **Son** : tick par mot ; riser court avant l'impact.
 
-### S11 · Fin — 29,67 → ≈ 31,4 s (890 → 942)
+### S11 · Fin — 33,10 → ≈ 34,8 s (993 → 1045)
 - **Écran** : logo + « **Gestion Chantiers** » (pas d'adresse ni de lien).
 - **Mouvement** : sur l'**impact**, la phrase se rétracte en un point qui devient le logo (pop) ; le nom s'écrit à côté ; halo bleu qui pulse une fois puis se calme.
 - **Son** : impact grave + note qui résonne ; la musique s'éteint en fondu.
