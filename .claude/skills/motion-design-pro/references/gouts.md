@@ -57,24 +57,26 @@ Mettre à jour à chaque nouvelle référence ou retour de Benjamin.
 28. **Pastilles lumineuses qui flottent** doucement autour du message central (Dépenses, Main d'œuvre, Imprévus…), celles du bord floues (profondeur).
 29. **Un temps fort environ chaque seconde** : il se passe toujours quelque chose de nouveau.
 
-### REF-03 · Pub « fostr AI » — intro jusqu'à la transition (~8–10 s), 15–24 s (surtout 16–18 s), musique et sons partout
+### REF-03 · Pub « fostr AI » — intro 0–9 s (surtout 6–9 s), 15–24 s (surtout 16–18 s), musique et sons partout
 
 **Univers**
 30. **Monochrome de marque** : tout l'univers dans une seule couleur (du sombre au lumineux), avec **lignes de lumière**, halos et pastilles en **verre dépoli** au liseré lumineux. Le blanc est réservé au texte et à l'interface.
 
-**Intro (0–10 s)**
+**Intro (0–9 s)**
 31. Le premier mot arrive **énorme et flou de vitesse**, recule et se pose.
 32. Des **logos / icônes arrivent un par un en tournant comme des pièces** autour du message, puis flottent.
 33. **Phrase qui se construit mot par mot**, et **le dernier mot (le mot-clé) arrive en grand avec une lueur** pendant que le début de la phrase rétrécit au-dessus.
 34. **Coupe par zoom avant violent** : un élément énorme et flou au premier plan recule pour se poser dans la nouvelle scène.
-35. **Ligne de lumière** qui structure la scène (horizon courbe) et **pivote de 90°** en entraînant l'élément central, qui se transforme (« AI » → « ? »).
-36. **Roue d'étiquettes** qui tourne autour d'un élément central ; celle face à nous est nette, les autres inclinées et floues ; chaque mot s'arrête sur un temps.
-37. **Whip** : balayage ultra rapide (≈ 4 images) avec flou massif, l'écran suivant arrive incliné puis se pose — **pile sur un temps fort**.
+35. ⭐ **Ligne de lumière** qui structure la scène (horizon courbe) et **pivote de 90°** en entraînant l'élément central, qui se transforme (« AI » → « ? »).
+36. ⭐ **Roue d'étiquettes** qui tourne autour d'un élément central ; celle face à nous est nette, les autres inclinées et floues ; chaque mot s'arrête sur un temps.
+37. **Whip** : balayage ultra rapide (≈ 4 images) avec flou massif, la scène suivante arrive inclinée puis se pose — **pile sur un temps fort** (vu à 18,1 s : la phrase file et la carte entre).
+
+> ⭐ = passages que Benjamin a dit aimer « particulièrement » : REF-03 6–9 s (#35–36) et 16–18 s (#38–40).
 
 **15–24 s, surtout 16–18 s (son passage préféré)**
-38. **Morph interface → mot** : l'écran de l'appli recule, rétrécit, se floute et **devient le surlignage d'un mot**. Les scènes se transforment l'une en l'autre au lieu de se remplacer.
-39. **Interlettrage** : les mots arrivent lettres espacées et floues qui **se resserrent** ; un mot de la phrase est dans une pastille surlignée.
-40. La phrase **file avec flou**, un **grand cadre arrondi en verre** entre en gros plan et devient une carte de données dont **les chiffres comptent** et les barres bougent.
+38. ⭐ **Morph interface → mot** : l'écran de l'appli recule, rétrécit, se floute et **devient le surlignage d'un mot**. Les scènes se transforment l'une en l'autre au lieu de se remplacer.
+39. ⭐ **Interlettrage** : les mots arrivent lettres espacées et floues qui **se resserrent** ; un mot de la phrase est dans une pastille surlignée.
+40. ⭐ La phrase **file avec flou**, un **grand cadre arrondi en verre** entre en gros plan et devient une carte de données dont **les chiffres comptent** et les barres bougent.
 41. **Point → bulle « … » avec ondes → pastille qui se déplie depuis l'arrière** (avatars un par un) → se replie → **les « … » deviennent une coche** → la coche devient une **grosse pièce 3D** qui tourne. Une seule forme qui se transforme en continu.
 42. **La révélation tombe sur le drop** : montée de tension pendant la construction du texte, l'élément clé arrive exactement sur le drop.
 
@@ -160,4 +162,4 @@ Planches : `assets/refs/REF-02_*_A-EVITER.jpg`.
 - 2026-10-20 — REF-01 : aime 0–7 s et la transition du dossier (~19 s), surtout les transitions.
 - 2026-10-20 — REF-02 : aime 0–23 s, en particulier la façon dont les cartes arrivent et repartent ; rejette tout le reste (démo produit).
 - 2026-10-20 — Raisons du rejet confirmées par Benjamin : **trop statique** et **interface trop petite et lointaine** pour voir ce qui se passe → règles R-ÉCRAN et R-MOUVEMENT.
-- 2026-10-20 — REF-03 : aime l'intro jusqu'à la transition « de la 8e seconde » (à préciser : rotation ~6,2 s ou whip 9,9 s), 15–24 s et surtout 16–18 s ; **adore la musique et les effets sonores** → section SON (#43–46).
+- 2026-10-20 — REF-03 : aime l'intro jusqu'à la transition « de la 8e seconde » (précisé ensuite : **6–9 s**, pivot de la ligne + roue de mots), 15–24 s et surtout 16–18 s ; **adore la musique et les effets sonores** → section SON (#43–46).

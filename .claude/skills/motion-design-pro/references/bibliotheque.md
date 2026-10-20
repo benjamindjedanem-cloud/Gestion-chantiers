@@ -85,7 +85,7 @@ Analyse des défauts et alternatives : `gouts.md` § À ÉVITER (E1 à E9).
 - **Partagée le** : 2026-10-20 · 31 s · 9:16 · filmée sur l'écran d'After Effects (vidéo d'origine en 16:9) · univers **monochrome magenta**
 - **Ce que Benjamin a dit** : « J'aime beaucoup la transition de la 8e seconde. J'aime aussi l'intro, du début jusqu'à la fin de cette transition. J'aime aussi de 15 à 24 et particulièrement de 16 à 17 fin, 18. Et ce que j'ai vraiment aimé sur toute la vidéo, c'est **la musique et les effets sonores**. »
 - **Planches** : `REF-03_00-04s_texte-logos.jpg`, `REF-03_04-07s_zoom-ai-roue-mots.jpg`, `REF-03_09-11s_whip-vers-interface.jpg`, `REF-03_15-19s_morph-texte-carte.jpg`, `REF-03_16-18s_DENSE_morph-mot-whip.jpg`, `REF-03_19-24s_bulle-avatars-coche.jpg`, `REF-03_spectrogramme-son.jpg`
-- ⚠️ « Transition de la 8e seconde » : les changements de plan détectés sont à 4,5 s, ~6,2 s et 9,9 s. Le plus probable est le **whip vers l'interface (9,9 s)** ou la **rotation de la ligne lumineuse (~6,2 s)** — à confirmer avec Benjamin ; les deux sont décrits.
+- « Transition de la 8e seconde » = **de 6 à 9 s** (précisé par Benjamin) : pivot de la ligne de lumière, « AI » → « ? », roue de mots. **Passage préféré de l'intro.** L'intro aimée va donc de 0 à 9 s ; le whip de 9,9 s n'en fait pas partie.
 
 ### Univers visuel
 - **Une seule couleur** (magenta) déclinée du sombre au lumineux : fond dégradé, halos, **lignes de lumière**, pastilles en verre dépoli (glassmorphism) au liseré lumineux. Le blanc sert uniquement au texte et à l'interface.
@@ -96,14 +96,15 @@ Analyse des défauts et alternatives : `gouts.md` § À ÉVITER (E1 à E9).
 - Des **logos d'outils connus** (Zoom, Slack, Google…) arrivent un par un autour du mot, **en tournant sur eux-mêmes comme des pièces** (rotation Y), flous puis nets, et flottent.
 - La phrase se construit **mot par mot** à la suite du premier : « Data » → « Data flows in » → le dernier mot **« Automatically »** arrive en **gros, avec une lueur** qui balaie, pendant que « Data flows in » rétrécit au-dessus. Hiérarchie : la phrase d'appui devient petite, le mot-clé devient grand.
 
-### 4,5–6,5 s · Zoom « AI » et ligne de lumière
+### 4,5–6 s · Zoom « AI » et ligne de lumière
 - Coupe par **zoom avant violent** : une pastille « AI » énorme (premier plan flou) recule jusqu'à se poser sur une **ligne de lumière courbe** (comme un horizon qui se creuse sous elle).
-- La ligne et la pastille **pivotent de 90°** (≈ 0,6 s) : la ligne devient verticale, le « AI » se transforme en « ? ».
 
-### 6,5–9,9 s · Roue de mots
-- Des étiquettes en verre « Who / What / Why » **tournent en roue** autour du « ? », le long de la ligne lumineuse ; celle qui passe à l'horizontale (face à nous) est nette et lisible, les autres sont inclinées et floues. Rotation continue, saccadée au rythme (chaque mot « s'arrête » sur un temps).
+### ⭐ 6–9 s · Pivot de la ligne + roue de mots (passage préféré de l'intro)
+- La ligne et la pastille **pivotent de 90°** (≈ 0,6 s, 6,0 → 6,6 s) : la ligne devient verticale, le « AI » se transforme en « ? » pendant la rotation. La ligne verticale **coupe l'écran en deux** : côté gauche plus sombre, côté droit plus lumineux, avec un halo intense le long de la ligne.
+- Les étiquettes arrivent **une par une, floues**, depuis le haut et le bas de la ligne (Who, puis What, puis Why), comme si elles sortaient de la lumière.
+- Des étiquettes en verre « Who / What / Why » **tournent en roue** autour du « ? », le long de la ligne lumineuse ; celle qui passe à l'horizontale (face à nous) est nette et lisible, les autres sont inclinées et floues. Rotation **par crans, un cran par temps musical** (≈ 0,43 s) : l'étiquette qui arrive face à nous s'arrête, s'éclaire d'un liseré lumineux, puis repart ; flou de mouvement entre deux crans. L'ensemble tourne pendant ≈ 3 s sans jamais être statique.
 
-### 9,9–10,3 s · Whip vers l'interface
+### 9,9–10,3 s · Whip vers l'interface (hors passage cité)
 - **Balayage ultra rapide** (≈ 4 images) avec flou de mouvement massif : le fond magenta file, l'interface blanche entre en glissant, **inclinée en perspective**, puis se redresse légèrement et se pose. Calé exactement sur un temps fort de la musique (9,87 s).
 
 ### 15–18,2 s · Morph interface → mot → carte (passage préféré : 16–18)
