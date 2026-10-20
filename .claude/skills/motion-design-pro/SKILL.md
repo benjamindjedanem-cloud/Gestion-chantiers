@@ -49,6 +49,7 @@ Rendre une planche des images clés (`ffmpeg -vf "fps=6,scale=300:-1,tile=6x4"`)
 - [ ] Zones sûres de la plateforme respectées.
 - [ ] **Son** : chaque changement de plan tombe sur une attaque de la musique ; la révélation sur le drop, le logo sur l'impact ; un effet sonore sur chaque mouvement marquant (whoosh, tick, pop, impact) ; effets sous la musique, jamais par-dessus.
 - [ ] Couleurs et polices = celles de la marque, pas de dégradé violet par défaut.
+- [ ] **Aucun effet « IA »** (R-DESIGN dans `gouts.md`) : pas de néon ni de verre partout ; titres bicolores très gras, formes pleines à bord blanc, ombres franches, logo présent, orange avec retenue.
 - [ ] Comparer côte à côte avec la planche de référence correspondante : est-ce au même niveau ? Sinon, corriger avant de montrer.
 
 ## Outils

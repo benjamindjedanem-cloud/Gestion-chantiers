@@ -1,6 +1,9 @@
 import { Composition, Still } from 'remotion';
 import { Promo } from './Promo';
 import { FRAMES } from './frames/StyleFrames';
+import { V2_FRAMES } from './v2/frames';
+import { V3_FRAMES } from './v3/frames';
+import { V4_FRAMES } from './v4/frames';
 import { VIDEO } from './theme';
 
 export const RemotionRoot = () => (
@@ -13,7 +16,7 @@ export const RemotionRoot = () => (
       width={VIDEO.width}
       height={VIDEO.height}
     />
-    {Object.entries(FRAMES).map(([id, Frame]) => (
+    {Object.entries({ ...FRAMES, ...V2_FRAMES, ...V3_FRAMES, ...V4_FRAMES }).map(([id, Frame]) => (
       <Still key={id} id={`Frame-${id}`} component={Frame} width={VIDEO.width} height={VIDEO.height} />
     ))}
   </>

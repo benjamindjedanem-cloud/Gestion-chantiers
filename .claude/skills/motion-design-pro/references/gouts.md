@@ -110,6 +110,24 @@ Mettre à jour à chaque nouvelle référence ou retour de Benjamin.
 
 ---
 
+## 🎨 DESIGN GRAPHIQUE — validé par Benjamin (affiches de référence DESIGN-01 à 03)
+
+Planches : `assets/refs/DESIGN-01_affiche-ararat-city.jpg`, `DESIGN-02_affiche-elephant-realty.jpg`, `DESIGN-03_affiche-jtech.jpg` (affiches immobilier/BTP d'Afrique de l'Ouest, faites sur Photoshop/Illustrator). Images clés validées : `video/style-frames/` du projet Gestion Chantiers (code : `video/src/v3/`).
+
+**R-DESIGN — Jamais « l'air IA ».** Interdits : lueurs néon (surtout sur le texte), verre dépoli partout, fond sombre uniforme à halos, tout centré sans grille, palette « bleu sur bleu » sans lien avec la marque. À la place :
+- **Fonds** : ciel clair dégradé avec nuages doux, ou blocs pleins de la couleur de marque (séparation nette ciel / marine, trait de couleur à la jonction). Fond marine plein pour les moments de tension ou de révélation (rayons plats discrets).
+- **Titres** : Montserrat Black, MAJUSCULES, serrés, **bicolores** (couleur principale + mot-clé dans la couleur d'accent), alignés à gauche sur une marge de grille ; grands contrastes d'échelle.
+- **Formes vectorielles pleines** : bulle d'étiquette (« 01 · ENTRÉES »), pastilles à puce étoile, bandeaux inclinés à bord blanc, badge rond avec anneau fin décalé, cartes pleines à **bord blanc épais**.
+- **Ombres franches et directionnelles** (décalage net + flou), comme un calque Photoshop ; pas de halo.
+- **Illustration de marque** liée au métier (ex. silhouette de chantier avec grue).
+- **Logo toujours présent** en haut à droite (sauf plans où il est le sujet).
+- **Palette dérivée du logo** ; l'accent chaud (orange) avec **retenue** — Benjamin a demandé « moins de jaune » : le réserver aux mots-clés et à quelques détails.
+- Photos réelles encadrées de blanc quand on en dispose (Benjamin les fournit : licence à son nom).
+
+**Méthode** : quand Benjamin demande de « rendre plus pro », **garder le storyboard validé** (mêmes plans, mêmes contenus) et ne reprendre que le design ; montrer 2–3 plans tests avant de tout refaire.
+
+---
+
 ## ❌ À ÉVITER — REF-02 après 23 s (rejeté par Benjamin)
 
 Planches : `assets/refs/REF-02_*_A-EVITER.jpg`.
@@ -201,3 +219,4 @@ Planches : `assets/refs/REF-02_*_A-EVITER.jpg`.
 - 2026-10-20 — REF-04 : aime **toute la vidéo** (minimalisme blanc/noir + accent bleu, mots déposés par un arc, mot → champ de saisie, cartes → mot, écart qui se referme, nom manuscrit, musique mélodique synchronisée) → points 47–59.
 - 2026-10-20 — Brief Gestion Chantiers : Benjamin relève l'absence de présentation de la solution (nom, rôle) → règle **R-SOLUTION** ; préfère le concret (« Chaque franc de vos chantiers, sous contrôle. ») ; pas d'adresse vercel.app à l'écran.
 - 2026-10-20 — Storyboard Gestion Chantiers validé ; Benjamin exige **un geste = une scène** (entrée, sortie, dette séparées, jamais statiques) et accepte jusqu'à 35 s.
+- 2026-10-20 — Design : rejette l'esthétique « IA » (néon, verre, bleu nuit à halos) ; valide le style « affiche pro BTP » de ses références (ciel, titres Montserrat Black bicolores, formes pleines, ombres franches, logo en haut) ; demande moins de jaune ; rappelle de ne jamais changer les plans validés en reprenant le design → section DESIGN GRAPHIQUE / R-DESIGN.
