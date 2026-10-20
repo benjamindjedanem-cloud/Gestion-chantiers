@@ -75,7 +75,19 @@ Planches : `assets/refs/REF-02_*_A-EVITER.jpg`.
 | E8 | **Démo deux fois plus longue que le récit** (40 s contre 23 s), vidéo de 67 s | Le rythme d'un temps fort par seconde disparaît | Récit et démo au même rythme ; vidéo de 20–30 s |
 | E9 | Alternance clair/sombre abandonnée, plus de lueurs ni de cartes | Rupture de style : on dirait deux vidéos collées | Garder le même langage visuel du début à la fin |
 
-**Règle d'or tirée de ce rejet** : la partie « produit » doit avoir **la même énergie, le même rythme et les mêmes transitions** que la partie « problème ». Jamais de bascule vers une démo d'écrans.
+**Ce que Benjamin a dit lui-même (2026-10-20)** : « C'était assez **statique** et on ne voyait même pas vraiment ce qui se passe à l'écran de l'application puisque c'était **trop petit et loin**. » → Ses deux griefs principaux. Règles fermes qui en découlent :
+
+- **R-ÉCRAN — Montrer l'appli en grand et de près.**
+  - L'élément d'interface montré occupe **au moins 60 % de la largeur du cadre** ; on recadre sur la zone utile (une carte, un formulaire, un chiffre), jamais l'écran entier vu de loin.
+  - Le texte de l'interface doit être lisible sur téléphone : **au moins 32 px de haut** pour une vidéo de 1080 px de large.
+  - Vue **de face ou légèrement inclinée** (≤ 15°) ; jamais en perspective rasante.
+  - Pas de maquette d'appareil (ordinateur, téléphone) qui rapetisse l'interface. Si un téléphone apparaît, c'est pour une transition rapide, puis on entre dans l'écran (zoom jusqu'à ce que l'interface remplisse le cadre).
+- **R-MOUVEMENT — Jamais statique.**
+  - À tout instant, au moins un élément **entre, sort ou change** (chiffre qui défile, carte qui arrive, champ qui se remplit, bouton pressé). Une simple dérive lente de caméra ne compte pas.
+  - Aucun plan d'interface ne dure plus de **3 s** sans nouvel événement.
+  - L'interface **se fait utiliser** sous nos yeux : un doigt / curseur tape, une valeur se saisit, le total se met à jour en comptant.
+
+**Règle d'or tirée de ce rejet** : la partie « produit » doit avoir **la même énergie, le même rythme et les mêmes transitions** que la partie « problème », avec l'interface **grande, proche et en action**. Jamais de bascule vers une démo d'écrans.
 
 ---
 
@@ -115,3 +127,4 @@ Planches : `assets/refs/REF-02_*_A-EVITER.jpg`.
 - 2026-10-20 — Exige un résultat pro, pas générique ; prêt à fournir ce qu'il faut.
 - 2026-10-20 — REF-01 : aime 0–7 s et la transition du dossier (~19 s), surtout les transitions.
 - 2026-10-20 — REF-02 : aime 0–23 s, en particulier la façon dont les cartes arrivent et repartent ; rejette tout le reste (démo produit).
+- 2026-10-20 — Raisons du rejet confirmées par Benjamin : **trop statique** et **interface trop petite et lointaine** pour voir ce qui se passe → règles R-ÉCRAN et R-MOUVEMENT.

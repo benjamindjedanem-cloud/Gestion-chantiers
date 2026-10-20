@@ -106,7 +106,21 @@ import { CameraMotionBlur } from '@remotion/motion-blur';
 ```
 Coûteux au rendu : l'appliquer seulement aux séquences rapides. Alternative légère : `filter: blur()` proportionnel à la vitesse.
 
-## 11. Montants négatifs en rouge lumineux (REF-02, 20–23 s)
+## 11. Montrer l'interface de l'appli (règles R-ÉCRAN et R-MOUVEMENT)
+
+Réutiliser les **vrais composants React de l'appli** (mêmes couleurs, polices, données de démo) plutôt que des captures : net à toute taille et animable élément par élément.
+
+- **Cadrage** : rendre le composant à grande échelle (ex. carte de chantier à 900 px de large sur 1080) ; texte ≥ 32 px.
+- **Entrée dans l'écran** : si on part d'un téléphone, zoomer (scale 1 → 3,5, 18 images, `ease.inOut`) jusqu'à ce que la zone utile remplisse le cadre, puis retirer le cadre du téléphone.
+- **Action visible**, dans cet ordre, ~6 images entre chaque :
+  1. un doigt (cercle blanc 60 px à 40 % d'opacité, ou curseur) arrive sur le bouton, pression = scale 1 → 0,94 → 1 (6 images) ;
+  2. le champ se remplit (machine à écrire, § 6) ;
+  3. le résultat se met à jour **en comptant** : `Math.round(interpolate(frame, [a, a + 20], [ancien, nouveau], { ...clamp, easing: ease.out }))`, formaté en FCFA, la couleur passe de rouge à vert si la dette disparaît ;
+  4. confirmation (coche, badge « Soldé ») avec ressort `pose`.
+- **Suivi caméra** : le cadre glisse vers l'élément qui va changer (translate 8–12 images, `ease.inOut`) avant qu'il change ; jamais de panoramique lent sur un écran entier.
+- Durée d'un geste : **2 à 3 s**, puis transition (carrousel ou sortie fantôme) vers le geste suivant.
+
+## 12. Montants négatifs en rouge lumineux (REF-02, 20–23 s)
 
 - Pastilles rouge `#B91C1C` à fond sombre, texte blanc tabulaire, `box-shadow: 0 0 24px rgba(239,68,68,.8)`.
 - Elles apparaissent en rafale (décalage 2–3 images), positions pseudo-aléatoires fixes (`random('seed-' + i)` de Remotion), légère profondeur de champ.

@@ -41,6 +41,8 @@ Rendre une planche des images clés (`ffmpeg -vf "fps=6,scale=300:-1,tile=6x4"`)
 - [ ] Première image forte même à l'arrêt (c'est la vignette dans le fil).
 - [ ] Aucune coupe sèche : chaque scène naît de la précédente.
 - [ ] Rien n'apparaît en fondu simple ou à vitesse constante (voir recettes).
+- [ ] **Interface de l'appli grande et proche** : ≥ 60 % de la largeur, texte ≥ 32 px, lisible sur téléphone (R-ÉCRAN).
+- [ ] **Jamais statique** : à chaque instant quelque chose entre, sort ou change ; aucun plan > 3 s sans événement (R-MOUVEMENT).
 - [ ] Les éléments d'un même groupe arrivent décalés, jamais ensemble.
 - [ ] Flou de mouvement sur tout ce qui se déplace vite.
 - [ ] Texte lisible : chaque phrase reste à l'écran au moins le temps de la lire deux fois.
