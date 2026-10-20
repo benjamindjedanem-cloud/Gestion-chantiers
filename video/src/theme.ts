@@ -26,4 +26,5 @@ export const C = {
   red: '#B91C1C',
 };
 
-export const VIDEO = { width: 1080, height: 1920, fps: 30 };
+// Format principal 4:5 (fils LinkedIn et Facebook). Déclinaison 9:16 pour TikTok et stories.
+export const VIDEO = { width: 1080, height: 1350, fps: 30 };

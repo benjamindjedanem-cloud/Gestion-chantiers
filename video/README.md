@@ -2,7 +2,8 @@
 
 Projet [Remotion](https://www.remotion.dev) (vidéo écrite en React) pour la vidéo de promotion de l'application.
 
-- Format principal : 1080×1920 (9:16), 30 i/s — TikTok, LinkedIn, Facebook
+- Format principal : 1080×1350 (4:5), 30 i/s — fils LinkedIn et Facebook
+- Déclinaison : 1080×1920 (9:16) — TikTok, stories
 - Identité visuelle : `src/theme.ts` (couleurs et polices reprises de l'application)
 
 ## Commandes
