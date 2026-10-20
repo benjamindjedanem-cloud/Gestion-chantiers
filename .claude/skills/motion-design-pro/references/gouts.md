@@ -87,6 +87,27 @@ Mettre à jour à chaque nouvelle référence ou retour de Benjamin.
 45. **Chaque changement de plan tombe sur une attaque** ; chaque apparition d'élément (mot, logo, icône) tombe sur un temps ou un tick.
 46. **Effets sonores sur chaque mouvement** : tick/clic à chaque apparition, **whoosh** sur chaque balayage, **impact** grave sur le logo, **riser** avant la révélation. L'image et le son ne font qu'un.
 
+### REF-04 · Pub widgets ChatGPT — aimée en entier
+
+**Univers et rythme**
+47. **Minimalisme élégant** : fond blanc cassé ou noir pur, texte fin, **une seule couleur d'accent**, beaucoup d'espace ; aucune décoration, tout est dans le mouvement.
+48. **Inversion blanc ↔ noir sur les temps forts** : coupe franche qui relance l'attention.
+49. **Rien n'est jamais immobile** : même posée, une phrase dérive et grandit très légèrement.
+50. **Rythme très soutenu** : un changement toutes les 1 à 1,5 s ; vidéo courte (12 s de contenu) et dense.
+
+**Mouvements**
+51. **Un trait (arc de cercle) qui dépose les mots** un par un sur son passage ; les mots arrivent clairs, décalés en hauteur, puis s'alignent et prennent leur couleur finale.
+52. **Un mot remplacé par l'interface** : dans une phrase, un mot devient un élément de l'appli (champ de saisie) qui se remplit sous nos yeux. *(même idée que REF-03 #38, en sens inverse → goût fort)*
+53. **Éclatement → convergence** : un élément éclate en plusieurs cartes qui flottent, puis les cartes **convergent, rétrécissent et deviennent le mot suivant**.
+54. **Mot qui se remplit d'un dégradé de couleur** qui balaie (« boom »), puis se fixe.
+55. **Échange rapide** d'un élément par un autre au même endroit (widget → widget), puis **démultiplication en éventail** horizontal de cartes colorées.
+56. **Écart qui se referme** : deux groupes de mots arrivent flous des côtés avec un grand vide entre eux, puis se rapprochent jusqu'à former la phrase ; le mot-clé en couleur d'accent.
+57. **Le produit en situation** : l'appareil monte du bas du cadre et montre le résultat dans son contexte (widget sur l'écran d'accueil). Court, net, en grand — pas une démo.
+58. **Signature manuscrite** : le nom s'écrit à la main (tracé qui se dessine) avant le logo final.
+
+**Son**
+59. Musique **plus douce et mélodique** (≈ 115 BPM, accords tenus) également appréciée : le critère n'est pas « fort », c'est **la synchronisation parfaite** et une **fin sur impact + note qui s'éteint**. *(REF-03 + REF-04 → goût fort)*
+
 ---
 
 ## ❌ À ÉVITER — REF-02 après 23 s (rejeté par Benjamin)
@@ -123,16 +144,19 @@ Planches : `assets/refs/REF-02_*_A-EVITER.jpg`.
 
 ## Synthèse : ce qui fait « pro » pour Benjamin
 
-1. **Continuité** : aucune coupe sèche ni fondu au noir ; chaque scène naît de la précédente. *(REF-01, REF-02)*
+1. **Continuité** : chaque scène naît de la précédente, pas de fondu au noir. Seule coupe franche admise : l'**inversion blanc ↔ noir sur un temps fort** (REF-04). *(REF-01, REF-02, REF-03, REF-04)*
 2. **Les cartes sont son motif préféré** : volume, perspective, entrées qui grandissent, sorties soignées (carrousel ou fantôme), contenu en cascade. *(REF-01, REF-02 — goût fort, confirmé deux fois)*
 3. **Une transition signature** par vidéo, qui porte le message (fusion ou objet). *(REF-01)*
 4. **Texte cinétique** avec mot-clé en couleur ; compréhensible sans le son. *(REF-02)*
 5. **Récit problème → tension → solution**, accroche qui nomme la cible. *(REF-02)*
 6. **Rythme** : un temps fort par seconde, des respirations courtes et voulues. *(REF-02)*
 7. **Matière** : flou de mouvement, profondeur de champ, lueurs, lignes de lumière, verre dépoli. *(REF-01, REF-02, REF-03)*
-8. **Morphing** : un élément se transforme en l'élément suivant (cartes → points → logo ; interface → surlignage ; bulle → coche → pièce). *(REF-01, REF-03 — goût fort, confirmé deux fois)*
+8. **Morphing** : un élément se transforme en l'élément suivant (cartes → points → logo ; interface → surlignage ; bulle → coche → pièce ; cartes → mot). *(REF-01, REF-03, REF-04 — goût très fort, confirmé trois fois)*
 9. **Le son fait la moitié du résultat** : musique percussive structurée (montée → drop) et effets sonores sur chaque mouvement, tout calé au temps près. *(REF-03)*
 10. **Les chiffres bougent** : montants qui comptent, barres qui s'animent. *(REF-02, REF-03)*
+11. **Phrase ↔ interface** : un mot devient un élément de l'appli, ou l'appli devient un mot. *(REF-03, REF-04 — goût fort)*
+12. **Fin type** : impact grave sur le logo + note qui s'éteint, après une signature (logo qui se forme ou nom manuscrit). *(REF-03, REF-04 — goût fort)*
+13. **Deux registres possibles**, tous deux appréciés : **immersif** (une couleur de marque, lumières, verre — REF-03) ou **minimaliste** (blanc/noir + un accent — REF-04). Choisir l'un des deux par vidéo, ne pas mélanger.
 
 ### Structure par défaut d'une vidéo d'appli (20–30 s)
 
@@ -163,3 +187,4 @@ Planches : `assets/refs/REF-02_*_A-EVITER.jpg`.
 - 2026-10-20 — REF-02 : aime 0–23 s, en particulier la façon dont les cartes arrivent et repartent ; rejette tout le reste (démo produit).
 - 2026-10-20 — Raisons du rejet confirmées par Benjamin : **trop statique** et **interface trop petite et lointaine** pour voir ce qui se passe → règles R-ÉCRAN et R-MOUVEMENT.
 - 2026-10-20 — REF-03 : aime l'intro jusqu'à la transition « de la 8e seconde » (précisé ensuite : **6–9 s**, pivot de la ligne + roue de mots), 15–24 s et surtout 16–18 s ; **adore la musique et les effets sonores** → section SON (#43–46).
+- 2026-10-20 — REF-04 : aime **toute la vidéo** (minimalisme blanc/noir + accent bleu, mots déposés par un arc, mot → champ de saisie, cartes → mot, écart qui se referme, nom manuscrit, musique mélodique synchronisée) → points 47–59.

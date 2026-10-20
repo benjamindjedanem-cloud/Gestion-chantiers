@@ -199,3 +199,48 @@ import { Audio, Sequence, staticFile } from 'remotion';
 <Sequence from={whipFrame - 5}><Audio src={staticFile('sfx/whoosh-court.mp3')} volume={0.5} /></Sequence>
 ```
 - Vérifier la synchro sur le rendu final : extraire une planche des images autour de chaque attaque mesurée (`ffmpeg -ss <t-0.2> -t 0.4 ... fps=30`) et confirmer que l'image change bien sur l'attaque.
+
+## 20. Arc qui dépose les mots (REF-04, 0–0,8 s)
+
+- Trait SVG : arc de cercle (rayon ≈ 45 % de la hauteur), épaisseur 3 px, couleur d'accent, longueur visible ≈ 60° qui **tourne** autour du centre (rotation 0 → 300°, 22 images, `ease.inOut`) ; `strokeDasharray` pour n'afficher qu'un segment, qui s'amincit et disparaît à la fin.
+- Chaque mot apparaît **là où passe la tête de l'arc** (décalage 5 images entre mots), en couleur d'accent claire, opacité 0 → 1, à une hauteur décalée (±40 px), puis **descend sur la ligne de base** (ressort `ferme`, 10 images) et passe à la couleur du texte (interpolation de couleur, 8 images).
+
+## 21. Inversion blanc ↔ noir (REF-04)
+
+- Coupe franche, **sur une attaque** de la musique : fond, texte et éléments échangent leurs couleurs d'une image à l'autre. Pas de fondu.
+- Maximum 3–4 inversions par vidéo, aux changements d'étape du récit.
+
+## 22. Éclatement en cartes → convergence en mot (REF-04, 3,1–3,7 s)
+
+1. Éclatement : 4 cartes partent du centre vers 4 positions (translate + rotateZ ±10°, ressort `pose`, 10 images) avec flou ; elles flottent ensuite (dérive sinusoïdale).
+2. Convergence : toutes vers le centre (8 images, `ease.in`), scale → 0,15, blur croissant.
+3. Sur l'image où elles se rejoignent : **inversion** + le mot suivant apparaît à leur place, à la même taille que le paquet de cartes, puis grandit à sa taille normale (6 images).
+
+## 23. Mot rempli d'un dégradé qui balaie (REF-04, « boom »)
+
+- `background: linear-gradient(90deg, <accent>, <accent clair>, <couleur texte>)` avec `background-clip: text`, `backgroundSize: 300%`, position 100 % → 0 % (14 images, `ease.out`) ; le mot finit dans la couleur du texte.
+
+## 24. Écart qui se referme (REF-04, 6,8–8,3 s)
+
+- Deux groupes de mots : gauche arrive de −300 px, droite de +300 px, flous (blur 12 → 0) en 8 images ; un **vide de ~200 px** les sépare au départ.
+- Le vide se referme ensuite **lentement** (30 images, `ease.inOut`) jusqu'à l'espacement normal ; pendant ce temps la phrase grandit de 1 → 1,04 (dérive).
+- Le mot-clé (couleur d'accent) est le premier mot du groupe de droite.
+
+## 25. Éventail de cartes et échange rapide (REF-04, 5,2–6,8 s)
+
+- Échange : l'élément A sort en scale 1 → 0,8 + opacité 1 → 0 (4 images) pendant que B entre en scale 1,2 → 1 + opacité 0 → 1 (4 images) au même endroit.
+- Éventail : la carte se duplique en 5 variantes de couleurs ; elles glissent horizontalement depuis le centre (translateX 0 → ±n × 55 % de la largeur d'une carte, ressort `pose`, décalage 2 images), la carte centrale au-dessus (z-index), les autres derrière et légèrement plus petites (scale 0,92).
+- Repli : toutes glissent vers la gauche et se superposent (8 images, `ease.in`) puis whip (§ 13).
+
+## 26. Signature manuscrite (REF-04, 10,4–11,5 s)
+
+- Nom en police manuscrite convertie en tracés SVG (ou police « script » avec masque qui se dévoile de gauche à droite) ; `strokeDashoffset` 100 % → 0 sur 20–25 images, `ease.inOut`, puis remplissage.
+- Enchaîner sur l'inversion finale + logo **sur l'impact** de la musique.
+
+## 27. Dérive permanente (REF-04, partout)
+
+Envelopper chaque scène posée dans une dérive très lente pour qu'elle ne soit jamais figée :
+```tsx
+const drift = interpolate(frame, [0, durationInFrames], [1, 1.04]);
+<AbsoluteFill style={{ transform: `scale(${drift}) translateY(${interpolate(frame, [0, durationInFrames], [0, -8])}px)` }}>…</AbsoluteFill>
+```

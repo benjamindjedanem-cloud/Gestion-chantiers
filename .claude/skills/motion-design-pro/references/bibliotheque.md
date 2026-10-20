@@ -128,3 +128,41 @@ Analyse du spectrogramme et des attaques (`scripts/analyse_son.py`) :
 - **Structure** : 0–15 s pulsation régulière (couplet) → **15,1 s coupure nette des percussions** → 15–18 s **montée** (nappe grave tenue + balayage qui monte, tension) → **18,2 s drop** (tout le groupe, mélodie, plus dense) → ~25,7 s respiration → **26,9 s impact** grave final sur le logo → **queue** résonnante (note qui s'éteint) jusqu'à 28,5 s.
 - **Synchronisation image/son** : changements de plan à 4,5 / 9,9 / 16,6 / 18,2 / 19,7 / 24,1 / 26,9 s — presque tous **exactement sur une attaque** (9,87 ✓, 18,2 ✓ drop, 19,74 ✓, 26,92 ✓ impact). Les apparitions d'éléments (logos, mots) tombent sur les ticks entre les temps.
 - **Effets sonores** : clics/ticks aigus à chaque apparition de mot ou logo, **whoosh** sur chaque balayage (énergie aiguë qui monte avant le plan), **impact** grave sur le logo final, montée (riser) avant la révélation.
+
+---
+
+## REF-04 — Pub widgets ChatGPT pour téléphone (@phoenixanimationcn / raja_artix)
+
+- **Partagée le** : 2026-10-20 · 15,6 s (contenu jusqu'à 12,5 s) · 16:9 · rendu direct (net)
+- **Ce que Benjamin a dit** : « Cette vidéo, j'aime globalement le tout. » → **toute la vidéo est une référence**, y compris son rythme global et son son.
+- **Planches** : `REF-04_00-03s_arc-mots-prompt.jpg`, `REF-04_03-06s_cartes-andboom-widget.jpg`, `REF-04_06-09s_eventail-phrase-telephone.jpg`, `REF-04_09-12s_ecran-signature-logo.jpg`, `REF-04_00-01s_DENSE_arc-depose-mots.jpg`, `REF-04_03-04s_DENSE_cartes-deviennent-mot.jpg`, `REF-04_06-08s_DENSE_ecart-qui-se-referme.jpg`, `REF-04_spectrogramme-son.jpg`
+
+### Univers visuel
+- **Minimalisme façon Apple** : fond blanc cassé ou noir pur, texte fin (graisse normale, pas de gras), **une seule couleur d'accent (bleu)**, beaucoup d'espace vide, petits éléments au centre. Aucune décoration : tout l'intérêt est dans le mouvement.
+- **Inversion blanc ↔ noir** à certains temps forts (1,0 s, 3,7 s, 10,4 s) : coupe franche qui relance l'attention.
+- **Rien n'est jamais immobile** : même quand la phrase est posée, elle dérive et grandit très légèrement.
+
+### Déroulé
+| Temps | À l'écran |
+|---|---|
+| 0–0,8 s | Un **arc de cercle bleu** (trait fin) balaie l'écran en tournant et **dépose les mots un par un** : « Imagine », « building », « anything » apparaissent en bleu clair, à des hauteurs décalées, puis **descendent sur la même ligne et passent au noir** |
+| 0,8–1,0 s | La phrase posée dérive doucement |
+| 1,0 s | **Inversion** (fond noir) : le mot du milieu « building » est **remplacé par un champ de saisie** (prompt) où s'écrit « with just a simple prompt… » → le mot devient l'interface |
+| 1–3,1 s | Saisie lettre par lettre, la phrase dérive ; à la fin elle **s'incline** |
+| 3,1–3,6 s | Le champ **éclate en 4 cartes-widgets** (jauge « 24 », graphique « 3 200 », « 10K », profil) qui jaillissent avec flou et flottent autour de « Just type » (texte incliné) |
+| 3,6–3,7 s | Les cartes **convergent au centre, rétrécissent et deviennent le mot « and »** ; **inversion** vers le blanc |
+| 3,7–4,4 s | « and **boom** » : « boom » se remplit d'un **dégradé de couleur qui balaie** puis se fixe en noir |
+| 4,4–5,2 s | « It's **there** » en bleu, « there » plus clair, puis passe au noir |
+| 5,2–6,8 s | Un widget **apparaît en pop** au centre, **est remplacé** par un autre (échange rapide), puis un troisième (« 24 ») qui se **démultiplie en éventail horizontal** de cartes colorées (jaune, vert, bleu nuit, rouge, violet), la carte centrale devant |
+| 6,8 s | L'éventail **se replie vers la gauche** et file avec flou |
+| 6,8–8,3 s | « Just add it to ____ **your** phone » : les deux groupes de mots arrivent **flous depuis les côtés**, avec un **grand écart** entre eux, puis l'**écart se referme** jusqu'à une phrase normale ; « your » en bleu |
+| 8,3–9,0 s | Un **téléphone monte du bas** du cadre, son écran montre le widget en situation (anneaux d'activité) |
+| 9,0–10,4 s | Coupe sur **fond noir** : téléphone avec une galerie photos ; puis fond blanc : écran d'accueil avec les widgets en place |
+| 10,4–11,5 s | Le mot « Chatgpt » **s'écrit à la main** (tracé manuscrit qui se dessine) |
+| 11,5–12,5 s | **Inversion** finale sur noir : logo + nom, sur l'**impact** final |
+
+### 🎵 Son
+- **≈ 115 BPM**, plus doux et **mélodique** que REF-03 : nappes et accords tenus (lignes horizontales sur le spectrogramme), percussions plus discrètes, élégant.
+- Attaques marquées à 2,6 / 3,66 / 5,77 / 6,83 / 7,87 / 8,36 / 8,93 s et **impact grave à 11,55 s** suivi d'une **note qui résonne et s'éteint** jusqu'à ~13 s.
+- **Synchronisation** : les changements de plan (1,0 / 2,6 / 3,67 / 6,77 / 8,33 / 9,0 / 10,37 / 11,5 s) tombent **sur les attaques** (2,61 ✓, 3,66 ✓, 6,83 ✓, 8,36 ✓, 8,93 ✓, 11,55 ✓).
+- **Même fin que REF-03** : impact grave sur le logo + note qui s'éteint → goût confirmé.
