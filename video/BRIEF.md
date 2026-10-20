@@ -10,12 +10,12 @@ Statut : ✅ validé · 🟡 proposé, en attente de validation · ⬜ à fourni
 | Plateformes | LinkedIn et Facebook (fil), puis TikTok | ✅ |
 | Format | 4:5 — 1080×1350, 30 i/s (déclinaison 9:16 ensuite) | ✅ |
 | Durée | 20 à 30 s | ✅ |
-| Cible | Gérants de chantier, entrepreneurs et petites entreprises du BTP | 🟡 |
-| Style | Immersif dans le bleu de la marque (bleu nuit, lignes de lumière, cartes en verre ; écrans de l'appli lumineux ; rouge → vert) | 🟡 |
+| Cible | Gérants de chantier, entrepreneurs et petites entreprises du BTP | ✅ |
+| Style | Immersif dans le bleu de la marque (bleu nuit, lignes de lumière, cartes en verre ; écrans de l'appli lumineux ; rouge → vert) | ✅ |
 
 ## Texte à l'écran
 
-**Accroche** 🟡
+**Accroche** ✅
 - « Vous gérez des chantiers ? »
 
 **Problème** ✅ (validé par Benjamin le 2026-10-20 ; **mot-clé** mis en valeur)
@@ -27,20 +27,42 @@ Statut : ✅ validé · 🟡 proposé, en attente de validation · ⬜ à fourni
 
 Angle : le point de vue du **gérant**, qui ne sait plus qui lui doit encore et qui il a déjà payé. Phrases 2–3 : questions rapides avec noms et montants flottants marqués « ? » ; phrases 4–5 : montants rouges qui envahissent l'écran.
 
-**Solution — 3 gestes de l'appli** 🟡 (chacun répond à une question du problème)
-1. Entrée : paiement client de 2 500 000 FCFA → le total du chantier monte en comptant (« Qui vous doit encore ? »).
-2. Sortie : ciment, 850 000 FCFA (« Qui avez-vous déjà payé ? »).
-3. Dette : le reste à payer au maçon passe du rouge au vert → « Soldé ✓ ».
+**Révélation de la solution** ✅ (sur le drop de la musique)
+- Les montants rouges convergent et **fusionnent dans le logo** (transition signature).
+- « **Gestion Chantiers** »
+- « Entrées, sorties, dettes… enfin au **même endroit**. » (répond à « tout se mélange »)
 
-**Phrase finale** 🟡 (au choix)
-- « Chaque franc de vos chantiers, sous contrôle. »
-- « Votre chantier. Votre argent. Sous contrôle. »
+**Solution — 3 gestes de l'appli** ✅ (grands et en action ; chacun répond à une question du problème)
+| Geste | Légende | Répond à |
+|---|---|---|
+| Paiement client de 2 500 000 FCFA → le total monte en comptant | « Chaque paiement reçu, **noté**. » | « Qui vous doit encore ? » |
+| Sortie : ciment, 850 000 FCFA, au fournisseur | « Chaque dépense, par **bénéficiaire**. » | « Qui avez-vous déjà payé ? » |
+| Reste dû au maçon : rouge → vert → « Soldé ✓ » | « Le reste à payer, toujours **à jour**. » | « Où est passé l'argent ? » |
 
-**Appel à l'action** 🟡
-- **gestionchantiers.vercel.app** → « Ajouter à l'écran d'accueil » (+ QR code éventuel)
+**Atout supplémentaire** ✅ (≈ 2 s, avant la fin)
+- « Même sans **réseau**. » — fonctionne hors ligne, sauvegarde en ligne au retour du réseau.
+
+**Phrase finale** ✅
+- « Chaque franc de vos chantiers, sous **contrôle**. »
+
+**Fin** ✅
+- Logo + « Gestion Chantiers » sur l'impact final. **Pas d'adresse web** (hébergement gratuit Vercel = usage non commercial ; le lien va dans le texte de la publication).
+- 🟡 Mention discrète « Lien dans la publication » sous le logo (à confirmer).
+
+## Déroulé (≈ 30 s, à caler sur la musique)
+
+| Temps | Partie | Contenu |
+|---|---|---|
+| 0–2 s | Accroche | « Vous gérez des chantiers ? » |
+| 2–11 s | Problème | Phrases 1 à 3, noms et montants flottants « ? » |
+| 11–14 s | Tension | Phrases 4–5, montants rouges ; coupure puis montée musicale |
+| 14–17 s | Révélation | Drop : fusion dans le logo, nom, phrase |
+| 17–26 s | Solution | 3 gestes (~3 s chacun) |
+| 26–28 s | Atout | « Même sans réseau. » |
+| 28–30 s | Fin | Phrase finale, logo + nom sur l'impact |
 
 ## À fournir par Benjamin
 
 - ⬜ Musique (MP3), 115–140 BPM, avec coupure / montée / drop
 - ⬜ Noms de chantiers et de corps de métier réalistes pour les données de démo
-- ⬜ Validation des points 🟡
+- 🟡 Mention « Lien dans la publication » : oui / non
