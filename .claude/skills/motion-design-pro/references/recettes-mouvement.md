@@ -125,3 +125,77 @@ Réutiliser les **vrais composants React de l'appli** (mêmes couleurs, polices,
 - Pastilles rouge `#B91C1C` à fond sombre, texte blanc tabulaire, `box-shadow: 0 0 24px rgba(239,68,68,.8)`.
 - Elles apparaissent en rafale (décalage 2–3 images), positions pseudo-aléatoires fixes (`random('seed-' + i)` de Remotion), légère profondeur de champ.
 - Le texte central reste lisible au-dessus (fond sombre, gras).
+
+## 13. Whip (balayage ultra rapide) (REF-03, 9,9 s et 18,1 s)
+
+- Durée **4 à 6 images**. Scène sortante : translateX 0 → −120 % ; scène entrante : +120 % → 0, avec `ease.inOut` très marqué (`Easing.bezier(0.9, 0, 0.1, 1)`).
+- Flou de mouvement **massif** pendant le balayage : `filter: blur()` horizontal simulé par `CameraMotionBlur` (samples 12) ou par 6–8 copies décalées à opacité décroissante.
+- La scène entrante arrive **inclinée** (rotateY 25° → 8°) puis se redresse sur 10 images (ressort `ferme`).
+- La **dernière image du balayage tombe sur un temps fort** de la musique ; whoosh qui démarre 4–6 images avant.
+
+## 14. Morph interface → surlignage d'un mot (REF-03, 16,6 s)
+
+1. L'interface (composant réel) recule : scale 1 → 0,12, blur 0 → 10 px, 12 images, `ease.in` ; son `border-radius` augmente pour devenir celui d'une pastille.
+2. Sur la même image où elle atteint la taille du mot, elle **est remplacée** par le rectangle de surlignage (même couleur, même taille, même position) : l'œil voit une seule forme.
+3. Le mot apparaît dans le surlignage (interlettrage, § 15).
+Règle générale du morph : **faire coïncider taille, position, couleur et coins** des deux éléments sur l'image de bascule.
+
+## 15. Interlettrage (lettres qui se resserrent) (REF-03)
+
+- Par mot : `letterSpacing` 0,6 em → 0, blur 8 → 0 px, opacité 0 → 1, sur 10 images, `ease.out` ; mots décalés de 5 images.
+- Mot mis en avant : dans une pastille (fond couleur de marque, coins 0,25 em) qui grandit en largeur pendant que les lettres se resserrent.
+
+## 16. Logos / icônes qui tournent comme des pièces (REF-03, 0–4 s)
+
+- Chaque icône : rotateY 540° → 0 (ressort `pose`, ≈ 18 images), scale 0,5 → 1, blur 6 → 0 ; décalage 6–8 images entre icônes ; ensuite flottement sinusoïdal lent.
+- Face arrière (rotateY entre 90° et 270°) : afficher le disque vide ou légèrement plus sombre (`backface-visibility`).
+
+## 17. Point → bulle → pastille dépliée → coche → pièce 3D (REF-03, 19,7–24 s)
+
+1. Point 8 px → bulle 220 px (ressort `pose`), « … » qui pulsent (opacité décalée), 2–3 ondes concentriques (scale 1 → 2,5, opacité 0,4 → 0, 20 images, en boucle décalée).
+2. Pastille derrière la bulle : largeur 0 → 100 % depuis le centre de la bulle (14 images `ease.out`), éléments (avatars, icônes) qui entrent un par un (décalage 4 images, scale 0 → 1).
+3. Repli inverse, éléments qui sortent un par un.
+4. Bulle scale 1 → 0,6, les « … » se resserrent et se transforment en coche (tracé SVG `strokeDashoffset` 100 % → 0, 8 images).
+5. Pop : scale 0,6 → 1,6 (ressort `pose`) + rotateY 0 → 25° + épaisseur (`box-shadow` couches) → pièce 3D.
+Application type : « dette soldée ✓ », « chantier enregistré ✓ ».
+
+## 18. Ligne de lumière (REF-03, 4,5–9,9 s)
+
+- Ligne fine blanche (2–3 px) avec halo (`box-shadow: 0 0 40px 10px <couleur claire>`), courbée en creux sous l'élément central (SVG `path` avec `filter: drop-shadow`).
+- Pivot de toute la scène (ligne + élément) : rotateZ 0 → 90°, 18 images, `ease.inOut`. L'élément central change de contenu pendant le pivot (fondu croisé de 4 images au milieu).
+- Roue d'étiquettes autour : positions sur un arc, rotation par crans (chaque cran = 1 temps musical, ressort `ferme`) ; étiquette face caméra nette, les autres blur 4–6 px et inclinées.
+
+## 19. Son : musique et effets sonores (REF-03 — essentiel pour Benjamin)
+
+### Musique
+- **Benjamin fournit le morceau** (Uppbeat, Artlist, Epidemic Sound…). Viser : électronique percussive, 120–150 BPM, avec une **coupure + montée + drop** placée vers 40 % de la durée.
+- Analyser le morceau **avant** de faire le storyboard :
+  ```bash
+  ffmpeg -i musique.mp3 -ac 1 -ar 22050 audio.wav
+  python3 scripts/analyse_son.py audio.wav          # tempo, attaques, niveau par seconde
+  ffmpeg -i audio.wav -lavfi "showspectrumpic=s=1800x500:legend=1:scale=log:fscale=log" spectro.png
+  ```
+  Sur le spectrogramme : colonnes jaunes en bas = basses/kicks ; disparition des colonnes = coupure ; lignes qui montent = montée ; tout qui s'épaissit d'un coup = drop ; colonne blanche isolée = impact.
+- Construire une **grille de temps** en images et caler dessus : `const beat = Math.round(fps * 60 / bpm)` ; placer chaque transition sur un multiple de `beat` à partir du premier temps mesuré ; la révélation principale **sur le drop**, le logo **sur l'impact final**.
+- Si le morceau est plus long que la vidéo, couper sur une fin de mesure et finir sur la queue d'un impact (ne jamais couper net).
+
+### Effets sonores
+- Bibliothèque minimale dans `public/sfx/` : `whoosh` (2–3 variantes, court/long), `tick`/`clic` doux, `pop`, `impact` grave, `riser` (1–3 s), `swipe` léger, `ding`/validation, `compteur` (tic-tic rapide pour les chiffres qui défilent).
+- Sources : banques de sons des mêmes sites que la musique, ou génération par ElevenLabs si le connecteur le permet.
+- Correspondance mouvement → son :
+  | Mouvement | Son | Placement |
+  |---|---|---|
+  | Whip / balayage | whoosh | démarre 4–6 images avant la fin du balayage |
+  | Apparition mot / icône / carte | tick ou pop doux | sur l'image d'arrivée |
+  | Chiffres qui comptent | compteur | pendant le comptage |
+  | Coche / validation | ding court | sur le pop |
+  | Révélation | riser → impact | riser pendant la montée, impact sur le drop |
+  | Logo final | impact grave + queue | sur l'impact de la musique |
+- Mixage : musique à 0,7–0,8, effets à 0,3–0,6 (les effets **accompagnent**, ils ne couvrent pas la musique) ; baisser la musique de 20 % sous une voix off.
+
+```tsx
+import { Audio, Sequence, staticFile } from 'remotion';
+<Audio src={staticFile('musique.mp3')} volume={0.75} />
+<Sequence from={whipFrame - 5}><Audio src={staticFile('sfx/whoosh-court.mp3')} volume={0.5} /></Sequence>
+```
+- Vérifier la synchro sur le rendu final : extraire une planche des images autour de chaque attaque mesurée (`ffmpeg -ss <t-0.2> -t 0.4 ... fps=30`) et confirmer que l'image change bien sur l'attaque.

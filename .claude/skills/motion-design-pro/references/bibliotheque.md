@@ -77,3 +77,53 @@ Planches : `REF-02_23-34s_A-EVITER.jpg`, `REF-02_34-45s_A-EVITER.jpg`, `REF-02_4
 | 64–67 s | Écran de fin TikTok |
 
 Analyse des défauts et alternatives : `gouts.md` § À ÉVITER (E1 à E9).
+
+---
+
+## REF-03 — « The only launch video you need to see today » (@saasservices17, appli SaaS « fostr AI »)
+
+- **Partagée le** : 2026-10-20 · 31 s · 9:16 · filmée sur l'écran d'After Effects (vidéo d'origine en 16:9) · univers **monochrome magenta**
+- **Ce que Benjamin a dit** : « J'aime beaucoup la transition de la 8e seconde. J'aime aussi l'intro, du début jusqu'à la fin de cette transition. J'aime aussi de 15 à 24 et particulièrement de 16 à 17 fin, 18. Et ce que j'ai vraiment aimé sur toute la vidéo, c'est **la musique et les effets sonores**. »
+- **Planches** : `REF-03_00-04s_texte-logos.jpg`, `REF-03_04-07s_zoom-ai-roue-mots.jpg`, `REF-03_09-11s_whip-vers-interface.jpg`, `REF-03_15-19s_morph-texte-carte.jpg`, `REF-03_16-18s_DENSE_morph-mot-whip.jpg`, `REF-03_19-24s_bulle-avatars-coche.jpg`, `REF-03_spectrogramme-son.jpg`
+- ⚠️ « Transition de la 8e seconde » : les changements de plan détectés sont à 4,5 s, ~6,2 s et 9,9 s. Le plus probable est le **whip vers l'interface (9,9 s)** ou la **rotation de la ligne lumineuse (~6,2 s)** — à confirmer avec Benjamin ; les deux sont décrits.
+
+### Univers visuel
+- **Une seule couleur** (magenta) déclinée du sombre au lumineux : fond dégradé, halos, **lignes de lumière**, pastilles en verre dépoli (glassmorphism) au liseré lumineux. Le blanc sert uniquement au texte et à l'interface.
+- Équivalent pour une marque bleue : tout l'univers dans le bleu de la marque.
+
+### 0–4,5 s · Intro texte + logos
+- « Data » arrive **très gros et flou de vitesse**, recule et se pose au centre (≈ 0,3 s).
+- Des **logos d'outils connus** (Zoom, Slack, Google…) arrivent un par un autour du mot, **en tournant sur eux-mêmes comme des pièces** (rotation Y), flous puis nets, et flottent.
+- La phrase se construit **mot par mot** à la suite du premier : « Data » → « Data flows in » → le dernier mot **« Automatically »** arrive en **gros, avec une lueur** qui balaie, pendant que « Data flows in » rétrécit au-dessus. Hiérarchie : la phrase d'appui devient petite, le mot-clé devient grand.
+
+### 4,5–6,5 s · Zoom « AI » et ligne de lumière
+- Coupe par **zoom avant violent** : une pastille « AI » énorme (premier plan flou) recule jusqu'à se poser sur une **ligne de lumière courbe** (comme un horizon qui se creuse sous elle).
+- La ligne et la pastille **pivotent de 90°** (≈ 0,6 s) : la ligne devient verticale, le « AI » se transforme en « ? ».
+
+### 6,5–9,9 s · Roue de mots
+- Des étiquettes en verre « Who / What / Why » **tournent en roue** autour du « ? », le long de la ligne lumineuse ; celle qui passe à l'horizontale (face à nous) est nette et lisible, les autres sont inclinées et floues. Rotation continue, saccadée au rythme (chaque mot « s'arrête » sur un temps).
+
+### 9,9–10,3 s · Whip vers l'interface
+- **Balayage ultra rapide** (≈ 4 images) avec flou de mouvement massif : le fond magenta file, l'interface blanche entre en glissant, **inclinée en perspective**, puis se redresse légèrement et se pose. Calé exactement sur un temps fort de la musique (9,87 s).
+
+### 15–18,2 s · Morph interface → mot → carte (passage préféré : 16–18)
+1. **16,6 s** : l'écran de l'appli **recule et rétrécit** en se floutant jusqu'à devenir **un petit rectangle**… qui **devient le surlignage** du mot « Not ». L'interface se transforme littéralement en élément de texte.
+2. La phrase se construit : chaque mot arrive **lettres espacées et floues qui se resserrent** (animation d'interlettrage), « someone » dans une pastille surlignée, « else's » en dernier.
+3. **18,1 s** : toute la phrase **file vers la gauche** avec flou de mouvement ; un **grand cadre arrondi** (verre, liseré lumineux) entre par la droite en gros plan, se pose → carte « Investment Update » dont **les chiffres défilent en comptant** ($122k → $139k → $147k…) et les barres bougent.
+4. Le tout est calé sur la musique : la phase 1–2 se passe pendant une **montée (riser) sans percussions**, et la carte arrive **pile sur le drop** (18,2 s).
+
+### 18,2–24 s · Carte → bulle → coche
+- La carte file à droite ; un **point** apparaît au centre, grandit en **bulle « … »** (en train d'écrire) avec des **ondes concentriques**.
+- Une **pastille d'avatars** se **déplie depuis l'arrière** de la bulle (les visages arrivent un par un), puis les avatars **repartent un par un** et la pastille se replie dans la bulle.
+- La bulle rétrécit, les « … » se transforment en **coche** ; la coche **pop** et devient une **grosse pièce 3D inclinée** qui tourne.
+
+### Non cité (ne pas prendre comme modèle sans accord)
+- 10,3–15 s : écran d'interface entier en perspective, peu de mouvement (cohérent avec R-ÉCRAN).
+- 24–28 s : fin « AI Future Model ».
+
+### 🎵 Musique et effets sonores (aimés sur TOUTE la vidéo)
+Analyse du spectrogramme et des attaques (`scripts/analyse_son.py`) :
+- **Tempo ≈ 140 BPM** (un temps = 0,43 s = 13 images à 30 i/s). Musique électronique percussive : **basses courtes et puissantes** (type 808) sur les temps, petits clics et « ticks » aigus entre les temps.
+- **Structure** : 0–15 s pulsation régulière (couplet) → **15,1 s coupure nette des percussions** → 15–18 s **montée** (nappe grave tenue + balayage qui monte, tension) → **18,2 s drop** (tout le groupe, mélodie, plus dense) → ~25,7 s respiration → **26,9 s impact** grave final sur le logo → **queue** résonnante (note qui s'éteint) jusqu'à 28,5 s.
+- **Synchronisation image/son** : changements de plan à 4,5 / 9,9 / 16,6 / 18,2 / 19,7 / 24,1 / 26,9 s — presque tous **exactement sur une attaque** (9,87 ✓, 18,2 ✓ drop, 19,74 ✓, 26,92 ✓ impact). Les apparitions d'éléments (logos, mots) tombent sur les ticks entre les temps.
+- **Effets sonores** : clics/ticks aigus à chaque apparition de mot ou logo, **whoosh** sur chaque balayage (énergie aiguë qui monte avant le plan), **impact** grave sur le logo final, montée (riser) avant la révélation.

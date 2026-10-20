@@ -24,7 +24,7 @@ Suivre `references/ajouter-reference.md` : analyser image par image, ne retenir 
 
 Chaque étape a une validation par Benjamin avant la suivante.
 
-1. **Brief** : objectif (ex. faire installer l'appli), plateformes, durée, cible, message, appel à l'action. Plateformes → format (voir `gouts.md` § Formats).
+1. **Brief** : objectif (ex. faire installer l'appli), plateformes, durée, cible, message, appel à l'action. Plateformes → format (voir `gouts.md` § Formats). **Demander la musique dès le brief** et l'analyser (`scripts/analyse_son.py`, recettes § 19) : son tempo et sa structure (coupure, montée, drop, impact) dictent le storyboard.
 2. **Note d'intention** : le concept en 5 lignes, l'idée de transition signature, le ton. Dire quelles références de la bibliothèque on mobilise et pour quoi.
 3. **Storyboard** : tableau scène par scène — temps, texte exact à l'écran (mot-clé mis en valeur), ce qui bouge, transition vers la scène suivante.
 4. **Images clés (style frames)** : rendre une image fixe soignée par scène (`npx remotion still`) et les montrer **avant** d'animer. On fige le look ici.
@@ -47,6 +47,7 @@ Rendre une planche des images clés (`ffmpeg -vf "fps=6,scale=300:-1,tile=6x4"`)
 - [ ] Flou de mouvement sur tout ce qui se déplace vite.
 - [ ] Texte lisible : chaque phrase reste à l'écran au moins le temps de la lire deux fois.
 - [ ] Zones sûres de la plateforme respectées.
+- [ ] **Son** : chaque changement de plan tombe sur une attaque de la musique ; la révélation sur le drop, le logo sur l'impact ; un effet sonore sur chaque mouvement marquant (whoosh, tick, pop, impact) ; effets sous la musique, jamais par-dessus.
 - [ ] Couleurs et polices = celles de la marque, pas de dégradé violet par défaut.
 - [ ] Comparer côte à côte avec la planche de référence correspondante : est-ce au même niveau ? Sinon, corriger avant de montrer.
 

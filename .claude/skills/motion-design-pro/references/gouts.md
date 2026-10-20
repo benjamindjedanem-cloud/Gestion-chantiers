@@ -57,6 +57,34 @@ Mettre à jour à chaque nouvelle référence ou retour de Benjamin.
 28. **Pastilles lumineuses qui flottent** doucement autour du message central (Dépenses, Main d'œuvre, Imprévus…), celles du bord floues (profondeur).
 29. **Un temps fort environ chaque seconde** : il se passe toujours quelque chose de nouveau.
 
+### REF-03 · Pub « fostr AI » — intro jusqu'à la transition (~8–10 s), 15–24 s (surtout 16–18 s), musique et sons partout
+
+**Univers**
+30. **Monochrome de marque** : tout l'univers dans une seule couleur (du sombre au lumineux), avec **lignes de lumière**, halos et pastilles en **verre dépoli** au liseré lumineux. Le blanc est réservé au texte et à l'interface.
+
+**Intro (0–10 s)**
+31. Le premier mot arrive **énorme et flou de vitesse**, recule et se pose.
+32. Des **logos / icônes arrivent un par un en tournant comme des pièces** autour du message, puis flottent.
+33. **Phrase qui se construit mot par mot**, et **le dernier mot (le mot-clé) arrive en grand avec une lueur** pendant que le début de la phrase rétrécit au-dessus.
+34. **Coupe par zoom avant violent** : un élément énorme et flou au premier plan recule pour se poser dans la nouvelle scène.
+35. **Ligne de lumière** qui structure la scène (horizon courbe) et **pivote de 90°** en entraînant l'élément central, qui se transforme (« AI » → « ? »).
+36. **Roue d'étiquettes** qui tourne autour d'un élément central ; celle face à nous est nette, les autres inclinées et floues ; chaque mot s'arrête sur un temps.
+37. **Whip** : balayage ultra rapide (≈ 4 images) avec flou massif, l'écran suivant arrive incliné puis se pose — **pile sur un temps fort**.
+
+**15–24 s, surtout 16–18 s (son passage préféré)**
+38. **Morph interface → mot** : l'écran de l'appli recule, rétrécit, se floute et **devient le surlignage d'un mot**. Les scènes se transforment l'une en l'autre au lieu de se remplacer.
+39. **Interlettrage** : les mots arrivent lettres espacées et floues qui **se resserrent** ; un mot de la phrase est dans une pastille surlignée.
+40. La phrase **file avec flou**, un **grand cadre arrondi en verre** entre en gros plan et devient une carte de données dont **les chiffres comptent** et les barres bougent.
+41. **Point → bulle « … » avec ondes → pastille qui se déplie depuis l'arrière** (avatars un par un) → se replie → **les « … » deviennent une coche** → la coche devient une **grosse pièce 3D** qui tourne. Une seule forme qui se transforme en continu.
+42. **La révélation tombe sur le drop** : montée de tension pendant la construction du texte, l'élément clé arrive exactement sur le drop.
+
+### 🎵 SON — aimé par Benjamin sur toute la vidéo REF-03
+
+43. **Musique électronique percussive ≈ 140 BPM**, basses courtes et puissantes sur les temps, petits ticks aigus entre les temps. Énergique, moderne, « tech ».
+44. **Structure musicale qui porte le récit** : pulsation → **coupure nette** → **montée** (sans percussions, tension) → **drop** sur la révélation → respiration → **impact final** sur le logo → note qui s'éteint.
+45. **Chaque changement de plan tombe sur une attaque** ; chaque apparition d'élément (mot, logo, icône) tombe sur un temps ou un tick.
+46. **Effets sonores sur chaque mouvement** : tick/clic à chaque apparition, **whoosh** sur chaque balayage, **impact** grave sur le logo, **riser** avant la révélation. L'image et le son ne font qu'un.
+
 ---
 
 ## ❌ À ÉVITER — REF-02 après 23 s (rejeté par Benjamin)
@@ -99,17 +127,21 @@ Planches : `assets/refs/REF-02_*_A-EVITER.jpg`.
 4. **Texte cinétique** avec mot-clé en couleur ; compréhensible sans le son. *(REF-02)*
 5. **Récit problème → tension → solution**, accroche qui nomme la cible. *(REF-02)*
 6. **Rythme** : un temps fort par seconde, des respirations courtes et voulues. *(REF-02)*
-7. **Matière** : flou de mouvement, profondeur de champ, lueurs, alternance clair/sombre. *(REF-01, REF-02)*
+7. **Matière** : flou de mouvement, profondeur de champ, lueurs, lignes de lumière, verre dépoli. *(REF-01, REF-02, REF-03)*
+8. **Morphing** : un élément se transforme en l'élément suivant (cartes → points → logo ; interface → surlignage ; bulle → coche → pièce). *(REF-01, REF-03 — goût fort, confirmé deux fois)*
+9. **Le son fait la moitié du résultat** : musique percussive structurée (montée → drop) et effets sonores sur chaque mouvement, tout calé au temps près. *(REF-03)*
+10. **Les chiffres bougent** : montants qui comptent, barres qui s'animent. *(REF-02, REF-03)*
 
 ### Structure par défaut d'une vidéo d'appli (20–30 s)
 
 | Temps | Contenu | Références |
 |---|---|---|
-| 0–3 s | Accroche qui nomme la cible | REF-02 #15 |
-| 3–12 s | Problème en cartes et texte cinétique, montée en tension (chiffres rouges) | REF-02 #16–26 |
-| ~12 s | Transition signature vers la solution (fusion → logo, ou objet qui devient l'appli) | REF-01 #7–14 |
-| 12–24 s | 2 ou 3 gestes clés de l'appli, chacun en cartes avec son bénéfice (rouge → vert) | E2, E4, E5 |
-| 24–30 s | Logo + **un** appel à l'action, gros et contrasté | E7 |
+| 0–3 s | Accroche qui nomme la cible ; premier mot énorme qui se pose | REF-02 #15, REF-03 #31 |
+| 3–12 s | Problème en cartes et texte cinétique, montée en tension (chiffres rouges) ; musique en pulsation | REF-02 #16–26, #43 |
+| ~11–12 s | Coupure + **montée** musicale pendant que le texte se construit | #42, #44 |
+| ~12 s | Transition signature **sur le drop** (fusion → logo, morph, ou objet qui devient l'appli) | REF-01 #7–14, REF-03 #38, #42 |
+| 12–24 s | 2 ou 3 gestes clés de l'appli, grands et en action, chiffres qui comptent, bénéfice (rouge → vert) | E2, E4, E5, R-ÉCRAN, #40 |
+| 24–30 s | Logo + **un** appel à l'action, gros et contrasté, sur l'**impact** final | E7, #44 |
 
 ---
 
@@ -128,3 +160,4 @@ Planches : `assets/refs/REF-02_*_A-EVITER.jpg`.
 - 2026-10-20 — REF-01 : aime 0–7 s et la transition du dossier (~19 s), surtout les transitions.
 - 2026-10-20 — REF-02 : aime 0–23 s, en particulier la façon dont les cartes arrivent et repartent ; rejette tout le reste (démo produit).
 - 2026-10-20 — Raisons du rejet confirmées par Benjamin : **trop statique** et **interface trop petite et lointaine** pour voir ce qui se passe → règles R-ÉCRAN et R-MOUVEMENT.
+- 2026-10-20 — REF-03 : aime l'intro jusqu'à la transition « de la 8e seconde » (à préciser : rotation ~6,2 s ou whip 9,9 s), 15–24 s et surtout 16–18 s ; **adore la musique et les effets sonores** → section SON (#43–46).
