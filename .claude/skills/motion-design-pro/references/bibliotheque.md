@@ -65,5 +65,15 @@ Une fiche par vidéo partagée par Benjamin. Ne décrire **que les passages qu'i
 - **Sortie** : la carte grossit un peu (≈ 1,08), se floute, s'efface vers le haut ; un **écho** du titre reste une fraction de seconde au-dessus (effet fantôme).
 - **Vide** ≈ 0,2 s (fond seul) avant la carte suivante → respiration qui rend le rythme agréable.
 
-### Rejeté : après 23 s
-- Logo « Toolkit Manager » puis longue démo : ordinateur portable incliné, tableaux et tableaux de bord défilant, téléphone avec tuiles de couleur, formules finales. Hypothèse : trop long, illisible, plus de récit (à confirmer avec Benjamin).
+### ❌ Rejeté par Benjamin : de 23 s à la fin
+Planches : `REF-02_23-34s_A-EVITER.jpg`, `REF-02_34-45s_A-EVITER.jpg`, `REF-02_45-56s_A-EVITER.jpg`, `REF-02_56-67s_A-EVITER.jpg`.
+
+| Temps | À l'écran |
+|---|---|
+| 23–26 s | « Toolkit Manager » sur un tableau de bord vu presque à plat ; « Gardez enfin le contrôle… » |
+| 26–45 s | Panoramiques lents et inclinés sur des écrans entiers : tableaux sombres, listes de postes, réglages, tableau de bord avec graphique en anneau, puis tableaux clairs façon tableur. Aucun texte explicatif. |
+| 45–53 s | Ordinateur portable qui pivote, puis téléphone à tuiles colorées en gros plan flou devant l'ordinateur |
+| 53–64 s | Texte fin pastel : « Des projets maîtrisés et rentables… », « Choisissez votre formule… » (maquette ordinateur + téléphone), « Et passez dès aujourd'hui à une gestion financière professionnelle », « Découvrez l'outil ici : managertoolkit… » |
+| 64–67 s | Écran de fin TikTok |
+
+Analyse des défauts et alternatives : `gouts.md` § À ÉVITER (E1 à E9).
