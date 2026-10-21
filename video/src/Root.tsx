@@ -1,5 +1,5 @@
 import { Composition, Still } from 'remotion';
-import { Promo } from './Promo';
+import { Full, FULL_DURATION } from './anim/Full';
 import { Part1 } from './anim/Part1';
 import { FRAMES } from './frames/StyleFrames';
 import { V2_FRAMES } from './v2/frames';
@@ -11,8 +11,8 @@ export const RemotionRoot = () => (
   <>
     <Composition
       id="Promo"
-      component={Promo}
-      durationInFrames={VIDEO.fps * 3}
+      component={Full}
+      durationInFrames={FULL_DURATION}
       fps={VIDEO.fps}
       width={VIDEO.width}
       height={VIDEO.height}

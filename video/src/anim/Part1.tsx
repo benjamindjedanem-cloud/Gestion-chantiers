@@ -9,13 +9,24 @@ const M = 72;
 
 // ---------------------------------------------------------------------------
 // Texte : mots qui arrivent un par un (montée + flou qui se dissipe), mot-clé entre astérisques en orange.
-type W = { text: string; key: boolean };
-const words = (s: string): W[] =>
-  s.split(/(\*[^*]+\*)/).filter(Boolean).flatMap((p): W[] =>
-    p.startsWith('*') ? [{ text: p.slice(1, -1), key: true }] : p.split(/\s+/).filter(Boolean).map((w) => ({ text: w, key: false })),
-  );
+type W = { text: string; key: boolean; suffix?: string };
+// La ponctuation finale (. , … ;) se colle au mot précédent, dans la couleur normale.
+const words = (s: string): W[] => {
+  const out: W[] = [];
+  for (const p of s.split(/(\*[^*]+\*)/).filter(Boolean)) {
+    if (p.startsWith('*')) { out.push({ text: p.slice(1, -1), key: true }); continue; }
+    for (const w of p.split(/\s+/).filter(Boolean)) {
+      const m = /^([.,…;]+)(.*)$/.exec(w);
+      if (m && out.length) {
+        out[out.length - 1].suffix = (out[out.length - 1].suffix || '') + m[1];
+        if (m[2]) out.push({ text: m[2], key: false });
+      } else out.push({ text: w, key: false });
+    }
+  }
+  return out;
+};
 
-const Line = ({ f, text, size, at, step = 5, color = K.navy, accent = K.orange, style, align = 'left' }: { f: number; text: string; size: number; at: number; step?: number; color?: string; accent?: string; style?: CSSProperties; align?: 'left' | 'center' }) => (
+export const Line = ({ f, text, size, at, step = 5, color = K.navy, accent = K.orange, style, align = 'left' }: { f: number; text: string; size: number; at: number; step?: number; color?: string; accent?: string; style?: CSSProperties; align?: 'left' | 'center' }) => (
   <div style={{ display: 'flex', flexWrap: 'nowrap', gap: size * 0.26, justifyContent: align === 'center' ? 'center' : 'flex-start', fontFamily: FF.head, fontWeight: 900, fontSize: size, lineHeight: 1, letterSpacing: '-0.025em', textTransform: 'uppercase', color, ...style }}>
     {words(text).map((w, i) => {
       const s0 = at + i * step;
@@ -23,18 +34,19 @@ const Line = ({ f, text, size, at, step = 5, color = K.navy, accent = K.orange, 
       return (
         <span key={i} style={{ display: 'inline-block', whiteSpace: 'nowrap', color: w.key ? accent : color, opacity: t(f, s0, s0 + 4), transform: `translateY(${(1 - p) * size * 0.45}px)`, filter: `blur(${(1 - p) * 8}px)` }}>
           {w.text}
+          {w.suffix && <span style={{ color }}>{w.suffix}</span>}
         </span>
       );
     })}
   </div>
 );
 
-const Abs = ({ x, y, children, style }: { x: number; y: number; children: ReactNode; style?: CSSProperties }) => (
+export const Abs = ({ x, y, children, style }: { x: number; y: number; children: ReactNode; style?: CSSProperties }) => (
   <div style={{ position: 'absolute', left: x, top: y, ...style }}>{children}</div>
 );
 
 // Fond ciel dont les nuages dérivent lentement.
-const LiveSky = ({ f }: { f: number }) => (
+export const LiveSky = ({ f }: { f: number }) => (
   <AbsoluteFill style={{ transform: `scale(${1.04 + f * 0.0002}) translateX(${-f * 0.15}px)` }}>
     <Sky />
   </AbsoluteFill>
@@ -44,7 +56,7 @@ const LiveSky = ({ f }: { f: number }) => (
 // S1 · Accroche (0 → 67), sortie par un cercle qui part du « ? » et révèle le plan 2.
 const Q_X = 945, Q_Y = 482; // position du « ? » dans le titre
 
-const S1 = ({ f }: { f: number }) => {
+export const S1 = ({ f }: { f: number }) => {
   if (f > 72) return null;
   const a = t(f, 8, 22);
   const exit = t(f, 58, 70, 0, 1, ease.in);
@@ -99,7 +111,7 @@ const CARDS = [
   { at: b(6), kind: 'DÉPENSE', name: 'Transport Nadji', amount: '75 000', bg: '#B45309', icon: <Truck size={36} strokeWidth={2.6} />, x: 380, y: 640, ry: -14, rz: 8, exitX: 1400 },
 ];
 
-const S2 = ({ f }: { f: number }) => {
+export const S2 = ({ f }: { f: number }) => {
   if (f < 56 || f > 178) return null;
   // révélation en cercle depuis le « ? » du plan 1
   const r = t(f, 61, 72, 0, 1700, ease.in);
@@ -154,7 +166,7 @@ const S2 = ({ f }: { f: number }) => {
 const LABELS = ['Dr Herbert : payé ?', 'Avance Mme Achta ?', 'Transport Nadji : réglé ?', 'Ferrailleur Rodric : 150 000 ?', 'Maçon Jean ?', 'Dr Herbert : 1 200 000 ?', 'Ets Abdelkerim : réglé ?', 'Avance Mme Achta : 500 000 ?', 'Ferrailleur Rodric ?', 'Maçon Jean : combien ?'];
 const CX = 830, CY = 860;
 
-const S3 = ({ f }: { f: number }) => {
+export const S3 = ({ f }: { f: number }) => {
   if (f < 162 || f > 280) return null;
   const lineIn = t(f, 164, 174);
   const pivot = t(f, 172, 188, 90, 0, ease.inOut);
@@ -234,7 +246,7 @@ const Slam = ({ f, at, children, size, block }: { f: number; at: number; childre
   );
 };
 
-const S4 = ({ f }: { f: number }) => {
+export const S4 = ({ f }: { f: number }) => {
   if (f < 266 || f > 436) return null;
   const orbit = t(f, b(28), b(32), 0, 1, ease.in); // de la coupure au drop
   const converge = t(f, b(32) - 12, b(32), 0, 1, ease.in);
@@ -281,8 +293,10 @@ const S4 = ({ f }: { f: number }) => {
 
 // ---------------------------------------------------------------------------
 // S5 · Révélation (427 → 530) : flash sur le drop, logo qui pivote, nom, phrase dont l'écart se referme.
-const S5 = ({ f }: { f: number }) => {
-  if (f < b(32) - 1) return null;
+export const S5 = ({ f }: { f: number }) => {
+  if (f < b(32) - 1 || f > 532) return null;
+  const zoom = Math.pow(t(f, 514, 532, 0, 1, ease.in), 2);
+  const fadeOut = t(f, 508, 518);
   const s0 = b(32);
   const pop = sp(f, s0, 'pose');
   const flash = t(f, s0, s0 + 10, 1, 0);
@@ -292,13 +306,13 @@ const S5 = ({ f }: { f: number }) => {
     <AbsoluteFill>
       <Navy />
       <AbsoluteFill style={{ transform: `scale(${drift(f - s0, 110, 0.025)})` }}>
-        <RingBadge size={360} bg={K.white} ring={K.blue} style={{ left: 540 - 180, top: 250, transform: `perspective(1200px) scale(${0.25 + 0.75 * pop}) rotateY(${t(f, s0, s0 + 18, 170, 0)}deg)` }}>
+        <RingBadge size={360} bg={K.white} ring={K.blue} style={{ left: 540 - 180, top: 250, transform: `perspective(1200px) scale(${(0.25 + 0.75 * pop) * (1 + zoom * 16)}) rotateY(${t(f, s0, s0 + 18, 170, 0)}deg)` }}>
           <Img src={staticFile('logo.png')} style={{ width: 260, height: 260, borderRadius: 58 }} />
         </RingBadge>
-        <Abs x={0} y={700} style={{ width: 1080 }}>
+        <Abs x={0} y={700} style={{ width: 1080, opacity: 1 - fadeOut }}>
           <Line f={f} text="Gestion *chantiers*" size={84} at={b(33)} step={Math.round(BEAT)} color={K.white} align="center" />
         </Abs>
-        <Abs x={0} y={835} style={{ width: 1080 }}>
+        <Abs x={0} y={835} style={{ width: 1080, opacity: 1 - fadeOut }}>
           <div style={{ fontFamily: FF.head, fontWeight: 800, fontSize: 46, color: '#C9DCFF', textAlign: 'center', lineHeight: 1.2 }}>
             <div style={{ opacity: gapIn, transform: `translateX(${-gap * 240 - (1 - gapIn) * 200}px)`, filter: `blur(${(1 - gapIn) * 12}px)` }}>Entrées, sorties, dettes…</div>
             <div style={{ opacity: gapIn, transform: `translateX(${gap * 240 + (1 - gapIn) * 200}px)`, filter: `blur(${(1 - gapIn) * 12}px)` }}>
@@ -306,7 +320,7 @@ const S5 = ({ f }: { f: number }) => {
             </div>
           </div>
         </Abs>
-        <div style={{ position: 'absolute', left: 120, right: 120, top: 1060, height: 4, transformOrigin: '50% 50%', transform: `scaleX(${t(f, b(36), b(36) + 20)})`, background: 'linear-gradient(90deg, rgba(255,255,255,0), #FFFFFF 30%, #FFFFFF 70%, rgba(255,255,255,0))' }} />
+        <div style={{ position: 'absolute', left: 120, right: 120, top: 1060, height: 4, transformOrigin: '50% 50%', transform: `scaleX(${t(f, b(36), b(36) + 20)})`, opacity: 1 - fadeOut, background: 'linear-gradient(90deg, rgba(255,255,255,0), #FFFFFF 30%, #FFFFFF 70%, rgba(255,255,255,0))' }} />
       </AbsoluteFill>
       <AbsoluteFill style={{ background: '#FFFFFF', opacity: flash }} />
     </AbsoluteFill>
@@ -315,7 +329,7 @@ const S5 = ({ f }: { f: number }) => {
 
 // ---------------------------------------------------------------------------
 // Effets sonores calés sur l'image (voir STORYBOARD.md § effets sonores).
-const SFX: [number, string, number][] = [
+export const SFX1: [number, string, number][] = [
   [2, 'whoosh', 0.35], [b(1) - 2, 'tick', 0.35], [b(2) - 2, 'pop', 0.4],
   [56, 'whoosh', 0.5],
   [b(4), 'pop', 0.4], [b(5), 'pop', 0.4], [b(6), 'pop', 0.4], [b(8), 'swoosh', 0.45], [b(9), 'tick', 0.35], [158, 'whoosh', 0.5],
@@ -336,7 +350,7 @@ export const Part1 = () => {
       <S2 f={f} />
       <S5 f={f} />
       <Audio src={staticFile('musique.mp3')} trimBefore={36} volume={0.75} />
-      {SFX.map(([at, name, vol], i) => (
+      {SFX1.map(([at, name, vol], i) => (
         <Sequence key={i} from={at}>
           <Audio src={staticFile(`sfx/${name}.wav`)} volume={vol} />
         </Sequence>

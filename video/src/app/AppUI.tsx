@@ -86,12 +86,14 @@ export const EntreeDetail = ({
   entrees,
   highlight = -1,
   addPressed = 0,
+  rowStyles = [],
 }: {
   chantier: string;
   total: number;
   entrees: Entree[];
   highlight?: number;
   addPressed?: number;
+  rowStyles?: CSSProperties[];
 }) => (
   <div style={{ padding: '20px 18px 24px' }}>
     <BackBar title="Tous les chantiers" />
@@ -112,6 +114,7 @@ export const EntreeDetail = ({
             border: `1px solid ${i === highlight ? C.green : C.border}`,
             boxShadow: i === highlight ? '0 0 0 3px rgba(4,120,87,.15), 0 8px 20px rgba(4,120,87,.12)' : 'none',
             borderRadius: 14, padding: 12, display: 'flex', justifyContent: 'space-between', gap: 8,
+            ...rowStyles[i],
           }}
         >
           <div>
@@ -209,6 +212,7 @@ export const BeneficiaireCard = ({
   montantDu,
   statut,
   resteColor,
+  linkPressed = 0,
 }: {
   nom: string;
   totalPaye: number;
@@ -218,6 +222,7 @@ export const BeneficiaireCard = ({
   montantDu: number;
   statut: 'Soldé' | 'Partiel' | 'À régler';
   resteColor?: string;
+  linkPressed?: number;
 }) => (
   <div style={{ background: '#fff', border: `1px solid ${C.border}`, borderRadius: 14 }}>
     <div style={{ padding: '12px 14px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -241,7 +246,7 @@ export const BeneficiaireCard = ({
           <p style={{ ...tabular, fontSize: 13, fontWeight: 600, margin: 0 }}>{fcfa(montantDu)}</p>
         </div>
       </div>
-      {reste > 0 && <p style={{ fontSize: 13, fontWeight: 600, color: C.brand, margin: '8px 0 0' }}>Enregistrer un paiement</p>}
+      {reste > 0 && <p style={{ fontSize: 13, fontWeight: 600, color: C.brand, margin: '8px 0 0', display: 'inline-block', padding: '2px 6px', marginLeft: -6, borderRadius: 6, background: linkPressed ? `rgba(29,78,216,${0.15 * linkPressed})` : 'transparent' }}>Enregistrer un paiement</p>}
     </div>
   </div>
 );
