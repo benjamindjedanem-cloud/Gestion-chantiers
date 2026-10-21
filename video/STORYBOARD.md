@@ -84,21 +84,21 @@ Univers bleu nuit (#172554 → #0B1230), **une ligne de lumière** bleue qui str
 > **Règle (Benjamin)** : chaque geste est **une scène à part**, avec sa propre légende, son propre cadrage, sa propre action et sa propre transition. Jamais deux gestes dans le même plan, jamais d'écran statique : la caméra suit toujours l'élément qui change.
 
 ### S6 · Geste 1 — Entrée — 17,67 → 21,10 s (530 → 633)
-- **Légende** (arrive d'abord, mot par mot) : « Chaque paiement reçu, **noté**. »
+- **Légende** (arrive d'abord, mot par mot) : « Chaque **paiement** reçu, noté. »
 - **Interface (grande, R-ÉCRAN)** : on sort du zoom dans le logo directement **dans l'écran Entrées**. Cadrage serré sur la carte **VILLA FARCHA**. Un doigt touche « + Entrée » → le formulaire monte et remplit le cadre → « M. Mahamat Saleh » et « 2 500 000 FCFA » s'écrivent (la caméra glisse d'un champ à l'autre) → validation → retour sur la carte : le **total encaissé compte** de 6 000 000 à 8 500 000 FCFA, en vert, avec un léger zoom sur le chiffre (#40).
 - **Accent** : vert.
 - **Son** : tap ; frappe douce ; compteur ; ding.
 - **Transition vers S7** : **carrousel** — la carte Entrée part à gauche, rognée par le cadre, l'écran Sorties entre par la droite (#22).
 
 ### S7 · Geste 2 — Sortie — 21,10 → 24,53 s (633 → 736)
-- **Légende** : « Chaque dépense, par **bénéficiaire**. »
+- **Légende** : « Chaque **dépense**, par bénéficiaire. »
 - **Interface** : cadrage sur le formulaire de sortie. « Ciment × 50 sacs » s'écrit ; tap sur « Fonction » → la **vraie liste de l'appli** se déplie (Maçon, Carreleur, Électricien… **Fournisseur**) et défile jusqu'à « Fournisseur » qui s'allume ; « Ets Abdelkerim » ; « 850 000 FCFA » ; validation → la ligne **vient se ranger dans la liste** des sorties du chantier avec un petit rebond, le total des sorties se met à jour en comptant.
 - **Accent** : bleu (ambre pour la ligne ajoutée).
 - **Son** : tap ; défilement ; frappe ; pop.
 - **Transition vers S8** : la caméra suit la liste des bénéficiaires vers le bas ; la carte « **Maçon Jean** » grossit et vient au premier plan (objet qui devient la scène suivante, #13).
 
 ### S8 · Geste 3 — Dette soldée — 24,53 → 27,96 s (736 → 839)
-- **Légende** : « Le reste à payer, toujours **à jour**. »
+- **Légende** : « Le reste **à payer**, toujours à jour. »
 - **Interface** : carte **Maçon Jean** en grand : dû 1 200 000, payé 900 000, **reste 300 000** en rouge lumineux (écho direct aux montants rouges du problème). Tap « Enregistrer un paiement » (libellé réel de l'appli) → la jauge de paiement se remplit → le reste **compte jusqu'à 0** et passe du rouge au vert → une bulle « … » apparaît, les points deviennent une **coche** qui pop en **pièce 3D « Soldé ✓ »** (#41).
 - **Accent** : rouge → vert.
 - **Son** : tap ; compteur ; ding de validation ; petit impact sur la pièce.

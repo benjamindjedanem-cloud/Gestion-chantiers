@@ -35,9 +35,9 @@ Angle : le point de vue du **gérant**, qui ne sait plus qui lui doit encore et 
 **Solution — 3 gestes de l'appli** ✅ (grands et en action ; chacun répond à une question du problème)
 | Geste | Légende | Répond à |
 |---|---|---|
-| Paiement client de 2 500 000 FCFA → le total monte en comptant | « Chaque paiement reçu, **noté**. » | « Qui vous doit encore ? » |
-| Sortie : ciment, 850 000 FCFA, au fournisseur | « Chaque dépense, par **bénéficiaire**. » | « Qui avez-vous déjà payé ? » |
-| Reste dû au maçon : rouge → vert → « Soldé ✓ » | « Le reste à payer, toujours **à jour**. » | « Où est passé l'argent ? » |
+| Paiement client de 2 500 000 FCFA → le total monte en comptant | « Chaque **paiement** reçu, noté. » | « Qui vous doit encore ? » |
+| Sortie : ciment, 850 000 FCFA, au fournisseur | « Chaque **dépense**, par bénéficiaire. » | « Qui avez-vous déjà payé ? » |
+| Reste dû au maçon : rouge → vert → « Soldé ✓ » | « Le reste **à payer**, toujours à jour. » | « Où est passé l'argent ? » |
 
 **Atout supplémentaire** ✅ (≈ 2 s, avant la fin)
 - « Même sans **réseau**. » — fonctionne hors ligne, sauvegarde en ligne au retour du réseau.

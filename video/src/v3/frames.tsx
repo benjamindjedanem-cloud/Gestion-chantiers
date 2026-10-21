@@ -122,7 +122,7 @@ export const V3S4 = () => (
 // S5 · Révélation — composition du storyboard : logo au centre des rayons, nom, phrase, horizon
 export const V3S5 = () => (
   <AbsoluteFill>
-    <Navy rays />
+    <Navy />
     <RingBadge size={360} bg={K.white} ring={K.blue} style={{ left: 540 - 180, top: 250 }}>
       <Img src={staticFile('logo.png')} style={{ width: 260, height: 260, borderRadius: 58 }} />
     </RingBadge>
@@ -158,7 +158,7 @@ export const V3S6 = () => (
     <Sky />
     <NavyBand top={880} />
     <BrandMark />
-    <GestureHead tag="01 · Entrées" l1="Chaque paiement" l2="reçu, *noté*." />
+    <GestureHead tag="01 · Entrées" l1="Chaque *paiement*" l2="reçu, noté." />
     <AppPanel scale={2.4} glow={false} style={{ top: 500, left: 72, ...panelShadow }}>
       <EntreeDetail
         chantier="VILLA FARCHA"
@@ -179,7 +179,7 @@ export const V3S7 = () => (
     <Sky />
     <NavyBand top={880} />
     <BrandMark />
-    <GestureHead tag="02 · Sorties" l1="Chaque dépense," l2="par *bénéficiaire*." />
+    <GestureHead tag="02 · Sorties" l1="Chaque *dépense*," l2="par bénéficiaire." />
     <AppPanel scale={2.35} glow={false} style={{ top: 470, left: 84, ...panelShadow }}>
       <ModalHeader title="Nouvelle sortie — VILLA FARCHA" />
       <div style={{ padding: '18px 20px', background: '#fff' }}>
@@ -218,7 +218,7 @@ export const V3S8 = () => (
     <Sky />
     <NavyBand top={880} />
     <BrandMark />
-    <GestureHead tag="03 · Dettes" l1="Le reste à payer," l2="toujours *à jour*." />
+    <GestureHead tag="03 · Dettes" l1="Le reste *à payer*," l2="toujours à jour." />
     <AppPanel scale={2.4} glow={false} style={{ top: 640, left: 72, ...panelShadow }}>
       <div style={{ padding: 16 }}>
         <BeneficiaireCard nom="Jean (Maçon)" totalPaye={1_200_000} reste={0} ligne="Main d'œuvre — Élévation des murs" date="20/10/2026" montantDu={1_200_000} statut="Soldé" />
@@ -284,7 +284,7 @@ export const V3S10 = () => (
 // S11 · Fin — composition du storyboard : logo à gauche, nom à droite
 export const V3S11 = () => (
   <AbsoluteFill>
-    <Navy rays />
+    <Navy />
     <div style={{ position: 'absolute', left: 0, right: 0, top: 545, display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 44 }}>
       <Img src={staticFile('logo.png')} style={{ width: 240, height: 240, borderRadius: 54, boxShadow: `0 0 0 9px #FFFFFF, ${drop(0.8)}` }} />
       <div>
