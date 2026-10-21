@@ -244,3 +244,12 @@ Envelopper chaque scène posée dans une dérive très lente pour qu'elle ne soi
 const drift = interpolate(frame, [0, durationInFrames], [1, 1.04]);
 <AbsoluteFill style={{ transform: `scale(${drift}) translateY(${interpolate(frame, [0, durationInFrames], [0, -8])}px)` }}>…</AbsoluteFill>
 ```
+
+## 28. Voix off (ElevenLabs) et compréhension
+
+Leçon du projet Gestion Chantiers : une vidéo d'appli trop rapide reste incompréhensible, surtout sans voix. Règles :
+- **Problème / émotion** : rythme rapide (un événement par temps) accepté. **Démonstration de l'appli** : chaque geste ≈ **4 mesures (≈ 7 s)** : légende → geste lent → **résultat qui reste à l'écran**.
+- **Étiquettes d'étape** ①②③ (pastille blanche, numéro orange, coche verte pour le résultat) sous le titre de chaque geste : la vidéo s'explique même sans le son.
+- **Entourer** (anneau de couleur) la valeur qui change au moment où la voix la nomme.
+- **Voix off** : écrire un texte court phrase par phrase ; une seule génération ElevenLabs (4 prises, ~600 crédits chacune pour 35 s), voix choisie avec `creative_list_voices` (fr, genre, `use_cases: advertisement`). Télécharger les prises (`content_url`, hébergées sur storage.googleapis.com, accessible), repérer les phrases avec `silencedetect=noise=-38dB:d=0.28`, choisir la prise qui respecte les silences voulus et ne sature pas, la **découper phrase par phrase** (`ffmpeg -nostdin`, fondus 30/60 ms) et placer **chaque phrase sur son image** (on peut réordonner).
+- **Mixage** : voix remontée (+9 dB avec `alimiter`), musique 0,5 hors voix et **0,11 sous la voix** (rampes de 8–10 images), effets × 0,7 ; viser la voix ≈ 10 dB au-dessus du lit musical, pic final < −0,5 dB.

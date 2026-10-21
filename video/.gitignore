@@ -3,3 +3,4 @@ out
 # Musique sous licence Pixabay : ne pas redistribuer dans le dépôt
 public/musique.mp3
 public/sfx/
+public/voix/prise*.mp3
