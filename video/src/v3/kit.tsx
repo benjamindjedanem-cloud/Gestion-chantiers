@@ -91,7 +91,7 @@ export const Head = ({ text, size, color = K.navy, accent = K.orange, style, ali
 // Petite bulle de dialogue (« INTRODUCING » de l'affiche Ararat).
 export const TagBubble = ({ children, bg = K.navy, color = K.white, style }: { children: ReactNode; bg?: string; color?: string; style?: CSSProperties }) => (
   <div style={{ position: 'absolute', ...style }}>
-    <div style={{ background: bg, color, fontFamily: FF.head, fontWeight: 800, fontSize: 26, letterSpacing: '0.06em', padding: '12px 26px', borderRadius: 14, textTransform: 'uppercase', boxShadow: drop(0.35) }}>
+    <div style={{ background: bg, color, fontFamily: FF.head, fontWeight: 800, fontSize: 26, letterSpacing: '0.06em', padding: '12px 26px', borderRadius: 14, textTransform: 'uppercase', boxShadow: drop(0.35), whiteSpace: 'nowrap' }}>
       {children}
     </div>
     <div style={{ position: 'absolute', left: '62%', bottom: -16, width: 0, height: 0, borderLeft: '14px solid transparent', borderRight: '14px solid transparent', borderTop: `18px solid ${bg}` }} />

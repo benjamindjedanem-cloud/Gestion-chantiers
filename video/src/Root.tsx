@@ -1,5 +1,6 @@
 import { Composition, Still } from 'remotion';
 import { Promo } from './Promo';
+import { Part1 } from './anim/Part1';
 import { FRAMES } from './frames/StyleFrames';
 import { V2_FRAMES } from './v2/frames';
 import { V3_FRAMES } from './v3/frames';
@@ -16,6 +17,7 @@ export const RemotionRoot = () => (
       width={VIDEO.width}
       height={VIDEO.height}
     />
+    <Composition id="Partie1" component={Part1} durationInFrames={540} fps={VIDEO.fps} width={VIDEO.width} height={VIDEO.height} />
     {Object.entries({ ...FRAMES, ...V2_FRAMES, ...V3_FRAMES, ...V4_FRAMES }).map(([id, Frame]) => (
       <Still key={id} id={`Frame-${id}`} component={Frame} width={VIDEO.width} height={VIDEO.height} />
     ))}
