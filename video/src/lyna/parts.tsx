@@ -1,9 +1,22 @@
 // Briques visuelles du spot Lyna-Transfert : titres fins mot à mot, carte d'Afrique, flèches du logo, téléphone.
-import React from 'react';
+import React, { useContext } from 'react';
 import { Img, interpolate, staticFile } from 'remotion';
 import { ease, sp, t } from '../anim/motion';
 import geo from './afrique.json';
 import { C, FONT } from './theme';
+
+// Format 16:9 : titres dans la colonne de gauche, visuels (dessinés en coordonnées 9:16) dans <Vis> à droite.
+export const Wide = React.createContext(false);
+export const useWide = () => useContext(Wide);
+export const Vis: React.FC<{ cx: number; cy: number; s: number; children: React.ReactNode }> = ({ cx, cy, s, children }) => {
+  const wide = useWide();
+  if (!wide) return <>{children}</>;
+  return (
+    <div style={{ position: 'absolute', left: 0, top: 0, width: 1080, height: 1920, transformOrigin: '0 0', transform: `translate(${cx - 540 * s}px, ${540 - cy * s}px) scale(${s})` }}>
+      {children}
+    </div>
+  );
+};
 
 export const MAP = geo as unknown as { width: number; height: number; countries: Record<string, string>; cities: Record<string, [number, number]> };
 export const SAHEL = ['Mali', 'Burkina Faso', 'Niger', 'Chad', 'Central African Rep.']; // bande orange du logo
@@ -22,7 +35,14 @@ export const Title: React.FC<{
   left?: number;
   align?: 'left' | 'center';
   width?: number;
-}> = ({ f, lines, out = 99999, onGreen = false, size = 74, top = 250, left = 90, align = 'left', width = 860 }) => {
+  wtop?: number; // position en 16:9 (colonne de gauche)
+  keep?: boolean; // 16:9 : garder la position 9:16 (titre dessiné dans un <Vis>)
+}> = ({ f, lines, out = 99999, onGreen = false, size: size0 = 74, top: top0 = 250, left: left0 = 90, align = 'left', width: width0 = 860, wtop = 340, keep = false }) => {
+  const wide = useWide() && !keep;
+  const size = wide ? Math.min(size0, 64) : size0;
+  const top = wide ? wtop : top0;
+  const left = wide ? 140 : left0;
+  const width = wide ? 840 : width0;
   const exit = t(f, out, out + 12, 0, 1, ease.in);
   return (
     <div
@@ -200,7 +220,10 @@ export const Tagline: React.FC<{ width: number; reveal?: number }> = ({ width, r
 );
 
 // Pastille ronde blanche avec le logo (coin haut droit des plans de couleur).
-export const LogoBadge: React.FC<{ f: number; at: number; x?: number; y?: number; size?: number }> = ({ f, at, x = 930, y = 150, size = 112 }) => {
+export const LogoBadge: React.FC<{ f: number; at: number; x?: number; y?: number; size?: number }> = ({ f, at, x: x0, y: y0, size = 112 }) => {
+  const wide = useWide();
+  const x = x0 ?? (wide ? 200 : 930);
+  const y = y0 ?? (wide ? 150 : 150);
   const s = sp(f, at, 'pose');
   return (
     <div

@@ -2,6 +2,7 @@
 import { AbsoluteFill, Audio, Sequence, interpolate, staticFile, useCurrentFrame } from 'remotion';
 import { Final, MapLayer, S1, S2BG, S2Text, S3, S3BG, S4, S5 } from './scenes';
 import { C, END, VOICE_AT } from './theme';
+import { Wide } from './parts';
 
 const clamp = { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' } as const;
 
@@ -42,9 +43,10 @@ const SFX: [number, string, number][] = [
   [688, 'swoosh', 0.45],
 ];
 
-export const Lyna = () => {
+export const Lyna: React.FC<{ wide?: boolean }> = ({ wide = false }) => {
   const f = useCurrentFrame();
   return (
+    <Wide.Provider value={wide}>
     <AbsoluteFill style={{ background: C.paper }}>
       <S1 f={f} />
       <S2BG f={f} />
@@ -65,5 +67,6 @@ export const Lyna = () => {
         </Sequence>
       ))}
     </AbsoluteFill>
+    </Wide.Provider>
   );
 };

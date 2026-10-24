@@ -22,6 +22,7 @@ export const RemotionRoot = () => (
     />
     <Composition id="PromoCourte" component={FullCourt} durationInFrames={COURT_DURATION} fps={VIDEO.fps} width={VIDEO.width} height={VIDEO.height} />
     <Composition id="Lyna" component={Lyna} durationInFrames={LYNA_END} fps={30} width={1080} height={1920} />
+    <Composition id="Lyna-16x9" component={Lyna} durationInFrames={LYNA_END} fps={30} width={1920} height={1080} defaultProps={{ wide: true }} />
     <Composition id="Partie1" component={Part1} durationInFrames={540} fps={VIDEO.fps} width={VIDEO.width} height={VIDEO.height} />
     {Object.entries({ ...FRAMES, ...V2_FRAMES, ...V3_FRAMES, ...V4_FRAMES }).map(([id, Frame]) => (
       <Still key={id} id={`Frame-${id}`} component={Frame} width={VIDEO.width} height={VIDEO.height} />

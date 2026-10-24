@@ -2,10 +2,10 @@
 // Alternance blanc ↔ vert de marque (REF-05), trajets en pointillés (REF-05/08), anneau qui s'ouvre (REF-08),
 // la carte d'Afrique devient l'icône du logo, les flèches du logo tournent comme signature.
 import React from 'react';
-import { AbsoluteFill, interpolate, interpolateColors } from 'remotion';
+import { AbsoluteFill, interpolate, interpolateColors, useVideoConfig } from 'remotion';
 import { ArrowLeftRight, Facebook, Globe, Instagram, Linkedin, MessageCircle, Phone as PhoneIcon, Send, Smartphone, TrendingDown } from 'lucide-react';
 import { ease, sp, t } from '../anim/motion';
-import { Afrique, Camera, LogoArrows, LogoBadge, LogoIcon, MAP, Notif, Phone, Route, SAHEL, Tagline, Title, Wordmark } from './parts';
+import { Afrique, Camera, LogoArrows, LogoBadge, LogoIcon, MAP, Notif, Phone, Route, SAHEL, Tagline, Title, Vis, Wordmark, useWide } from './parts';
 import { C, CUT, END, FONT, H, W, v } from './theme';
 
 type P = { f: number };
@@ -32,11 +32,11 @@ export const S1: React.FC<P> = ({ f }) => {
   const pw = 660;
   return (
     <AbsoluteFill style={{ background: C.paper }}>
-      <Title f={f} top={210} size={72} out={54} lines={[{ text: 'Pour vos', at: 24 }, { text: "*transferts d'argent*,", at: 30 }]} />
-      <Envoi f={f} />
+      <Title f={f} top={210} wtop={400} size={72} out={54} lines={[{ text: 'Pour vos', at: 24 }, { text: "*transferts d'argent*,", at: 30 }]} />
       <Title
         f={f}
         top={200}
+        wtop={360}
         size={72}
         out={140}
         lines={[
@@ -45,6 +45,8 @@ export const S1: React.FC<P> = ({ f }) => {
           { text: '*au quotidien.*', at: 117 },
         ]}
       />
+      <Vis cx={1360} cy={1240} s={0.72}>
+      <Envoi f={f} />
       <div
         style={{
           position: 'absolute',
@@ -61,6 +63,7 @@ export const S1: React.FC<P> = ({ f }) => {
           <LockScreen f={f} w={pw * 0.94} />
         </Phone>
       </div>
+      </Vis>
     </AbsoluteFill>
   );
 };
@@ -85,7 +88,7 @@ const Envoi: React.FC<{ f: number }> = ({ f }) => {
   const pw = 400;
   return (
     <AbsoluteFill>
-      <div style={{ position: 'absolute', left: 60 - (1 - inA) * 700 - outA * 800, top: 660, transform: `rotate(${-7 + (1 - inA) * -12 - outA * 10}deg)`, filter: `blur(${outA * 10}px)` }}>
+      <div style={{ position: 'absolute', left: 60 - (1 - inA) * 700 - outA * 800, top: 660, transform: `rotate(${-7 + (1 - inA) * -12 - outA * 10}deg)`, filter: `blur(${outA * 10}px)`, opacity: Math.min(1, inA * 2.5) * (1 - outA) }}>
         <Phone w={pw}>
           <AbsoluteFill style={{ background: C.white, padding: '96px 30px 0', fontFamily: FONT.body }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 12, fontSize: 24, color: C.inkSoft, fontWeight: 500 }}>
@@ -124,7 +127,7 @@ const Envoi: React.FC<{ f: number }> = ({ f }) => {
           </AbsoluteFill>
         </Phone>
       </div>
-      <div style={{ position: 'absolute', left: 620 + (1 - inB) * 700, top: 830, transform: `rotate(${6 + (1 - inB) * 12}deg)`, opacity: f >= 52 ? 0 : 1 }}>
+      <div style={{ position: 'absolute', left: 620 + (1 - inB) * 700, top: 830, transform: `rotate(${6 + (1 - inB) * 12}deg)`, opacity: f >= 52 ? 0 : Math.min(1, inB * 2.5) }}>
         <Phone w={pw}>
           <AbsoluteFill style={{ background: `linear-gradient(170deg, ${C.green} 0%, ${C.greenDark} 70%, ${C.greenDeep} 100%)` }}>
             <div style={{ position: 'absolute', top: 100, width: '100%', textAlign: 'center', color: C.white, fontFamily: FONT.title, fontWeight: 300, fontSize: 92, letterSpacing: -3 }}>08:15</div>
@@ -226,6 +229,14 @@ const logoPose = (f: number) => {
   return { X: interpolate(k, [0, 1], [540, 172]), Y: interpolate(k, [0, 1], [760, 262]), D: interpolate(k, [0, 1], [700, 200]) };
 };
 
+// 16:9 : cadre du visuel de la carte (Tchad → Afrique), puis du logo (centré, puis à droite)
+const s3Vis = (f: number) => ({ cx: interpolate(t(f, 252, 272, 0, 1, ease.inOut), [0, 1], [960, 1340]), cy: 830, s: 0.77 });
+const mapVis = (f: number) => {
+  const k = t(f, 205, 224, 0, 1, ease.inOut);
+  const b = s3Vis(f);
+  return { cx: interpolate(k, [0, 1], [1360, b.cx]), cy: interpolate(k, [0, 1], [1100, b.cy]), s: interpolate(k, [0, 1], [0.83, b.s]) };
+};
+
 const camera = (f: number) => {
   // repères : Tchad en gros plan → Afrique entière → Afrique du logo
   const k1 = t(f, 176, 200, 0, 1, ease.inOut);
@@ -286,6 +297,7 @@ export const MapLayer: React.FC<P> = ({ f }) => {
   const lp = logoPose(f);
   return (
     <AbsoluteFill>
+      <Vis {...mapVis(f)}>
       <Camera {...cam}>
         <Afrique fillOf={fill} stroke={stroke} sw={interpolate(toLogo, [0, 1], [1.6, 2.5]) / cam.s}>
           <g opacity={routesOut}>
@@ -318,25 +330,27 @@ export const MapLayer: React.FC<P> = ({ f }) => {
           <LogoArrows D={lp.D} draw={t(f, 214, 236, 0, 1, ease.out)} />
         </div>
       ) : null}
+      </Vis>
     </AbsoluteFill>
   );
 };
 
 // ================= S2 · « Au Tchad comme à l'international » (fond vert) =================
-const sweepUp = (p: number) => {
-  const y = H - p * (H + 600);
-  return `polygon(0 ${y + 600}px, ${W}px ${y}px, ${W}px ${H}px, 0 ${H}px)`;
+const sweepUp = (p: number, w: number, h: number) => {
+  const y = h - p * (h + 600);
+  return `polygon(0 ${y + 600}px, ${w}px ${y}px, ${w}px ${h}px, 0 ${h}px)`;
 };
 export const S2BG: React.FC<P> = ({ f }) => {
   if (f < 140 || f > CUT.logo + 20) return null;
   const p = t(f, 142, 160, 0, 1, ease.inOut);
-  return <AbsoluteFill style={{ background: C.green, clipPath: p < 1 ? sweepUp(p) : undefined }} />;
+  const { width, height } = useVideoConfig();
+  return <AbsoluteFill style={{ background: C.green, clipPath: p < 1 ? sweepUp(p, width, height) : undefined }} />;
 };
 export const S2Text: React.FC<P> = ({ f }) => {
   if (f < 150 || f > CUT.logo) return null;
   return (
     <>
-      <Title f={f} onGreen top={230} size={70} out={203} lines={[{ text: 'Au *Tchad*', at: 158 }, { text: "comme à l'*international*,", at: 176 }]} />
+      <Title f={f} onGreen top={230} wtop={380} size={70} out={203} lines={[{ text: 'Au *Tchad*', at: 158 }, { text: "comme à l'*international*,", at: 176 }]} />
       <LogoBadge f={f} at={164} />
       {f > 203 ? null : null}
     </>
@@ -349,11 +363,13 @@ export const S3BG: React.FC<P> = ({ f }) => {
   // l'anneau blanc s'ouvre depuis N'Djamena (REF-08)
   const p = t(f, 204, 222, 0, 1, ease.inOut);
   const r = p * 1500;
+  const wide = useWide();
+  const [ox, oy] = wide ? [1360, 560] : [540, 1000];
   return (
     <AbsoluteFill>
-      <AbsoluteFill style={{ background: C.white, clipPath: p < 1 ? `circle(${r}px at 540px 1000px)` : undefined }} />
+      <AbsoluteFill style={{ background: C.white, clipPath: p < 1 ? `circle(${r}px at ${ox}px ${oy}px)` : undefined }} />
       {p < 1 ? (
-        <div style={{ position: 'absolute', left: 540 - r - 60, top: 1000 - r - 60, width: 2 * r + 120, height: 2 * r + 120, borderRadius: '50%', border: `60px solid ${C.white}`, boxShadow: '0 0 0 2px rgba(255,255,255,0.4), 10px 16px 30px rgba(0,50,20,0.25)' }} />
+        <div style={{ position: 'absolute', left: ox - r - 60, top: oy - r - 60, width: 2 * r + 120, height: 2 * r + 120, borderRadius: '50%', border: `60px solid ${C.white}`, boxShadow: '0 0 0 2px rgba(255,255,255,0.4), 10px 16px 30px rgba(0,50,20,0.25)' }} />
       ) : null}
     </AbsoluteFill>
   );
@@ -376,13 +392,14 @@ export const S3: React.FC<P> = ({ f }) => {
   const wmY = interpolate(k, [0, 1], [1150, 196]);
   return (
     <AbsoluteFill>
+      <Title f={f} top={430} wtop={380} size={72} lines={[{ text: 'Des services', at: 268 }, { text: '*adaptés à vos besoins.*', at: 301 }]} />
+      <Vis {...s3Vis(f)}>
       <div style={{ position: 'absolute', left: wmX, top: wmY }}>
         <Wordmark width={wmW} reveal={t(f, 226, 246, 0, 1, ease.out)} />
         <div style={{ marginTop: wmW * 0.04, marginLeft: wmW * 0.04 }}>
           <Tagline width={wmW * 0.86} reveal={t(f, 236, 256, 0, 1, ease.out)} />
         </div>
       </div>
-      <Title f={f} top={430} size={72} lines={[{ text: 'Des services', at: 268 }, { text: '*adaptés à vos besoins.*', at: 301 }]} />
       {SERVICES.map((s, i) => {
         const at = 276 + i * 7;
         const k2 = sp(f, at, 'pose');
@@ -406,6 +423,7 @@ export const S3: React.FC<P> = ({ f }) => {
               gap: 30,
               padding: '0 34px',
               transform: `translateX(${(1 - k2) * 1100}px) rotate(${(1 - k2) * 6}deg)`,
+              opacity: f < at ? 0 : 1,
               fontFamily: FONT.title,
               fontWeight: 500,
               fontSize: 46,
@@ -431,14 +449,15 @@ export const S3: React.FC<P> = ({ f }) => {
           <LogoIcon D={lp.D} spin={(f - 246) * 0.35} />
         </div>
       ) : null}
+      </Vis>
     </AbsoluteFill>
   );
 };
 
 // ================= S4 · « Grâce à une grille tarifaire avantageuse, frais réduits » (fond vert) =================
-const sweepLeft = (p: number) => {
-  const x0 = W - p * (W + 500);
-  return `polygon(${x0}px 0, ${W}px 0, ${W}px ${H}px, ${x0 + 500}px ${H}px)`;
+const sweepLeft = (p: number, w: number, h: number) => {
+  const x0 = w - p * (w + 500);
+  return `polygon(${x0}px 0, ${w}px 0, ${w}px ${h}px, ${x0 + 500}px ${h}px)`;
 };
 const ROWS = [
   { m: '5 000 à 300 000', fee: '2 %' },
@@ -458,11 +477,13 @@ export const S4: React.FC<P> = ({ f }) => {
   const hlOn = t(f, 410, 416);
   const badge = sp(f, 412, 'pose');
   const intl = sp(f, 452, 'pose');
+  const { width, height } = useVideoConfig();
   return (
-    <AbsoluteFill style={{ background: C.green, clipPath: p < 1 ? sweepLeft(p) : undefined }}>
-      <Title f={f} onGreen top={220} size={72} out={404} lines={[{ text: 'Une grille tarifaire', at: 352 }, { text: '*avantageuse*', at: 384 }]} />
-      <Title f={f} onGreen top={220} size={72} lines={[{ text: 'Des *frais réduits*', at: 414 }, { text: 'sur vos transferts.', at: 447 }]} />
+    <AbsoluteFill style={{ background: C.green, clipPath: p < 1 ? sweepLeft(p, width, height) : undefined }}>
+      <Title f={f} onGreen top={220} wtop={380} size={72} out={404} lines={[{ text: 'Une grille tarifaire', at: 352 }, { text: '*avantageuse*', at: 384 }]} />
+      <Title f={f} onGreen top={220} wtop={380} size={72} lines={[{ text: 'Des *frais réduits*', at: 414 }, { text: 'sur vos transferts.', at: 447 }]} />
       <LogoBadge f={f} at={356} />
+      <Vis cx={1380} cy={930} s={0.95}>
       <div
         style={{
           position: 'absolute',
@@ -580,6 +601,7 @@ export const S4: React.FC<P> = ({ f }) => {
         </span>
         <span style={{ fontWeight: 600, color: C.white, background: C.green, padding: '10px 26px', borderRadius: 40 }}>dès 4 %</span>
       </div>
+      </Vis>
     </AbsoluteFill>
   );
 };
@@ -670,11 +692,15 @@ export const S5: React.FC<P> = ({ f }) => {
   const r = p * 1300;
   const card = sp(f, 492, 'doux');
   const outK = t(f, 598, 612, 0, 1, ease.in);
+  const wide = useWide();
+  const { width, height } = useVideoConfig();
+  const [ox, oy] = [width / 2, height / 2];
   return (
     <AbsoluteFill>
-      <AbsoluteFill style={{ background: C.paper, clipPath: p < 1 ? `circle(${r}px at 540px 960px)` : undefined }}>
+      <AbsoluteFill style={{ background: C.paper, clipPath: p < 1 ? `circle(${r}px at ${ox}px ${oy}px)` : undefined }}>
         <div style={{ position: 'absolute', inset: 0, transform: `scale(${1 - outK * 0.35})`, opacity: 1 - outK, filter: `blur(${outK * 8}px)` }}>
-          <Title f={f} top={210} size={72} lines={[{ text: 'Retrouvez nos *agences*', at: 506 }, { text: "à travers *N'Djamena*", at: 532 }]} />
+          <Title f={f} top={210} wtop={300} size={72} lines={[{ text: 'Retrouvez nos *agences*', at: 506 }, { text: "à travers *N'Djamena*", at: 532 }]} />
+          <Vis cx={1380} cy={910} s={1}>
           <div
             style={{
               position: 'absolute',
@@ -698,8 +724,9 @@ export const S5: React.FC<P> = ({ f }) => {
               </div>
             </div>
           </div>
-          <Title f={f} top={1408} size={50} lines={[{ text: 'et sur nos *réseaux sociaux*', at: 566 }]} />
-          <div style={{ position: 'absolute', left: 90, top: 1490, display: 'flex', gap: 26, alignItems: 'center' }}>
+          </Vis>
+          <Title f={f} top={1408} wtop={600} size={50} lines={[{ text: 'et sur nos *réseaux sociaux*', at: 566 }]} />
+          <div style={{ position: 'absolute', left: wide ? 140 : 90, top: wide ? 690 : 1490, display: 'flex', gap: 26, alignItems: 'center' }}>
             {[Facebook, Instagram, Linkedin].map((Icon, i) => {
               const k = sp(f, 576 + i * 4, 'pose');
               return (
@@ -714,7 +741,7 @@ export const S5: React.FC<P> = ({ f }) => {
         </div>
       </AbsoluteFill>
       {p < 1 ? (
-        <div style={{ position: 'absolute', left: 540 - r - 70, top: 960 - r - 70, width: 2 * r + 140, height: 2 * r + 140, borderRadius: '50%', border: `70px solid ${C.white}`, boxShadow: '10px 16px 30px rgba(0,50,20,0.25)' }} />
+        <div style={{ position: 'absolute', left: ox - r - 70, top: oy - r - 70, width: 2 * r + 140, height: 2 * r + 140, borderRadius: '50%', border: `70px solid ${C.white}`, boxShadow: '10px 16px 30px rgba(0,50,20,0.25)' }} />
       ) : null}
     </AbsoluteFill>
   );
@@ -730,8 +757,10 @@ export const Final: React.FC<P> = ({ f }) => {
   const spin = interpolate(inK, [0, 1], [-260, 0]) + Math.max(0, f - 612) * 0.45;
   const afr = sp(f, 609, 'pose');
   const band = sp(f, 688, 'doux');
+  const wide = useWide();
   return (
     <AbsoluteFill style={{ background: C.white, opacity: t(f, 596, 604) }}>
+      <Vis cx={interpolate(band, [0, 1], [960, 620])} cy={840} s={1}>
       <div style={{ position: 'absolute', left: 540, top: Y }}>
         <div style={{ position: 'absolute', transform: `rotate(${spin}deg)` }}>
           <LogoArrows D={D} />
@@ -754,33 +783,36 @@ export const Final: React.FC<P> = ({ f }) => {
         left={0}
         width={W}
         align="center"
+        keep
         size={68}
         lines={[
           { text: 'Votre argent', at: 657 },
           { text: 'vous *suit partout.*', at: 669 },
         ]}
       />
-      {/* bandeau vert : contacts */}
+      </Vis>
+      {/* bandeau vert : contacts (en bas en 9:16, panneau de droite en 16:9) */}
       <div
         style={{
           position: 'absolute',
-          left: 0,
-          top: 1440,
-          width: W,
-          height: 520,
+          ...(wide
+            ? { left: 1260, top: 0, width: 660, height: 1080, borderRadius: '60px 0 0 60px', transform: `translateX(${(1 - band) * 700}px)`, padding: '0 60px', display: 'flex', flexDirection: 'column' as const, justifyContent: 'center' }
+            : { left: 0, top: 1440, width: W, height: 520, borderRadius: '60px 60px 0 0', transform: `translateY(${(1 - band) * 520}px)`, padding: '56px 90px' }),
           background: C.green,
-          borderRadius: '60px 60px 0 0',
-          transform: `translateY(${(1 - band) * 520}px)`,
-          padding: '56px 90px',
           fontFamily: FONT.body,
           fontWeight: 500,
           color: C.white,
-          fontSize: 40,
+          fontSize: wide ? 38 : 40,
         }}
       >
         {[
-          { Icon: PhoneIcon, txt: '(+235) 66 27 06 83 · 99 40 06 20', at: 694 },
-          { Icon: MessageCircle, txt: '(+235) 68 64 18 13 (WhatsApp)', at: 700 },
+          ...(wide
+            ? [
+                { Icon: PhoneIcon, txt: '(+235) 66 27 06 83', at: 694 },
+                { Icon: PhoneIcon, txt: '(+235) 99 40 06 20', at: 697 },
+              ]
+            : [{ Icon: PhoneIcon, txt: '(+235) 66 27 06 83 · 99 40 06 20', at: 694 }]),
+          { Icon: MessageCircle, txt: wide ? '(+235) 68 64 18 13' : '(+235) 68 64 18 13 (WhatsApp)', at: 700 },
           { Icon: Facebook, txt: 'Lyna Transfert', at: 706 },
         ].map(({ Icon, txt, at }) => (
           <div key={txt} style={{ display: 'flex', alignItems: 'center', gap: 22, marginBottom: 26, opacity: t(f, at, at + 10), transform: `translateY(${(1 - t(f, at, at + 14)) * 30}px)` }}>
