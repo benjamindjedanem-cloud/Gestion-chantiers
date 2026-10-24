@@ -26,12 +26,14 @@ const CLOCK = [
 
 export const S1: React.FC<P> = ({ f }) => {
   if (f > CUT.tchad + 12) return null;
-  const rise = sp(f, 2, 'doux');
+  // plan 1b : on entre dans le téléphone qui vient de recevoir l'argent (zoom depuis le plan 1a)
+  const rise = t(f, 52, 72, 0, 1, ease.inOut);
   const leave = t(f, 140, 162, 0, 1, ease.in);
   const pw = 660;
   return (
     <AbsoluteFill style={{ background: C.paper }}>
-      <Title f={f} top={210} size={72} out={52} lines={[{ text: 'Pour vos', at: 24 }, { text: "*transferts d'argent*,", at: 30 }]} />
+      <Title f={f} top={210} size={72} out={54} lines={[{ text: 'Pour vos', at: 24 }, { text: "*transferts d'argent*,", at: 30 }]} />
+      <Envoi f={f} />
       <Title
         f={f}
         top={200}
@@ -47,8 +49,11 @@ export const S1: React.FC<P> = ({ f }) => {
         style={{
           position: 'absolute',
           left: W / 2 - pw / 2,
-          top: 520 + (1 - rise) * 1300 - leave * 1500,
-          transform: `perspective(1800px) rotateX(${(1 - rise) * 22}deg) rotate(${(1 - rise) * -7 + leave * -10}deg) scale(${1 + f * 0.0004})`,
+          top: 520 - leave * 1500,
+          opacity: f >= 52 ? 1 : 0,
+          transformOrigin: '50% 50%',
+          // le téléphone qui reçoit (plan 1a) glisse au centre et grandit : raccord dans le mouvement
+          transform: `translate(${(1 - rise) * 280}px, ${(1 - rise) * 42}px) rotate(${(1 - rise) * 6 + leave * -10}deg) scale(${(0.606 + 0.394 * rise) * (1 + Math.max(0, f - 72) * 0.0004)})`,
           filter: `blur(${leave * 14}px)`,
         }}
       >
@@ -56,6 +61,117 @@ export const S1: React.FC<P> = ({ f }) => {
           <LockScreen f={f} w={pw * 0.94} />
         </Phone>
       </div>
+    </AbsoluteFill>
+  );
+};
+
+// ---------- Plan 1a · « Pour vos transferts d'argent » : l'argent part d'un téléphone et arrive sur l'autre ----------
+const ARC = { a: [300, 1010] as [number, number], b: [800, 1180] as [number, number] };
+const arcPt = (p: number) => {
+  const c = [560, 760];
+  const q = 1 - p;
+  return [q * q * ARC.a[0] + 2 * q * p * c[0] + p * p * ARC.b[0], q * q * ARC.a[1] + 2 * q * p * c[1] + p * p * ARC.b[1]];
+};
+const Envoi: React.FC<{ f: number }> = ({ f }) => {
+  if (f > 70) return null;
+  const inA = sp(f, 0, 'pose');
+  const inB = sp(f, 6, 'pose');
+  const press = t(f, 24, 28) - t(f, 28, 34);
+  const fly = t(f, 30, 48, 0, 1, ease.inOut);
+  const [tx, ty] = arcPt(fly);
+  const recv = sp(f, 47, 'pose');
+  // sortie : le téléphone d'envoi file à gauche, celui qui reçoit est repris par le plan 1b
+  const outA = t(f, 50, 64, 0, 1, ease.in);
+  const pw = 400;
+  return (
+    <AbsoluteFill>
+      <div style={{ position: 'absolute', left: 60 - (1 - inA) * 700 - outA * 800, top: 660, transform: `rotate(${-7 + (1 - inA) * -12 - outA * 10}deg)`, filter: `blur(${outA * 10}px)` }}>
+        <Phone w={pw}>
+          <AbsoluteFill style={{ background: C.white, padding: '96px 30px 0', fontFamily: FONT.body }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12, fontSize: 24, color: C.inkSoft, fontWeight: 500 }}>
+              <div style={{ position: 'relative', width: 46, height: 46 }}>
+                <div style={{ position: 'absolute', left: 23, top: 23 }}>
+                  <LogoIcon D={44} />
+                </div>
+              </div>
+              Lyna-Transfert
+            </div>
+            <div style={{ marginTop: 50, fontSize: 24, color: C.inkSoft }}>Envoi vers Moundou</div>
+            <div style={{ marginTop: 8, fontFamily: FONT.title, fontWeight: 500, fontSize: 52, color: C.ink, letterSpacing: -1 }}>150 000</div>
+            <div style={{ fontSize: 26, color: C.inkSoft }}>FCFA</div>
+            <div style={{ marginTop: 40, height: 2, background: C.greenPale }} />
+            <div style={{ marginTop: 22, display: 'flex', justifyContent: 'space-between', fontSize: 22, color: C.inkSoft }}>
+              <span>Frais</span>
+              <span style={{ color: C.green, fontWeight: 500 }}>2 %</span>
+            </div>
+            <div
+              style={{
+                marginTop: 60,
+                height: 84,
+                borderRadius: 84,
+                background: f >= 30 ? C.greenDark : C.green,
+                color: C.white,
+                display: 'grid',
+                placeItems: 'center',
+                fontFamily: FONT.title,
+                fontWeight: 500,
+                fontSize: 30,
+                transform: `scale(${1 - press * 0.06})`,
+              }}
+            >
+              {f >= 30 ? 'Envoyé ✓' : 'Envoyer'}
+            </div>
+          </AbsoluteFill>
+        </Phone>
+      </div>
+      <div style={{ position: 'absolute', left: 620 + (1 - inB) * 700, top: 830, transform: `rotate(${6 + (1 - inB) * 12}deg)`, opacity: f >= 52 ? 0 : 1 }}>
+        <Phone w={pw}>
+          <AbsoluteFill style={{ background: `linear-gradient(170deg, ${C.green} 0%, ${C.greenDark} 70%, ${C.greenDeep} 100%)` }}>
+            <div style={{ position: 'absolute', top: 100, width: '100%', textAlign: 'center', color: C.white, fontFamily: FONT.title, fontWeight: 300, fontSize: 92, letterSpacing: -3 }}>08:15</div>
+            <div style={{ position: 'absolute', left: 14, top: 260 - (1 - recv) * 60, opacity: Math.min(1, recv * 1.5), transform: `scale(${0.9 + 0.1 * recv})`, zoom: 0.62 }}>
+              <Notif title="Lyna-Transfert" when="08:15" text={<>Transfert reçu : <b>150 000 FCFA</b></>} w={560} />
+            </div>
+          </AbsoluteFill>
+        </Phone>
+      </div>
+      {/* trajet en pointillés + jeton qui glisse dessus */}
+      <svg width={W} height={H} style={{ position: 'absolute', left: 0, top: 0 }}>
+        <path
+          d={`M ${ARC.a[0]} ${ARC.a[1]} Q 560 760 ${ARC.b[0]} ${ARC.b[1]}`}
+          fill="none"
+          stroke={C.green}
+          strokeWidth={6}
+          strokeDasharray="16 14"
+          strokeLinecap="round"
+          opacity={t(f, 28, 34) * (1 - t(f, 50, 56))}
+          style={{ clipPath: `inset(0 ${(1 - fly) * 100}% 0 0)` }}
+        />
+      </svg>
+      {f >= 30 && f < 50 ? (
+        <div
+          style={{
+            position: 'absolute',
+            left: tx - 58,
+            top: ty - 58,
+            width: 116,
+            height: 116,
+            borderRadius: 116,
+            background: C.orange,
+            border: `6px solid ${C.white}`,
+            boxShadow: '6px 10px 16px rgba(0,40,15,0.25)',
+            display: 'grid',
+            placeItems: 'center',
+            color: C.white,
+            fontFamily: FONT.title,
+            fontWeight: 600,
+            fontSize: 26,
+            filter: `blur(${Math.sin(fly * Math.PI) * 2.5}px)`,
+            transform: `scale(${0.7 + 0.3 * Math.sin(fly * Math.PI) + 0.3})`,
+          }}
+        >
+          FCFA
+        </div>
+      ) : null}
     </AbsoluteFill>
   );
 };
