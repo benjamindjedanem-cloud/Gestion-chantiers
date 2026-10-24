@@ -57,7 +57,7 @@ export const Lyna = () => {
       </Sequence>
       {SFX.map(([at, name, vol], i) => (
         <Sequence key={i} from={at}>
-          <Audio src={staticFile(`sfx/${name}.wav`)} volume={vol * 0.7} />
+          <Audio src={staticFile(`sfx-pro/${name}.wav`)} volume={vol * 0.5} />
         </Sequence>
       ))}
     </AbsoluteFill>

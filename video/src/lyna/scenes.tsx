@@ -31,7 +31,7 @@ export const S1: React.FC<P> = ({ f }) => {
   const pw = 660;
   return (
     <AbsoluteFill style={{ background: C.paper }}>
-      <Title f={f} top={210} size={72} out={52} lines={[{ text: "Pour vos *transferts d'argent*,", at: 24 }]} />
+      <Title f={f} top={210} size={72} out={52} lines={[{ text: 'Pour vos', at: 24 }, { text: "*transferts d'argent*,", at: 30 }]} />
       <Title
         f={f}
         top={200}
@@ -220,7 +220,7 @@ export const S2Text: React.FC<P> = ({ f }) => {
   if (f < 150 || f > CUT.logo) return null;
   return (
     <>
-      <Title f={f} onGreen top={230} size={74} out={203} lines={[{ text: 'Au *Tchad*', at: 158 }, { text: "comme à l'*international*,", at: 176 }]} />
+      <Title f={f} onGreen top={230} size={70} out={203} lines={[{ text: 'Au *Tchad*', at: 158 }, { text: "comme à l'*international*,", at: 176 }]} />
       <LogoBadge f={f} at={164} />
       {f > 203 ? null : null}
     </>

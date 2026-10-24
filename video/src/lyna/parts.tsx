@@ -22,7 +22,7 @@ export const Title: React.FC<{
   left?: number;
   align?: 'left' | 'center';
   width?: number;
-}> = ({ f, lines, out = 99999, onGreen = false, size = 74, top = 250, left = 90, align = 'left', width = 900 }) => {
+}> = ({ f, lines, out = 99999, onGreen = false, size = 74, top = 250, left = 90, align = 'left', width = 860 }) => {
   const exit = t(f, out, out + 12, 0, 1, ease.in);
   return (
     <div
@@ -47,7 +47,7 @@ export const Title: React.FC<{
         const words = ln.text.split(' ').filter(Boolean);
         let inKey = false;
         return (
-          <div key={li} style={{ whiteSpace: 'nowrap' }}>
+          <div key={li}>
             {words.map((w, i) => {
               const starts = w.startsWith('*');
               if (starts) inKey = true;
