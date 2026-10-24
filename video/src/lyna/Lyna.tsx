@@ -13,7 +13,11 @@ const musicVol = (fr: number) =>
 
 const SFX: [number, string, number][] = [
   [2, 'swoosh', 0.5],
-  [40, 'pop', 0.45],
+  [8, 'swoosh', 0.35],
+  [25, 'tick', 0.5],
+  [29, 'whoosh', 0.5],
+  [47, 'pop', 0.5],
+  [51, 'swoosh', 0.35],
   [106, 'pop', 0.45],
   [124, 'pop', 0.45],
   [140, 'whoosh', 0.7],
