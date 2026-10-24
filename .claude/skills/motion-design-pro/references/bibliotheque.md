@@ -166,3 +166,39 @@ Analyse du spectrogramme et des attaques (`scripts/analyse_son.py`) :
 - Attaques marquées à 2,6 / 3,66 / 5,77 / 6,83 / 7,87 / 8,36 / 8,93 s et **impact grave à 11,55 s** suivi d'une **note qui résonne et s'éteint** jusqu'à ~13 s.
 - **Synchronisation** : les changements de plan (1,0 / 2,6 / 3,67 / 6,77 / 8,33 / 9,0 / 10,37 / 11,5 s) tombent **sur les attaques** (2,61 ✓, 3,66 ✓, 6,83 ✓, 8,36 ✓, 8,93 ✓, 11,55 ✓).
 - **Même fin que REF-03** : impact grave sur le logo + note qui s'éteint → goût confirmé.
+
+---
+
+## REF-05 — Pub appli **Gozem** (Bénin), « Gozem te simplifie la vie »
+
+- **Partagée le** : 2026-10-24 · 18 s (filmée sur écran) · 9:16 · ≈ 86 BPM
+- **Ce que Benjamin a dit** : « Voici les nouvelles motions que j'aime, ajoute à la liste. » (vidéo aimée dans son ensemble)
+- **Planches** : `REF-05_vue-ensemble_gozem.jpg`, `REF-05_09-11s_DENSE_balayage-et-trajet-pointille.jpg`
+- **Univers** : **une seule couleur de marque** (vert) qui alterne avec le **blanc** : fond blanc ↔ plein écran vert. Typo fine et sobre, mot-clé dans la couleur de marque. Contexte africain (Calavi, Cotonou).
+- **Déroulé** : logo + « te simplifie la vie » → « Besoin de te **déplacer** ? » (téléphone de face qui monte, doigt qui tape) → « un **zem**, un **tricycle** ou un **taxi** » (l'écran change à chaque mot, un **trajet rouge se dessine** sur la carte) → balayage vert → « Une petite **faim** ? » → « tes plats préférés, **livrés chez toi** » → « Un **colis** ? Des **courses** ? » (icônes reliées par un **trajet en pointillés qui se dessine**, l'objet glisse le long) → « De **Calavi** à **Cotonou** » (**carte** dans une carte blanche, épingles qui tombent, itinéraire qui se trace d'un point à l'autre) → « Gozem t'**accompagne** ».
+- **Transitions** : le téléphone file en diagonale avec flou pendant qu'un **balayage de couleur** (vert → blanc) traverse l'écran ; changement d'écran *dans* le téléphone sur chaque mot.
+
+## REF-06 — Pub appli **Yango**, « Yango te facilite la vie » (0–48 s ; la suite est un making-of, hors référence)
+
+- **Partagée le** : 2026-10-24 · 9:16
+- **Planche** : `REF-06_vue-ensemble_yango.jpg`
+- **Univers** : **rouge plein** de la marque, blanc, et une scène de nuit (ville éclairée) ; jaune en accent sur les mots-clés.
+- **Récit « une journée »** : « **Imagine** une journée… » → **grandes heures comme chapitres** (« **07:00** Tu te réveilles », « **12:00** », « **19:00** Et le soir… ») avec **notifications** qui tombent → chaque moment = un service (taxi, repas, colis) montré dans le téléphone → logo **YANGO** gras et incliné, « pensée pour toi » → liste des services en cartes → « **Télécharge** l'application » avec boutons des magasins d'applis → « Yango te facilite la **vie** ».
+- **À retenir** : la **structure narrative par moments de la journée**, très claire ; illustrations simples (voiture rouge sur fond blanc).
+
+## REF-07 — Pub formation « **Web Builder Pro** »
+
+- **Partagée le** : 2026-10-24 · 62 s · 4:5
+- **Planche** : `REF-07_vue-ensemble_web-builder-pro.jpg`
+- **Univers** : **gris anthracite** + **vert citron** en accent unique ; typo fine centrée, mot-clé en accent ; cartes sombres en relief doux.
+- **Mouvements** : champ de saisie qui s'écrit (« Crée-moi une landing page ») ; **carrousel de sites en perspective** ; pastille-bouton qui se transforme en titre ; **modules en cartes empilées** (« 4 modules, étape par étape ») ; **icônes en orbite** autour d'un objet central ; final avec bouton d'appel « Je rejoins la formation → ».
+- Même famille que REF-04 (minimal, une couleur d'accent), version sombre.
+
+## REF-08 — Pub appli **TourShop Express** (envoi de colis)
+
+- **Partagée le** : 2026-10-24 · 36 s · 16:9 · ≈ 126 BPM
+- **Planches** : `REF-08_vue-ensemble_tourshop.jpg`, `REF-08_05-07s_DENSE_anneau-qui-s-ouvre.jpg`
+- **Univers** : **bleu vif** avec grandes formes douces en relief, **objets 3D** (colis, carte de ville avec épingles, **globe avec avion**), téléphone avec la vraie interface, **cartes blanches arrondies** pour les infos ; titres blancs très gras alignés à gauche ; **photos de vraies personnes africaines** dans des cercles.
+- **Déroulé** : « Un **colis** à expédier ? » → « Une **agence près de vous** » (carte 3D, épingle, encart adresse) → logo + téléphone → « **À l'étranger** » (globe + avion) / « **Entre les communes** » → « Préparez votre envoi » → « **Estimez votre coût** » (encart « 96 250 FCFA ») → « Suivez votre colis » (barre de progression avec colis qui glisse) → « Une difficulté ? » → **pastilles d'avantages empilées** (« Tarifs avantageux », « Bonus », « Offres promotionnelles ») → « **Téléchargez** » + magasins → parrainage (visages) → « Le monde s'ouvre à vous. »
+- **Transition signature** : un **anneau blanc épais** s'ouvre depuis le centre, son trou grandit et révèle la scène suivante ; le téléphone **pivote sur lui-même** pour changer d'écran.
+- **Très proche d'un service de transfert/envoi** : agence sur la carte, globe international, tarifs.

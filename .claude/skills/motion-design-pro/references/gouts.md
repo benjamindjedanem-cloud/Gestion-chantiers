@@ -108,6 +108,18 @@ Mettre à jour à chaque nouvelle référence ou retour de Benjamin.
 **Son**
 59. Musique **plus douce et mélodique** (≈ 115 BPM, accords tenus) également appréciée : le critère n'est pas « fort », c'est **la synchronisation parfaite** et une **fin sur impact + note qui s'éteint**. *(REF-03 + REF-04 → goût fort)*
 
+### REF-05 à REF-08 · Gozem, Yango, Web Builder Pro, TourShop — aimées dans leur ensemble
+
+60. **Une couleur de marque, en grand** : la vidéo vit dans la couleur de la marque (vert Gozem, rouge Yango, bleu TourShop), en alternance avec le blanc. *(REF-05, 06, 08)*
+61. **Le téléphone de face, au centre, dont l'écran change à chaque mot** de la phrase. *(REF-05, 06)*
+62. **Trajets qui se dessinent** : itinéraire sur une carte, pointillés d'un point A à un point B avec l'objet qui glisse dessus ; épingles qui tombent. *(REF-05, 08)*
+63. **Balayage de couleur** plein écran comme transition (la couleur de marque traverse et révèle la scène suivante). *(REF-05)*
+64. **Anneau blanc qui s'ouvre** depuis le centre comme transition ; téléphone qui **pivote** pour changer d'écran. *(REF-08)*
+65. **Récit par moments de la journée** avec grandes heures (07:00, 12:00, 19:00) et notifications. *(REF-06)*
+66. **Objets 3D du métier** (colis, globe avec avion, carte de ville) et **cartes blanches arrondies** pour les infos ; **pastilles d'avantages empilées**. *(REF-08)*
+67. **Contexte africain assumé** : noms de villes et quartiers réels, visages africains, prix en FCFA. *(REF-05, 08)*
+68. **Fin d'appel à l'action** : logo + slogan + bouton/action (télécharger, rejoindre, venir en agence). *(REF-06, 07, 08)*
+
 ---
 
 ## 🎨 DESIGN GRAPHIQUE — validé par Benjamin (affiches de référence DESIGN-01 à 03)
@@ -223,3 +235,4 @@ Planches : `assets/refs/REF-02_*_A-EVITER.jpg`.
 - 2026-10-21 — Légendes des gestes : l'orange va sur le mot de la fonction (paiement, dépense, à payer), pas sur la fin de phrase ; plans avec le logo sur fond marine uni, sans rayons.
 - 2026-10-21 — Première version complète jugée « trop rapide, difficile à comprendre sans voix off » → gestes ralentis (≈ 7 s chacun) avec étapes ①②③ et valeurs entourées, voix off féminine ElevenLabs (Manon), vidéo portée à ≈ 50 s (recette § 28).
 - 2026-10-21 — Verdict sur le premier projet (Gestion Chantiers) : Benjamin préfère la **version courte (≈ 35 s) avec voix off** — plus immersive, et compréhensible grâce à la voix ; sans voix, elle reste trop rapide. → Par défaut : format court immersif **avec voix off**, et proposer en option une version longue expliquée (étapes ①②③) pour une lecture sans le son.
+- 2026-10-24 — Ajout de 4 références aimées dans leur ensemble : Gozem, Yango, Web Builder Pro, TourShop (points 60–68). Goût confirmé pour les pubs d'applis africaines « une couleur de marque + téléphone + trajets + objets du métier ».
