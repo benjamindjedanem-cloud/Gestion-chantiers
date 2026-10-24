@@ -27,7 +27,8 @@ Chaque étape a une validation par Benjamin avant la suivante.
 1. **Brief** : objectif (ex. faire installer l'appli), plateformes, durée, cible, message, appel à l'action. Plateformes → format (voir `gouts.md` § Formats). **Demander la musique dès le brief** et l'analyser (`scripts/analyse_son.py`, recettes § 19) : son tempo et sa structure (coupure, montée, drop, impact) dictent le storyboard.
 2. **Note d'intention** : le concept en 5 lignes, l'idée de transition signature, le ton. Dire quelles références de la bibliothèque on mobilise et pour quoi.
 3. **Storyboard** : tableau scène par scène — temps, texte exact à l'écran (mot-clé mis en valeur), ce qui bouge, transition vers la scène suivante.
-4. **Images clés (style frames)** : rendre une image fixe soignée par scène (`npx remotion still`) et les montrer **avant** d'animer. On fige le look ici.
+4. **Storyboard visuel à valider — OBLIGATOIRE, même quand Benjamin dit « anime seulement » ou fournit déjà la voix** : planches avec, par scène, deux images clés (début / fin), temps, phrase de la voix, ce qui bouge, transition (exemple : `video/scripts/storyboard_lyna.py`). **Aucun rendu vidéo avant son « je valide ».**
+   **Images clés (style frames)** : rendre une image fixe soignée par scène (`npx remotion still`) et les montrer **avant** d'animer. On fige le look ici.
 5. **Système de mouvement** : fixer courbes, durées, décalages, à partir de `recettes-mouvement.md`, dans un fichier `motion.ts` partagé par toutes les scènes.
 6. **Animation** + calage sur la musique (repérer les temps forts du morceau et poser les transitions dessus). **Voix off par défaut** (ElevenLabs, recette § 28) : format court immersif ≈ 35 s préféré par Benjamin ; version longue expliquée (étapes ①②③) en option pour la lecture sans le son.
 7. **Relecture image par image par Claude d'abord** (voir Contrôle qualité), puis rendu à Benjamin, puis corrections.
