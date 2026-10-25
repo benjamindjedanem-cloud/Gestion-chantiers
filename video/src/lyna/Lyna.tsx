@@ -12,6 +12,9 @@ const V_OUT = VOICE_AT + Math.round(22.67 * 30);
 const musicVol = (fr: number) =>
   interpolate(fr, [0, V_IN - 4, V_IN + 6, V_OUT, V_OUT + 10, END - 30, END], [0.6, 0.6, 0.28, 0.28, 0.62, 0.62, 0], clamp);
 
+// Effets un peu plus présents (retour de Benjamin) ; après la carte, ils se perdaient sous la voix : on les remonte davantage.
+const sfxGain = (at: number) => (at >= 205 ? 0.9 : 0.62);
+
 const SFX: [number, string, number][] = [
   [2, 'swoosh', 0.5],
   [8, 'swoosh', 0.35],
@@ -63,7 +66,7 @@ export const Lyna: React.FC<{ wide?: boolean }> = ({ wide = false }) => {
       </Sequence>
       {SFX.map(([at, name, vol], i) => (
         <Sequence key={i} from={at}>
-          <Audio src={staticFile(`sfx-pro/${name}.wav`)} volume={vol * 0.5} />
+          <Audio src={staticFile(`sfx-pro/${name}.wav`)} volume={Math.min(1, vol * sfxGain(at))} />
         </Sequence>
       ))}
     </AbsoluteFill>
