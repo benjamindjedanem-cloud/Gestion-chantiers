@@ -32,16 +32,23 @@ export const S1: React.FC<P> = ({ f }) => {
   const pw = 660;
   return (
     <AbsoluteFill style={{ background: C.paper }}>
-      <Title f={f} top={210} wtop={400} size={72} out={54} lines={[{ text: 'Pour vos', at: 24 }, { text: "*transferts d'argent*,", at: 30 }]} />
+      <Title f={f} top={210} wtop={350} size={72} out={54} lines={[{ text: 'Pour vos', at: 24 }, { text: "*transferts d'argent*,", at: 30 }]} wlines={[{ text: 'Pour vos', at: 24 }, { text: '*transferts*', at: 30 }, { text: "*d'argent*,", at: 33 }]} />
       <Title
         f={f}
         top={200}
-        wtop={360}
+        wtop={290}
         size={72}
         out={140}
         lines={[
           { text: 'Choisissez une solution', at: 64 },
           { text: 'qui vous *accompagne*', at: 98 },
+          { text: '*au quotidien.*', at: 117 },
+        ]}
+        wlines={[
+          { text: 'Choisissez', at: 64 },
+          { text: 'une solution', at: 67 },
+          { text: 'qui vous', at: 98 },
+          { text: '*accompagne*', at: 104 },
           { text: '*au quotidien.*', at: 117 },
         ]}
       />
@@ -350,7 +357,7 @@ export const S2Text: React.FC<P> = ({ f }) => {
   if (f < 150 || f > CUT.logo) return null;
   return (
     <>
-      <Title f={f} onGreen top={230} wtop={380} size={70} out={203} lines={[{ text: 'Au *Tchad*', at: 158 }, { text: "comme à l'*international*,", at: 176 }]} />
+      <Title f={f} onGreen top={230} wtop={380} size={70} out={203} lines={[{ text: 'Au *Tchad*', at: 158 }, { text: "comme à l'*international*,", at: 176 }]} wlines={[{ text: 'Au *Tchad*', at: 158 }, { text: 'comme à', at: 176 }, { text: "l'*international*,", at: 182 }]} />
       <LogoBadge f={f} at={164} />
       {f > 203 ? null : null}
     </>
@@ -392,7 +399,7 @@ export const S3: React.FC<P> = ({ f }) => {
   const wmY = interpolate(k, [0, 1], [1150, 196]);
   return (
     <AbsoluteFill>
-      <Title f={f} top={430} wtop={380} size={72} lines={[{ text: 'Des services', at: 268 }, { text: '*adaptés à vos besoins.*', at: 301 }]} />
+      <Title f={f} top={430} wtop={380} size={72} lines={[{ text: 'Des services', at: 268 }, { text: '*adaptés à vos besoins.*', at: 301 }]} wlines={[{ text: 'Des services', at: 268 }, { text: '*adaptés*', at: 301 }, { text: '*à vos besoins.*', at: 304 }]} />
       <Vis {...s3Vis(f)}>
       <div style={{ position: 'absolute', left: wmX, top: wmY }}>
         <Wordmark width={wmW} reveal={t(f, 226, 246, 0, 1, ease.out)} />
@@ -480,8 +487,8 @@ export const S4: React.FC<P> = ({ f }) => {
   const { width, height } = useVideoConfig();
   return (
     <AbsoluteFill style={{ background: C.green, clipPath: p < 1 ? sweepLeft(p, width, height) : undefined }}>
-      <Title f={f} onGreen top={220} wtop={380} size={72} out={404} lines={[{ text: 'Une grille tarifaire', at: 352 }, { text: '*avantageuse*', at: 384 }]} />
-      <Title f={f} onGreen top={220} wtop={380} size={72} lines={[{ text: 'Des *frais réduits*', at: 414 }, { text: 'sur vos transferts.', at: 447 }]} />
+      <Title f={f} onGreen top={220} wtop={350} size={72} out={404} lines={[{ text: 'Une grille tarifaire', at: 352 }, { text: '*avantageuse*', at: 384 }]} wlines={[{ text: 'Une grille', at: 352 }, { text: 'tarifaire', at: 358 }, { text: '*avantageuse*', at: 384 }]} />
+      <Title f={f} onGreen top={220} wtop={350} size={72} lines={[{ text: 'Des *frais réduits*', at: 414 }, { text: 'sur vos transferts.', at: 447 }]} wlines={[{ text: 'Des *frais réduits*', at: 414 }, { text: 'sur vos', at: 447 }, { text: 'transferts.', at: 453 }]} />
       <LogoBadge f={f} at={356} />
       <Vis cx={1410} cy={930} s={1}>
       <div
@@ -699,7 +706,7 @@ export const S5: React.FC<P> = ({ f }) => {
     <AbsoluteFill>
       <AbsoluteFill style={{ background: C.paper, clipPath: p < 1 ? `circle(${r}px at ${ox}px ${oy}px)` : undefined }}>
         <div style={{ position: 'absolute', inset: 0, transform: `scale(${1 - outK * 0.35})`, opacity: 1 - outK, filter: `blur(${outK * 8}px)` }}>
-          <Title f={f} top={210} wtop={300} size={72} lines={[{ text: 'Retrouvez nos *agences*', at: 506 }, { text: "à travers *N'Djamena*", at: 532 }]} />
+          <Title f={f} top={210} wtop={190} size={72} lines={[{ text: 'Retrouvez nos *agences*', at: 506 }, { text: "à travers *N'Djamena*", at: 532 }]} wlines={[{ text: 'Retrouvez nos', at: 506 }, { text: '*agences*', at: 512 }, { text: 'à travers', at: 532 }, { text: "*N'Djamena*", at: 538 }]} />
           <Vis cx={1450} cy={910} s={1}>
           <div
             style={{
@@ -725,8 +732,8 @@ export const S5: React.FC<P> = ({ f }) => {
             </div>
           </div>
           </Vis>
-          <Title f={f} top={1408} wtop={620} size={50} lines={[{ text: 'et sur nos *réseaux sociaux*', at: 566 }]} />
-          <div style={{ position: 'absolute', left: wide ? 110 : 90, top: wide ? 720 : 1490, display: 'flex', gap: 26, alignItems: 'center' }}>
+          <Title f={f} top={1408} wtop={600} size={50} lines={[{ text: 'et sur nos *réseaux sociaux*', at: 566 }]} wlines={[{ text: 'et sur nos', at: 566 }, { text: '*réseaux sociaux*', at: 575 }]} />
+          <div style={{ position: 'absolute', left: wide ? 110 : 90, top: wide ? 760 : 1490, ...(wide ? { width: 900, justifyContent: 'center' } : {}), display: 'flex', gap: 26, alignItems: 'center' }}>
             {[Facebook, Instagram, Linkedin].map((Icon, i) => {
               const k = sp(f, 576 + i * 4, 'pose');
               return (
