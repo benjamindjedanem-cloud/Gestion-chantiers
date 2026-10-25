@@ -39,10 +39,10 @@ export const Title: React.FC<{
   keep?: boolean; // 16:9 : garder la position 9:16 (titre dessiné dans un <Vis>)
 }> = ({ f, lines, out = 99999, onGreen = false, size: size0 = 74, top: top0 = 250, left: left0 = 90, align = 'left', width: width0 = 860, wtop = 340, keep = false }) => {
   const wide = useWide() && !keep;
-  const size = wide ? Math.min(size0, 64) : size0;
+  const size = wide ? (size0 >= 70 ? 80 : 58) : size0;
   const top = wide ? wtop : top0;
-  const left = wide ? 140 : left0;
-  const width = wide ? 840 : width0;
+  const left = wide ? 110 : left0;
+  const width = wide ? 830 : width0;
   const exit = t(f, out, out + 12, 0, 1, ease.in);
   return (
     <div

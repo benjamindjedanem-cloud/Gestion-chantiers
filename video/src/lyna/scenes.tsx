@@ -45,7 +45,7 @@ export const S1: React.FC<P> = ({ f }) => {
           { text: '*au quotidien.*', at: 117 },
         ]}
       />
-      <Vis cx={1360} cy={1240} s={0.72}>
+      <Vis cx={1430} cy={1108} s={0.85}>
       <Envoi f={f} />
       <div
         style={{
@@ -230,7 +230,7 @@ const logoPose = (f: number) => {
 };
 
 // 16:9 : cadre du visuel de la carte (Tchad → Afrique), puis du logo (centré, puis à droite)
-const s3Vis = (f: number) => ({ cx: interpolate(t(f, 252, 272, 0, 1, ease.inOut), [0, 1], [960, 1340]), cy: 830, s: 0.77 });
+const s3Vis = (f: number) => ({ cx: interpolate(t(f, 252, 272, 0, 1, ease.inOut), [0, 1], [960, 1400]), cy: 765, s: 0.85 });
 const mapVis = (f: number) => {
   const k = t(f, 205, 224, 0, 1, ease.inOut);
   const b = s3Vis(f);
@@ -483,7 +483,7 @@ export const S4: React.FC<P> = ({ f }) => {
       <Title f={f} onGreen top={220} wtop={380} size={72} out={404} lines={[{ text: 'Une grille tarifaire', at: 352 }, { text: '*avantageuse*', at: 384 }]} />
       <Title f={f} onGreen top={220} wtop={380} size={72} lines={[{ text: 'Des *frais réduits*', at: 414 }, { text: 'sur vos transferts.', at: 447 }]} />
       <LogoBadge f={f} at={356} />
-      <Vis cx={1380} cy={930} s={0.95}>
+      <Vis cx={1410} cy={930} s={1}>
       <div
         style={{
           position: 'absolute',
@@ -700,7 +700,7 @@ export const S5: React.FC<P> = ({ f }) => {
       <AbsoluteFill style={{ background: C.paper, clipPath: p < 1 ? `circle(${r}px at ${ox}px ${oy}px)` : undefined }}>
         <div style={{ position: 'absolute', inset: 0, transform: `scale(${1 - outK * 0.35})`, opacity: 1 - outK, filter: `blur(${outK * 8}px)` }}>
           <Title f={f} top={210} wtop={300} size={72} lines={[{ text: 'Retrouvez nos *agences*', at: 506 }, { text: "à travers *N'Djamena*", at: 532 }]} />
-          <Vis cx={1380} cy={910} s={1}>
+          <Vis cx={1450} cy={910} s={1}>
           <div
             style={{
               position: 'absolute',
@@ -725,8 +725,8 @@ export const S5: React.FC<P> = ({ f }) => {
             </div>
           </div>
           </Vis>
-          <Title f={f} top={1408} wtop={600} size={50} lines={[{ text: 'et sur nos *réseaux sociaux*', at: 566 }]} />
-          <div style={{ position: 'absolute', left: wide ? 140 : 90, top: wide ? 690 : 1490, display: 'flex', gap: 26, alignItems: 'center' }}>
+          <Title f={f} top={1408} wtop={620} size={50} lines={[{ text: 'et sur nos *réseaux sociaux*', at: 566 }]} />
+          <div style={{ position: 'absolute', left: wide ? 110 : 90, top: wide ? 720 : 1490, display: 'flex', gap: 26, alignItems: 'center' }}>
             {[Facebook, Instagram, Linkedin].map((Icon, i) => {
               const k = sp(f, 576 + i * 4, 'pose');
               return (
@@ -802,7 +802,7 @@ export const Final: React.FC<P> = ({ f }) => {
           fontFamily: FONT.body,
           fontWeight: 500,
           color: C.white,
-          fontSize: wide ? 38 : 40,
+          fontSize: wide ? 46 : 40,
         }}
       >
         {[
