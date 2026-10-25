@@ -487,8 +487,8 @@ export const S4: React.FC<P> = ({ f }) => {
   const { width, height } = useVideoConfig();
   return (
     <AbsoluteFill style={{ background: C.green, clipPath: p < 1 ? sweepLeft(p, width, height) : undefined }}>
-      <Title f={f} onGreen top={220} wtop={350} size={72} out={404} lines={[{ text: 'Une grille tarifaire', at: 352 }, { text: '*avantageuse*', at: 384 }]} wlines={[{ text: 'Une grille', at: 352 }, { text: 'tarifaire', at: 358 }, { text: '*avantageuse*', at: 384 }]} />
-      <Title f={f} onGreen top={220} wtop={350} size={72} lines={[{ text: 'Des *frais réduits*', at: 414 }, { text: 'sur vos transferts.', at: 447 }]} wlines={[{ text: 'Des *frais réduits*', at: 414 }, { text: 'sur vos', at: 447 }, { text: 'transferts.', at: 453 }]} />
+      <Title f={f} onGreen top={220} wtop={380} size={72} out={404} lines={[{ text: 'Une grille tarifaire', at: 352 }, { text: '*avantageuse*', at: 384 }]} wcenter={false} />
+      <Title f={f} onGreen top={220} wtop={380} size={72} lines={[{ text: 'Des *frais réduits*', at: 414 }, { text: 'sur vos transferts.', at: 447 }]} wcenter={false} />
       <LogoBadge f={f} at={356} />
       <Vis cx={1410} cy={930} s={1}>
       <div
@@ -706,7 +706,7 @@ export const S5: React.FC<P> = ({ f }) => {
     <AbsoluteFill>
       <AbsoluteFill style={{ background: C.paper, clipPath: p < 1 ? `circle(${r}px at ${ox}px ${oy}px)` : undefined }}>
         <div style={{ position: 'absolute', inset: 0, transform: `scale(${1 - outK * 0.35})`, opacity: 1 - outK, filter: `blur(${outK * 8}px)` }}>
-          <Title f={f} top={210} wtop={190} size={72} lines={[{ text: 'Retrouvez nos *agences*', at: 506 }, { text: "à travers *N'Djamena*", at: 532 }]} wlines={[{ text: 'Retrouvez nos', at: 506 }, { text: '*agences*', at: 512 }, { text: 'à travers', at: 532 }, { text: "*N'Djamena*", at: 538 }]} />
+          <Title f={f} top={210} wtop={300} size={72} lines={[{ text: 'Retrouvez nos *agences*', at: 506 }, { text: "à travers *N'Djamena*", at: 532 }]} wcenter={false} />
           <Vis cx={1450} cy={910} s={1}>
           <div
             style={{
@@ -732,8 +732,8 @@ export const S5: React.FC<P> = ({ f }) => {
             </div>
           </div>
           </Vis>
-          <Title f={f} top={1408} wtop={600} size={50} lines={[{ text: 'et sur nos *réseaux sociaux*', at: 566 }]} wlines={[{ text: 'et sur nos', at: 566 }, { text: '*réseaux sociaux*', at: 575 }]} />
-          <div style={{ position: 'absolute', left: wide ? 110 : 90, top: wide ? 760 : 1490, ...(wide ? { width: 900, justifyContent: 'center' } : {}), display: 'flex', gap: 26, alignItems: 'center' }}>
+          <Title f={f} top={1408} wtop={620} size={50} lines={[{ text: 'et sur nos *réseaux sociaux*', at: 566 }]} wcenter={false} />
+          <div style={{ position: 'absolute', left: wide ? 110 : 90, top: wide ? 720 : 1490, display: 'flex', gap: 26, alignItems: 'center' }}>
             {[Facebook, Instagram, Linkedin].map((Icon, i) => {
               const k = sp(f, 576 + i * 4, 'pose');
               return (

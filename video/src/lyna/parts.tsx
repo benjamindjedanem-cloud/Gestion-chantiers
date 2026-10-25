@@ -38,13 +38,15 @@ export const Title: React.FC<{
   wtop?: number; // position en 16:9 (colonne de gauche)
   keep?: boolean; // 16:9 : garder la position 9:16 (titre dessiné dans un <Vis>)
   wlines?: Line[]; // 16:9 : coupures de lignes choisies à la main
-}> = ({ f, lines, out = 99999, onGreen = false, size: size0 = 74, top: top0 = 250, left: left0 = 90, align = 'left', width: width0 = 860, wtop = 340, keep = false, wlines }) => {
+  wcenter?: boolean; // 16:9 : bloc centré (phrases courtes) ; false = aligné à gauche (phrases longues qui touchent déjà l'illustration)
+}> = ({ f, lines, out = 99999, onGreen = false, size: size0 = 74, top: top0 = 250, left: left0 = 90, align = 'left', width: width0 = 860, wtop = 340, keep = false, wlines, wcenter = true }) => {
   const wide = useWide() && !keep;
   const size = wide ? (size0 >= 70 ? 80 : 58) : size0;
   const top = wide ? wtop : top0;
   // 16:9 : bloc centré dans la zone libre à gauche (centre à 560 px), texte aligné à gauche dans le bloc
+  const center = wide && wcenter;
   const left = wide ? 110 : left0;
-  const width = wide ? 900 : width0;
+  const width = center ? 900 : wide ? 830 : width0;
   const shown = wide && wlines ? wlines : lines;
   const exit = t(f, out, out + 12, 0, 1, ease.in);
   return (
@@ -65,8 +67,8 @@ export const Title: React.FC<{
         opacity: 1 - exit,
       }}
     >
-      <div style={wide ? { display: 'flex', justifyContent: 'center' } : undefined}>
-      <div style={wide ? { display: 'inline-block', whiteSpace: 'nowrap' } : undefined}>
+      <div style={center ? { display: 'flex', justifyContent: 'center' } : undefined}>
+      <div style={center ? { display: 'inline-block', whiteSpace: 'nowrap' } : undefined}>
       {shown.map((ln, li) => {
         // *mot-clé* : graisse 600 + couleur ; ponctuation collée au mot
         const words = ln.text.split(' ').filter(Boolean);
