@@ -1,7 +1,7 @@
-const CACHE_NAME = 'gestion-chantiers-v13';
+const CACHE_NAME = 'gestion-chantiers-v14';
 // Coquille minimale pré-cachée à l'installation. Le reste (JS/CSS générés, polices)
 // est mis en cache au premier chargement par le gestionnaire fetch ci-dessous.
-const APP_SHELL = ['./', './index.html', './manifest.json', './gc-icon-v12.ico', './icons/gc-icon-v12-32.png', './icons/gc-icon-v12-128.png', './icons/gc-icon-v12-180.png', './icons/gc-icon-v12-192.png', './icons/gc-icon-v12-512.png', './icons/gc-icon-v12-maskable-512.png'];
+const APP_SHELL = ['./', './index.html', './manifest.json', './favicon.svg', './icons/gc-logo-32.png', './icons/gc-logo-192.png', './icons/gc-logo-512.png', './icons/gc-logo-maskable-512.png', './icons/gc-logo-apple-180.png'];
 // Origines tierces dont on accepte de mettre les réponses en cache.
 const CACHEABLE_ORIGINS = ['https://fonts.googleapis.com', 'https://fonts.gstatic.com'];
 

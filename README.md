@@ -85,7 +85,7 @@ L'app s'installe avec son icône, s'ouvre en plein écran sans barre de navigate
 
 ## À savoir
 
-- Les icônes de l’application sont dans `public/icons/` avec plusieurs déclinaisons (PWA, Android maskable, Apple, navigateur et Windows). Le projet utilise une version dédiée de ces icônes dans le manifest, le favicon, le service worker et l’en-tête de l’application.
+- **Logo** : le dessin source est `public/favicon.svg` (vectoriel, net à toutes les tailles). Les icônes PNG de `public/icons/` (Android, iPhone, navigateur) en sont tirées.
 
 ## Comptes utilisateurs et sauvegarde en ligne (Supabase)
 
@@ -105,6 +105,19 @@ Les identifiants publics du projet sont dans `.env` (`VITE_SUPABASE_URL`, `VITE_
 - **Redirect URLs** : ajouter cette même adresse et `http://localhost:5173`
 
 Sans cela, les liens reçus par e-mail (confirmation de compte, mot de passe oublié) pointent vers une mauvaise adresse.
+
+## Entreprises et rôles
+
+Chaque compte appartient à **une entreprise**. Celui qui la crée en est le **propriétaire** ; il invite les autres depuis l'onglet **Équipe** (par adresse e-mail : la personne crée son compte avec cette adresse et accepte l'invitation).
+
+| Rôle | Accès |
+|---|---|
+| Propriétaire | Tout. Ne peut pas être retiré de l'entreprise. |
+| Associé | Tout, y compris inviter des membres et attribuer les chantiers. |
+| Comptable | Voit, saisit et corrige les entrées et sorties de **tous** les chantiers. Ne crée pas de chantier, ne gère pas l'équipe. |
+| Employé | Voit et saisit uniquement sur les chantiers **qui lui sont attribués**. |
+
+Chaque entrée et sortie indique qui l'a saisie. Ces règles sont appliquées par la base de données elle-même (RLS), pas seulement par l'affichage.
 
 ## Correctif responsive / déploiement
 

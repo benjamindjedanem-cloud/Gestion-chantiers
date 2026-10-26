@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { supabase } from './supabase.js';
+import { Logo } from './ui.jsx';
 
 /* ---------------------------------------------------------------- */
 /* Écrans d'authentification : connexion, inscription, mot de passe  */
@@ -29,7 +30,7 @@ function messageErreur(error) {
   return error?.message || 'Une erreur est survenue.';
 }
 
-function Shell({ title, subtitle, children }) {
+export function Shell({ title, subtitle, children }) {
   return (
     <div className="gc-root min-h-screen flex flex-col" style={{ background: C.bg }}>
       <header className="px-5 pt-5 pb-8" style={{ background: `linear-gradient(145deg, ${C.brandDark} 0%, #1E3A8A 55%, ${C.brand} 100%)`, color: '#fff' }}>
@@ -38,7 +39,7 @@ function Shell({ title, subtitle, children }) {
             <p className="text-[10px] uppercase tracking-[0.16em] font-bold" style={{ color: '#BFDBFE' }}>Pilotage financier</p>
             <p className="gc-display text-xl mt-1">Gestion Chantiers</p>
           </div>
-          <img src="./icons/gc-icon-v12-128.png" alt="" width="44" height="44" />
+          <Logo size={44} />
         </div>
       </header>
       <main className="flex-1 px-4" style={{ marginTop: -18 }}>
@@ -52,7 +53,7 @@ function Shell({ title, subtitle, children }) {
   );
 }
 
-function Field({ label, ...props }) {
+export function Field({ label, ...props }) {
   return (
     <label className="block mb-3">
       <span className="block text-xs font-medium mb-1" style={{ color: C.textMuted }}>{label}</span>
@@ -61,12 +62,12 @@ function Field({ label, ...props }) {
   );
 }
 
-function Notice({ tone, children }) {
+export function Notice({ tone, children }) {
   const s = tone === 'error' ? { bg: C.redTint, fg: C.red } : { bg: C.greenTint, fg: C.green };
   return <p className="text-sm px-3 py-2.5 rounded-xl mb-3" style={{ background: s.bg, color: s.fg }}>{children}</p>;
 }
 
-function SubmitButton({ busy, children }) {
+export function SubmitButton({ busy, children }) {
   return (
     <button type="submit" disabled={busy} style={{ background: C.brand, color: '#fff', fontWeight: 700, fontSize: 15, padding: '13px 16px', borderRadius: 11, width: '100%', opacity: busy ? 0.6 : 1, boxShadow: '0 8px 20px rgba(29,78,216,.18)' }}>
       {busy ? 'Patientez…' : children}
@@ -74,7 +75,7 @@ function SubmitButton({ busy, children }) {
   );
 }
 
-function LinkButton({ onClick, children }) {
+export function LinkButton({ onClick, children }) {
   return <button type="button" onClick={onClick} className="text-sm font-bold" style={{ color: C.brand, background: 'none' }}>{children}</button>;
 }
 
