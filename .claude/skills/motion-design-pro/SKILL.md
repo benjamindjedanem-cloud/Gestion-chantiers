@@ -14,7 +14,7 @@ Ce skill contient ce que Benjamin aime (et n'aime pas) en motion design, tiré d
 1. **Lire `references/gouts.md`** en entier : la liste ✅ À REPRODUIRE, la liste ❌ À ÉVITER (avec quoi faire à la place) et la structure par défaut. Toujours. Chaque scène du storyboard doit pouvoir citer le numéro de règle qu'elle applique, et ne violer aucune règle E1–E9.
 2. **Lire `references/recettes-mouvement.md`** (paramètres concrets : durées, courbes, échelles, et code Remotion).
 3. Parcourir `references/bibliotheque.md` et ouvrir les planches `assets/refs/*.jpg` des passages pertinents pour avoir l'image en tête.
-4. Suivre la méthode ci-dessous. Ne demander à Benjamin **que** ce que lui seul peut fournir : objectif, cible, message, musique, données réelles, logo. Pas de références : elles sont ici (il peut en ajouter s'il veut, jamais obligatoire).
+4. Suivre la méthode ci-dessous. Ne demander à Benjamin **que** ce que lui seul peut fournir : objectif, cible, message, musique, données réelles, logo, **et ses visuels réels** (réalisations, photos, captures : jamais d'illustrations dessinées par Claude, règle R-VISUELS). Pas de références : elles sont ici (il peut en ajouter s'il veut, jamais obligatoire).
 
 ### B. Benjamin partage une vidéo de référence → enrichir
 
