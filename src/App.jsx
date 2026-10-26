@@ -1,145 +1,14 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import {
   LayoutDashboard, Building2, ArrowDownCircle, ArrowUpCircle,
-  Plus, X, Search, AlertTriangle, ChevronDown, ChevronRight, ChevronLeft, Trash2, CheckCircle2, Pencil, Check, LogOut, Cloud, CloudOff, RefreshCw,
+  Plus, X, Search, AlertTriangle, ChevronDown, ChevronRight, ChevronLeft, Trash2, CheckCircle2, Pencil, Check, LogOut, Cloud, CloudOff, RefreshCw, Users,
 } from 'lucide-react';
 import { STATUTS, MODES, TYPES_SORTIE, FONCTIONS_BENEFICIAIRE, fcfa, dateFR, today, paye, reste, statutSortie, byDateDesc } from './lib.js';
-import { useAppData, clearLocalUserData } from './store.js';
-import { supabase } from './supabase.js';
-
-/* ---------------------------------------------------------------- */
-/* Design tokens                                                     */
-/* ---------------------------------------------------------------- */
-
-const C = {
-  bg: '#F5F7FA',
-  surface: '#FFFFFF',
-  surfaceSoft: '#F8FAFC',
-  border: '#E6EAF0',
-  borderStrong: '#CBD5E1',
-  text: '#0F172A',
-  textMuted: '#64748B',
-  brand: '#1D4ED8',
-  brandDark: '#172554',
-  brandTint: '#EFF6FF',
-  green: '#047857',
-  greenTint: '#ECFDF5',
-  amber: '#B45309',
-  amberTint: '#FFFBEB',
-  red: '#B91C1C',
-  redTint: '#FEF2F2',
-};
-
-/* ---------------------------------------------------------------- */
-/* Small reusable UI bits                                            */
-/* ---------------------------------------------------------------- */
-
-function Field({ label, children }) {
-  return (
-    <label className="block mb-3">
-      <span className="block text-xs font-medium mb-1" style={{ color: C.textMuted }}>{label}</span>
-      {children}
-    </label>
-  );
-}
-
-const inputStyle = {
-  width: '100%',
-  padding: '11px 12px',
-  borderRadius: 10,
-  border: `1px solid ${C.border}`,
-  background: C.surface,
-  fontSize: 14,
-  color: C.text,
-  outline: 'none',
-};
-
-function TextInput(props) {
-  // Montants : clavier numérique sur mobile et pas de valeurs négatives.
-  const numberProps = props.type === 'number' ? { inputMode: 'numeric', min: 0 } : null;
-  return <input {...numberProps} {...props} style={{ ...inputStyle, ...(props.style || {}) }} onFocus={(e) => { e.target.style.borderColor = C.brand; props.onFocus && props.onFocus(e); }} onBlur={(e) => { e.target.style.borderColor = C.border; props.onBlur && props.onBlur(e); }} />;
-}
-function Select(props) {
-  return <select {...props} style={{ ...inputStyle, ...(props.style || {}) }}>{props.children}</select>;
-}
-
-function StatusPill({ statut }) {
-  const map = {
-    'En cours': { bg: C.greenTint, fg: C.green },
-    'Terminé': { bg: C.border, fg: C.textMuted },
-    'En pause': { bg: C.amberTint, fg: C.amber },
-  };
-  const s = map[statut] || map['En cours'];
-  return <span style={{ background: s.bg, color: s.fg, fontSize: 11, fontWeight: 600, padding: '4px 9px', borderRadius: 999 }}>{statut}</span>;
-}
-
-function PaiementPill({ statut }) {
-  const map = {
-    'Soldé': { bg: C.greenTint, fg: C.green },
-    'Partiel': { bg: C.amberTint, fg: C.amber },
-    'À régler': { bg: C.redTint, fg: C.red },
-  };
-  const s = map[statut];
-  return <span style={{ background: s.bg, color: s.fg, fontSize: 10, fontWeight: 700, padding: '3px 8px', borderRadius: 999 }}>{statut}</span>;
-}
-
-function Modal({ title, onClose, children }) {
-  useEffect(() => {
-    const onKey = (e) => { if (e.key === 'Escape') onClose(); };
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden'; // empêche la page de défiler derrière la fenêtre
-    window.addEventListener('keydown', onKey);
-    return () => { window.removeEventListener('keydown', onKey); document.body.style.overflow = prevOverflow; };
-  }, [onClose]);
-  return (
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4" style={{ background: 'rgba(15,23,42,0.52)', backdropFilter: 'blur(5px)' }} onClick={onClose}>
-      <div className="w-full sm:max-w-md overflow-y-auto gc-scroll" style={{ background: C.surface, borderRadius: '24px 24px 0 0', maxHeight: '92vh', boxShadow: '0 -20px 60px rgba(15,23,42,.18)' }} onClick={(e) => e.stopPropagation()}>
-        <div className="flex items-center justify-between px-5 py-4 sticky top-0 z-10" style={{ background: 'rgba(255,255,255,.96)', borderBottom: `1px solid ${C.border}`, backdropFilter: 'blur(10px)' }}>
-          <div>
-            <p className="text-[10px] uppercase tracking-[0.14em] font-bold" style={{ color: C.brand }}>GESTION CHANTIERS</p>
-            <h3 className="gc-display text-xl mt-0.5">{title}</h3>
-          </div>
-          <button onClick={onClose} aria-label="Fermer" className="w-9 h-9 rounded-full flex items-center justify-center" style={{ color: C.textMuted, background: C.surfaceSoft }}><X size={19} /></button>
-        </div>
-        <div className="px-5 py-5 overflow-y-auto">{children}</div>
-      </div>
-    </div>
-  );
-}
-
-function PrimaryButton({ children, ...props }) {
-  return (
-    <button {...props} className="shadow-sm" style={{ background: C.brand, color: '#fff', fontWeight: 700, fontSize: 14, padding: '12px 16px', borderRadius: 11, width: '100%', boxShadow: '0 8px 20px rgba(29,78,216,.18)', ...(props.style || {}) }}>
-      {children}
-    </button>
-  );
-}
-
-function ToggleGroup({ options, value, onChange }) {
-  return (
-    <div className="flex p-1 gap-1 rounded-xl" style={{ background: C.surfaceSoft, border: `1px solid ${C.border}` }}>
-      {options.map((o) => (
-        <button key={o} type="button" onClick={() => onChange(o)} className="flex-1 text-xs font-bold py-2.5 rounded-lg" style={{ border: 'none', background: value === o ? C.surface : 'transparent', color: value === o ? C.brand : C.textMuted, boxShadow: value === o ? '0 2px 7px rgba(15,23,42,.07)' : 'none' }}>{o}</button>
-      ))}
-    </div>
-  );
-}
-
-function EmptyState({ text, cta, onCta }) {
-  return (
-    <div className="text-center py-12 px-5 rounded-2xl" style={{ color: C.textMuted, background: C.surface, border: `1px dashed ${C.borderStrong}` }}>
-      <div className="w-12 h-12 rounded-2xl mx-auto mb-3 flex items-center justify-center" style={{ background: C.brandTint, color: C.brand }}><Building2 size={22} /></div>
-      <p className="text-sm leading-relaxed">{text}</p>
-      {cta && <button onClick={onCta} className="mt-4 text-sm font-bold" style={{ color: C.brand }}>{cta}</button>}
-    </div>
-  );
-}
-
-function BackBar({ title, onBack }) {
-  return (
-    <button onClick={onBack} className="flex items-center gap-1.5 mb-4 -mx-1 px-1 py-1 text-sm font-bold" style={{ color: C.brand }}><ChevronLeft size={18} /> {title}</button>
-  );
-}
+import { useAppData } from './store.js';
+import { useEquipe, peutGerer, deconnecter, ROLES } from './equipe.js';
+import { EquipeTab } from './Equipe.jsx';
+import { demanderConfirmation } from './confirm.jsx';
+import { Logo, C, Field, inputStyle, TextInput, Select, StatusPill, PaiementPill, Modal, PrimaryButton, ToggleGroup, EmptyState, BackBar, PageIntro } from './ui.jsx';
 
 /* Liste des chantiers, utilisée comme écran d'entrée pour Entrées et Sorties */
 function ChantierPicker({ chantiers, getSubtitle, onSelect, emptyText }) {
@@ -176,13 +45,36 @@ function ChantierPicker({ chantiers, getSubtitle, onSelect, emptyText }) {
 /* App                                                                */
 /* ---------------------------------------------------------------- */
 
-export default function App({ user }) {
-  const { data, saveError, syncStatus, pendingCount, syncNow, actions } = useAppData(user.id);
-  const [tab, setTab] = useState('dashboard');
+// Mémorise l'écran courant pour l'onglet du navigateur (survit au rafraîchissement).
+const ECRAN_KEY = 'gestion-chantiers-ecran';
+const ONGLETS = ['dashboard', 'chantiers', 'entrees', 'sorties', 'equipe'];
+function lireEcran() {
+  try {
+    const e = JSON.parse(sessionStorage.getItem(ECRAN_KEY)) || {};
+    return { tab: ONGLETS.includes(e.tab) ? e.tab : 'dashboard', selEntree: e.selEntree || '', selSortie: e.selSortie || '' };
+  } catch (err) {
+    return { tab: 'dashboard', selEntree: '', selSortie: '' };
+  }
+}
+function ecrireEcran(ecran) {
+  try {
+    sessionStorage.setItem(ECRAN_KEY, JSON.stringify(ecran));
+  } catch (err) {
+    // navigation privée : sans conséquence
+  }
+}
+
+export default function App({ user, membre, onMembreUpdated, onMembershipChanged }) {
+  const { data, saveError, syncStatus, pendingCount, syncNow, actions } = useAppData(user.id, membre.entrepriseId, membre.role);
+  const equipe = useEquipe(user.id, user.email, membre.role);
+  const gerer = peutGerer(membre.role); // créer, modifier, supprimer les chantiers
+  // Écran affiché au moment d'un rafraîchissement de la page : on y revient.
+  const [ecranInitial] = useState(lireEcran);
+  const [tab, setTab] = useState(ecranInitial.tab);
   const [modal, setModal] = useState(null);
   const [search, setSearch] = useState('');
-  const [selEntree, setSelEntree] = useState(''); // id du chantier ouvert dans Entrées
-  const [selSortie, setSelSortie] = useState(''); // id du chantier ouvert dans Sorties
+  const [selEntree, setSelEntree] = useState(ecranInitial.selEntree); // id du chantier ouvert dans Entrées
+  const [selSortie, setSelSortie] = useState(ecranInitial.selSortie); // id du chantier ouvert dans Sorties
   const [paiementFor, setPaiementFor] = useState(null); // id de la sortie à payer
   const [editSortieId, setEditSortieId] = useState(null); // sortie id en cours de modification
   const [editChantierId, setEditChantierId] = useState(null); // chantier id en cours de modification
@@ -201,6 +93,8 @@ export default function App({ user }) {
     if (!navInitializedRef.current) {
       window.history.replaceState({ appSentinel: true }, '', url);
       window.history.pushState({ appNav: true, tab: 'dashboard', selEntree: '', selSortie: '' }, '', url);
+      // Écran restauré après rafraîchissement : « retour » ramène à l'accueil.
+      if (ecranInitial.tab !== 'dashboard') window.history.pushState({ appNav: true, ...ecranInitial }, '', url);
       navInitializedRef.current = true;
     }
 
@@ -261,6 +155,8 @@ export default function App({ user }) {
     window.history.pushState({ appNav: true, tab, selEntree, selSortie }, '', window.location.href);
   }, [tab, selEntree, selSortie]);
 
+  useEffect(() => { ecrireEcran({ tab, selEntree, selSortie }); }, [tab, selEntree, selSortie]);
+
   // Agrégats calculés en une seule passe sur les entrées et les sorties.
   const stats = useMemo(() => {
     const acc = new Map(data.chantiers.map((c) => [c.id, { totalEntrees: 0, totalSorties: 0, totalReste: 0 }]));
@@ -309,22 +205,38 @@ export default function App({ user }) {
   const editEntreeObj = editEntreeId ? data.entrees.find((e) => e.id === editEntreeId) : null;
   const nomChantier = (id) => statsById.get(id)?.nom || '';
 
+  // « Saisi par » : affiché dès que l'entreprise compte plusieurs membres.
+  const auteur = useMemo(() => {
+    if (equipe.membres.length < 2) return null;
+    const noms = new Map(equipe.membres.map((m) => [m.user_id, m.nom_affiche || m.email]));
+    return (row) => (row.creePar ? noms.get(row.creePar) || 'ancien membre' : noms.get(user.id));
+  }, [equipe.membres, user.id]);
+
+  const aucunChantierTexte = gerer
+    ? null
+    : membre.role === 'employe'
+      ? 'Aucun chantier ne vous a encore été attribué. Demandez au propriétaire ou à un associé de vous en attribuer.'
+      : 'Aucun chantier pour l’instant. Seuls le propriétaire et les associés peuvent en créer.';
+
   const logout = async () => {
-    if (pendingCount > 0 && !window.confirm(`${pendingCount} modification(s) n’ont pas encore été envoyées en ligne (pas de réseau). Si vous vous déconnectez maintenant, elles seront perdues. Continuer ?`)) return;
-    clearLocalUserData(user.id); // ne rien laisser sur un téléphone partagé
-    await supabase.auth.signOut({ scope: 'local' });
+    if (pendingCount > 0 && !(await demanderConfirmation({
+      titre: 'Se déconnecter quand même ?',
+      message: `${pendingCount} modification(s) n’ont pas encore été envoyées en ligne (pas de réseau). Si vous vous déconnectez maintenant, elles seront perdues.`,
+      confirmer: 'Se déconnecter',
+    }))) return;
+    await deconnecter(user.id);
   };
 
   return (
     <div className="gc-root min-h-screen" style={{ background: C.bg }}>
       <div className="max-w-md lg:max-w-xl mx-auto min-h-screen flex flex-col" style={{ background: C.bg, borderLeft: `1px solid ${C.border}`, borderRight: `1px solid ${C.border}` }}>
-        {tab === 'dashboard' && <Header totaux={totaux} saveError={saveError} email={user.email} syncStatus={syncStatus} pendingCount={pendingCount} onSync={syncNow} onLogout={logout} />}
+        {tab === 'dashboard' && <Header totaux={totaux} saveError={saveError} email={user.email} membre={membre} syncStatus={syncStatus} pendingCount={pendingCount} onSync={syncNow} onLogout={logout} />}
 
         <main className="flex-1 overflow-y-auto gc-scroll pb-24 px-4" style={{ paddingTop: 18 }}>
-            {tab === 'dashboard' && <Dashboard stats={stats} search={search} setSearch={setSearch} />}
+            {tab === 'dashboard' && <Dashboard stats={stats} search={search} setSearch={setSearch} emptyText={aucunChantierTexte} />}
 
             {tab === 'chantiers' && (
-              <ChantiersTab chantiers={data.chantiers} stats={stats} onAdd={() => setModal('chantier')} onEdit={setEditChantierId} onRemove={actions.removeChantier} onChangeStatut={actions.updateStatutChantier} onChangeDateFin={actions.updateDateFinReelle} />
+              <ChantiersTab chantiers={data.chantiers} stats={stats} gerer={gerer} emptyText={aucunChantierTexte} onAdd={() => setModal('chantier')} onEdit={setEditChantierId} onRemove={actions.removeChantier} onChangeStatut={actions.updateStatutChantier} onChangeDateFin={actions.updateDateFinReelle} />
             )}
 
             {tab === 'entrees' && (
@@ -333,7 +245,7 @@ export default function App({ user }) {
                   <PageIntro eyebrow="Suivi financier" title="Entrées" subtitle="Les paiements reçus, chantier par chantier" />
                   <ChantierPicker
                     chantiers={stats}
-                    emptyText="Ajoutez un chantier pour commencer à enregistrer des entrées."
+                    emptyText={aucunChantierTexte || 'Ajoutez un chantier pour commencer à enregistrer des entrées.'}
                     getSubtitle={(c) => {
                       const lines = [{ label: fcfa(c.totalEntrees), color: C.green }];
                       if (c.budget > 0 && c.totalEntrees >= c.budget) lines.push({ label: 'Soldé', color: C.green });
@@ -351,6 +263,7 @@ export default function App({ user }) {
                   onAdd={() => setModal('entree')}
                   onRemove={actions.removeEntree}
                   onEdit={setEditEntreeId}
+                  auteur={auteur}
                 />
               )
             )}
@@ -361,7 +274,7 @@ export default function App({ user }) {
                   <PageIntro eyebrow="Suivi financier" title="Sorties" subtitle="Les dépenses et paiements à suivre" />
                   <ChantierPicker
                     chantiers={stats}
-                    emptyText="Ajoutez un chantier pour commencer à enregistrer des sorties."
+                    emptyText={aucunChantierTexte || 'Ajoutez un chantier pour commencer à enregistrer des sorties.'}
                     getSubtitle={(c) => {
                       const lines = [{ label: fcfa(c.totalSorties), color: C.textMuted }];
                       if (c.totalReste > 0) lines.push({ label: `Reste ${fcfa(c.totalReste)}`, color: C.red });
@@ -381,12 +294,25 @@ export default function App({ user }) {
                   onEdit={setEditSortieId}
                   onEditPaiement={actions.updatePaiement}
                   onRemovePaiement={actions.removePaiement}
+                  auteur={auteur}
                 />
               )
             )}
+
+            {tab === 'equipe' && (
+              <EquipeTab
+                user={user}
+                membre={membre}
+                equipe={equipe}
+                chantiers={stats}
+                pendingCount={pendingCount}
+                onMembershipChanged={onMembershipChanged}
+                onMembreUpdated={onMembreUpdated}
+              />
+            )}
           </main>
 
-          <BottomNav tab={tab} setTab={(t) => { setTab(t); setSearch(''); if (t !== 'entrees') setSelEntree(''); if (t !== 'sorties') setSelSortie(''); }} />
+          <BottomNav tab={tab} badgeEquipe={equipe.mesInvitations.length} setTab={(t) => { setTab(t); setSearch(''); if (t !== 'entrees') setSelEntree(''); if (t !== 'sorties') setSelSortie(''); }} />
       </div>
 
       {backHint && (
@@ -429,27 +355,6 @@ export default function App({ user }) {
 }
 
 /* ---------------------------------------------------------------- */
-/* Page framing                                                       */
-/* ---------------------------------------------------------------- */
-
-function PageIntro({ eyebrow, title, subtitle, action, onAction }) {
-  return (
-    <div className="mb-5">
-      <div className="flex items-end justify-between gap-3">
-        <div className="min-w-0">
-          {eyebrow && <p className="gc-section-label" style={{ color: C.brand }}>{eyebrow}</p>}
-          <h1 className="gc-display text-[24px] leading-tight mt-1">{title}</h1>
-          {subtitle && <p className="text-xs mt-1.5" style={{ color: C.textMuted }}>{subtitle}</p>}
-        </div>
-        {action && onAction && (
-          <button onClick={onAction} className="shrink-0 flex items-center gap-1 text-sm font-bold px-3 py-2 rounded-xl" style={{ color: C.brand, background: C.brandTint }}><Plus size={15} /> {action}</button>
-        )}
-      </div>
-    </div>
-  );
-}
-
-/* ---------------------------------------------------------------- */
 /* Header + Nav                                                      */
 /* ---------------------------------------------------------------- */
 
@@ -474,17 +379,17 @@ function SyncBadge({ status, pendingCount, onSync }) {
   );
 }
 
-function Header({ totaux, saveError, email, syncStatus, pendingCount, onSync, onLogout }) {
+function Header({ totaux, saveError, email, membre, syncStatus, pendingCount, onSync, onLogout }) {
   const balancePositive = totaux.solde >= 0;
   return (
     <header className="px-5 pt-5 pb-4" style={{ background: `linear-gradient(145deg, ${C.brandDark} 0%, #1E3A8A 55%, ${C.brand} 100%)`, color: '#fff' }}>
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-[10px] uppercase tracking-[0.16em] font-bold" style={{ color: '#BFDBFE' }}>Pilotage financier</p>
-          <p className="gc-display text-xl mt-1">Gestion Chantiers</p>
+          <p className="text-[10px] uppercase tracking-[0.16em] font-bold" style={{ color: '#BFDBFE' }}>{ROLES[membre.role]?.label} · Gestion Chantiers</p>
+          <p className="gc-display text-xl mt-1">{membre.entrepriseNom || 'Mon entreprise'}</p>
         </div>
-        <div className="flex items-center justify-center" style={{ width: 44, height: 44 }}>
-          <img src="./icons/gc-icon-v12-128.png" alt="Gestion Chantiers" width="44" height="44" className="w-full h-full object-contain" />
+        <div style={{ filter: 'drop-shadow(0 6px 14px rgba(0,0,0,.25))', borderRadius: 11, boxShadow: 'inset 0 0 0 1px rgba(255,255,255,.18)' }}>
+          <Logo size={44} />
         </div>
       </div>
       <div className="flex items-center justify-between gap-2 mt-3">
@@ -515,16 +420,18 @@ const NAV_ITEMS = [
   { id: 'chantiers', label: 'Chantiers', icon: Building2 },
   { id: 'entrees', label: 'Entrées', icon: ArrowDownCircle },
   { id: 'sorties', label: 'Sorties', icon: ArrowUpCircle },
+  { id: 'equipe', label: 'Équipe', icon: Users },
 ];
 
-function BottomNav({ tab, setTab }) {
+function BottomNav({ tab, setTab, badgeEquipe }) {
   return (
     <nav className="max-w-md lg:max-w-xl mx-auto w-full fixed bottom-0 left-0 right-0 z-40 px-3 pb-3 pointer-events-none">
       <div className="pointer-events-auto rounded-2xl shadow-lg" style={{ background: 'rgba(255,255,255,.96)', border: `1px solid ${C.border}`, boxShadow: '0 12px 30px rgba(15,23,42,.10)', backdropFilter: 'blur(14px)' }}>
         <div className="flex p-1.5">
           {NAV_ITEMS.map((it) => { const Icon = it.icon; const active = tab === it.id; return (
-            <button key={it.id} onClick={() => setTab(it.id)} className="flex-1 flex flex-col items-center gap-1 py-2 rounded-xl" style={{ color: active ? C.brand : C.textMuted, background: active ? C.brandTint : 'transparent' }}>
+            <button key={it.id} onClick={() => setTab(it.id)} className="flex-1 flex flex-col items-center gap-1 py-2 rounded-xl relative" style={{ color: active ? C.brand : C.textMuted, background: active ? C.brandTint : 'transparent' }}>
               <Icon size={19} strokeWidth={active ? 2.4 : 1.8} />
+              {it.id === 'equipe' && badgeEquipe > 0 && <span style={{ position: 'absolute', top: 5, right: 'calc(50% - 16px)', width: 8, height: 8, borderRadius: 999, background: C.red }} />}
               <span style={{ fontSize: 10, fontWeight: active ? 700 : 600 }}>{it.label}</span>
             </button>
           ); })}
@@ -538,7 +445,7 @@ function BottomNav({ tab, setTab }) {
 /* Dashboard                                                          */
 /* ---------------------------------------------------------------- */
 
-function Dashboard({ stats, search, setSearch }) {
+function Dashboard({ stats, search, setSearch, emptyText }) {
   const filtered = stats.filter((s) => {
     const q = search.trim().toLowerCase();
     return !q || s.nom.toLowerCase().includes(q) || s.client.toLowerCase().includes(q);
@@ -583,7 +490,7 @@ function Dashboard({ stats, search, setSearch }) {
         </span>
       </div>
 
-      {filtered.length === 0 && <EmptyState text="Aucun chantier ne correspond à cette recherche." />}
+      {filtered.length === 0 && <EmptyState text={stats.length === 0 && emptyText ? emptyText : 'Aucun chantier ne correspond à cette recherche.'} />}
       <div className="gc-dashboard-list flex flex-col gap-3.5">
         {filtered.map((c) => <DashboardCard key={c.id} c={c} />)}
       </div>
@@ -674,7 +581,7 @@ function Stat({ label, value, valueColor }) {
 /* Chantiers tab                                                      */
 /* ---------------------------------------------------------------- */
 
-function ChantiersTab({ chantiers, stats, onAdd, onEdit, onRemove, onChangeStatut, onChangeDateFin }) {
+function ChantiersTab({ chantiers, stats, gerer, emptyText, onAdd, onEdit, onRemove, onChangeStatut, onChangeDateFin }) {
   const counts = {
     total: chantiers.length,
     active: chantiers.filter((c) => c.statut === 'En cours').length,
@@ -683,7 +590,7 @@ function ChantiersTab({ chantiers, stats, onAdd, onEdit, onRemove, onChangeStatu
   };
   return (
     <div>
-      <PageIntro eyebrow="Gestion des projets" title="Chantiers" subtitle="Tous vos projets, leur statut et leur budget" action="Ajouter" onAction={onAdd} />
+      <PageIntro eyebrow="Gestion des projets" title="Chantiers" subtitle="Tous vos projets, leur statut et leur budget" action={gerer ? 'Ajouter' : null} onAction={onAdd} />
 
       <div className="grid grid-cols-4 gap-2 mb-4">
         <MiniCount label="Tous" value={counts.total} />
@@ -692,7 +599,9 @@ function ChantiersTab({ chantiers, stats, onAdd, onEdit, onRemove, onChangeStatu
         <MiniCount label="En pause" value={counts.paused} tone="amber" />
       </div>
 
-      {chantiers.length === 0 && <EmptyState text="Aucun chantier pour l'instant." cta="Ajouter le premier chantier" onCta={onAdd} />}
+      {chantiers.length === 0 && (gerer
+        ? <EmptyState text="Aucun chantier pour l'instant." cta="Ajouter le premier chantier" onCta={onAdd} />
+        : <EmptyState text={emptyText} />)}
       <div className="gc-chantiers-list flex flex-col gap-3">
         {stats.map((c) => (
           <div key={c.id} className="rounded-2xl p-4" style={{ background: C.surface, border: `1px solid ${C.border}`, boxShadow: '0 4px 16px rgba(15,23,42,.03)' }}>
@@ -704,10 +613,10 @@ function ChantiersTab({ chantiers, stats, onAdd, onEdit, onRemove, onChangeStatu
                 </div>
                 <p className="text-xs mt-1 truncate" style={{ color: C.textMuted }}>{c.client}</p>
               </div>
-              <div className="flex items-center gap-2 shrink-0">
+              {gerer && <div className="flex items-center gap-2 shrink-0">
                 <button onClick={() => onEdit(c.id)} aria-label="Modifier le chantier" title="Modifier" className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ color: C.brand, background: C.brandTint }}><Pencil size={14} /></button>
                 <button onClick={() => onRemove(c.id)} aria-label="Supprimer" title="Supprimer" className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ color: C.textMuted, background: C.surfaceSoft }}><Trash2 size={14} /></button>
-              </div>
+              </div>}
             </div>
 
             <div className="grid grid-cols-2 gap-3 mt-4 pt-3.5" style={{ borderTop: `1px solid ${C.border}` }}>
@@ -717,7 +626,7 @@ function ChantiersTab({ chantiers, stats, onAdd, onEdit, onRemove, onChangeStatu
               <Stat label="Solde" value={fcfa(c.solde)} valueColor={c.solde >= 0 ? C.green : C.red} />
             </div>
 
-            <div className="mt-4 flex items-center justify-between gap-2 flex-wrap">
+            {gerer && <div className="mt-4 flex items-center justify-between gap-2 flex-wrap">
               <StatutSelect statut={c.statut} onChange={(v) => onChangeStatut(c.id, v)} />
               {c.statut === 'Terminé' && (
                 <label className="flex items-center gap-1.5 text-xs" style={{ color: C.textMuted }}>
@@ -725,7 +634,7 @@ function ChantiersTab({ chantiers, stats, onAdd, onEdit, onRemove, onChangeStatu
                   <TextInput type="date" value={c.dateFinReelle || ''} onChange={(e) => onChangeDateFin(c.id, e.target.value)} style={{ width: 'auto', padding: '5px 8px', fontSize: 12 }} />
                 </label>
               )}
-            </div>
+            </div>}
           </div>
         ))}
       </div>
@@ -787,7 +696,7 @@ function ChantierForm({ chantier, onClose, onSave }) {
 /* Entrées                                                            */
 /* ---------------------------------------------------------------- */
 
-function EntreeDetail({ chantier, budget, entrees, onBack, onAdd, onRemove, onEdit }) {
+function EntreeDetail({ chantier, budget, entrees, onBack, onAdd, onRemove, onEdit, auteur }) {
   const total = entrees.reduce((a, e) => a + Number(e.montant || 0), 0);
   const isSolde = budget > 0 && total >= budget;
   return (
@@ -808,7 +717,7 @@ function EntreeDetail({ chantier, budget, entrees, onBack, onAdd, onRemove, onEd
             <div>
               <p className="text-sm font-semibold">{e.versePar}</p>
               <p className="text-xs mt-0.5" style={{ color: C.textMuted }}>{e.description}</p>
-              <p className="text-xs mt-0.5" style={{ color: C.textMuted }}>{dateFR(e.date)} · {e.mode}</p>
+              <p className="text-xs mt-0.5" style={{ color: C.textMuted }}>{dateFR(e.date)} · {e.mode}{auteur && <> · saisi par <strong>{auteur(e)}</strong></>}</p>
             </div>
             <div className="flex flex-col items-end gap-1.5">
               <p className="gc-tabular font-semibold text-sm" style={{ color: C.green }}>+{fcfa(e.montant)}</p>
@@ -847,7 +756,7 @@ function EntreeForm({ chantierId, chantierNom, entree, onClose, onSave }) {
 /* Sorties                                                            */
 /* ---------------------------------------------------------------- */
 
-function SortieDetail({ chantier, sorties, onBack, onAdd, onRemove, onPay, onEdit, onEditPaiement, onRemovePaiement }) {
+function SortieDetail({ chantier, sorties, onBack, onAdd, onRemove, onPay, onEdit, onEditPaiement, onRemovePaiement, auteur }) {
   const groups = useMemo(() => {
     const map = {};
     sorties.forEach((s) => {
@@ -884,14 +793,14 @@ function SortieDetail({ chantier, sorties, onBack, onAdd, onRemove, onPay, onEdi
 
       <div className="flex flex-col gap-3">
         {groups.map((g) => (
-          <BeneficiaireGroup key={g.nom} group={g} onRemove={onRemove} onPay={onPay} onEdit={onEdit} onEditPaiement={onEditPaiement} onRemovePaiement={onRemovePaiement} />
+          <BeneficiaireGroup key={g.nom} group={g} onRemove={onRemove} onPay={onPay} onEdit={onEdit} onEditPaiement={onEditPaiement} onRemovePaiement={onRemovePaiement} auteur={auteur} />
         ))}
       </div>
     </div>
   );
 }
 
-function BeneficiaireGroup({ group, onRemove, onPay, onEdit, onEditPaiement, onRemovePaiement }) {
+function BeneficiaireGroup({ group, onRemove, onPay, onEdit, onEditPaiement, onRemovePaiement, auteur }) {
   const [open, setOpen] = useState(group.totalReste > 0);
   return (
     <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 14 }}>
@@ -908,7 +817,7 @@ function BeneficiaireGroup({ group, onRemove, onPay, onEdit, onEditPaiement, onR
       {open && (
         <div className="px-3.5 pb-3 flex flex-col gap-2" style={{ borderTop: `1px solid ${C.border}` }}>
           {group.items.map((s) => (
-            <SortieLine key={s.id} s={s} onRemove={onRemove} onPay={onPay} onEdit={onEdit} onEditPaiement={onEditPaiement} onRemovePaiement={onRemovePaiement} />
+            <SortieLine key={s.id} s={s} onRemove={onRemove} onPay={onPay} onEdit={onEdit} onEditPaiement={onEditPaiement} onRemovePaiement={onRemovePaiement} auteur={auteur} />
           ))}
         </div>
       )}
@@ -916,25 +825,18 @@ function BeneficiaireGroup({ group, onRemove, onPay, onEdit, onEditPaiement, onR
   );
 }
 
-function SortieLine({ s, onRemove, onPay, onEdit, onEditPaiement, onRemovePaiement }) {
+function SortieLine({ s, onRemove, onPay, onEdit, onEditPaiement, onRemovePaiement, auteur }) {
   const [showHist, setShowHist] = useState(false);
-  const [editingPaiement, setEditingPaiement] = useState(null); // paiement id
-  const [tempMontant, setTempMontant] = useState('');
+  const [editingPaiement, setEditingPaiement] = useState(null); // versement en cours de modification
   const st = statutSortie(s);
   const r = reste(s);
-
-  const startEditPaiement = (p) => { setEditingPaiement(p.id); setTempMontant(String(p.montant)); };
-  const saveEditPaiement = () => {
-    if (Number(tempMontant) > 0) onEditPaiement(s.id, editingPaiement, { montant: Number(tempMontant) });
-    setEditingPaiement(null);
-  };
 
   return (
     <div className="pt-2.5 first:pt-3">
       <div className="flex items-start justify-between gap-2">
         <div>
           <p className="text-xs font-medium">{s.type} — {s.description}</p>
-          <p className="text-xs mt-0.5" style={{ color: C.textMuted }}>{dateFR(s.date)} · {s.mode}</p>
+          <p className="text-xs mt-0.5" style={{ color: C.textMuted }}>{dateFR(s.date)} · {s.mode}{auteur && <> · saisi par <strong>{auteur(s)}</strong></>}</p>
         </div>
         <div className="flex flex-col items-end gap-1">
           <PaiementPill statut={st} />
@@ -962,28 +864,23 @@ function SortieLine({ s, onRemove, onPay, onEdit, onEditPaiement, onRemovePaieme
           {s.paiements.map((p) => (
             <div key={p.id} className="flex items-center justify-between text-xs pl-2 gap-2" style={{ color: C.textMuted }}>
               <span className="flex items-center gap-1 shrink-0"><CheckCircle2 size={11} style={{ color: C.green }} /> {dateFR(p.date)}</span>
-              {editingPaiement === p.id ? (
-                <div className="flex items-center gap-1">
-                  <TextInput
-                    type="number"
-                    autoFocus
-                    value={tempMontant}
-                    onChange={(e) => setTempMontant(e.target.value)}
-                    style={{ width: 90, padding: '3px 6px', fontSize: 12 }}
-                  />
-                  <button onClick={saveEditPaiement} aria-label="Valider" className="p-1.5" style={{ color: C.green }}><Check size={14} /></button>
-                  <button onClick={() => setEditingPaiement(null)} aria-label="Annuler" className="p-1.5" style={{ color: C.textMuted }}><X size={14} /></button>
-                </div>
-              ) : (
-                <div className="flex items-center gap-3">
-                  <span className="gc-tabular font-medium">{fcfa(p.montant)}</span>
-                  <button onClick={() => startEditPaiement(p)} aria-label="Modifier le versement" className="p-2 -m-2" style={{ color: C.textMuted }}><Pencil size={11} /></button>
-                  <button onClick={() => onRemovePaiement(s.id, p.id)} aria-label="Supprimer le versement" className="p-2 -m-2" style={{ color: C.textMuted }}><Trash2 size={11} /></button>
-                </div>
-              )}
+              <div className="flex items-center gap-3">
+                <span className="gc-tabular font-medium">{fcfa(p.montant)}</span>
+                <button onClick={() => setEditingPaiement(p)} aria-label="Modifier le versement" className="p-2 -m-2" style={{ color: C.textMuted }}><Pencil size={11} /></button>
+                <button onClick={() => onRemovePaiement(s.id, p.id)} aria-label="Supprimer le versement" className="p-2 -m-2" style={{ color: C.textMuted }}><Trash2 size={11} /></button>
+              </div>
             </div>
           ))}
         </div>
+      )}
+
+      {editingPaiement && (
+        <PaiementForm
+          sortie={s}
+          paiement={editingPaiement}
+          onClose={() => setEditingPaiement(null)}
+          onSave={(patch) => { onEditPaiement(s.id, editingPaiement.id, patch); setEditingPaiement(null); }}
+        />
       )}
     </div>
   );
@@ -1155,15 +1052,20 @@ function SortieEditForm({ sortie, onClose, onSave }) {
   );
 }
 
-function PaiementForm({ sortie, onClose, onSave }) {
+// Nouveau versement, ou modification d'un versement existant (date et montant).
+function PaiementForm({ sortie, paiement, onClose, onSave }) {
   const r = reste(sortie);
-  const [f, setF] = useState({ date: today(), montant: r > 0 ? String(r) : '' });
+  const [f, setF] = useState(() => paiement
+    ? { date: paiement.date || today(), montant: String(paiement.montant ?? '') }
+    : { date: today(), montant: r > 0 ? String(r) : '' });
   const valid = f.date && Number(f.montant) > 0;
   return (
-    <Modal title={`Paiement — ${sortie.beneficiaire}`} onClose={onClose}>
-      <p className="text-xs mb-3" style={{ color: C.textMuted }}>
-        Reste à payer : <span className="font-semibold" style={{ color: C.red }}>{fcfa(r)}</span>
-      </p>
+    <Modal title={`${paiement ? 'Modifier le versement' : 'Paiement'} — ${sortie.beneficiaire}`} onClose={onClose}>
+      {!paiement && (
+        <p className="text-xs mb-3" style={{ color: C.textMuted }}>
+          Reste à payer : <span className="font-semibold" style={{ color: C.red }}>{fcfa(r)}</span>
+        </p>
+      )}
       <Field label="Date du paiement"><TextInput type="date" value={f.date} onChange={(e) => setF({ ...f, date: e.target.value })} /></Field>
       <Field label="Montant versé (FCFA)"><TextInput type="number" value={f.montant} onChange={(e) => setF({ ...f, montant: e.target.value })} placeholder="0" /></Field>
       <div className="mt-2">

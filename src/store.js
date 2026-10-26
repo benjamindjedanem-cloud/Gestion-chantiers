@@ -1,10 +1,11 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
 import { uid, today, fcfa } from './lib.js';
 import { TABLES, pullAll, pushOps } from './sync.js';
+import { demanderConfirmation } from './confirm.jsx';
 
 /* ---------------------------------------------------------------- */
 /* Couche données : chargement, migration, sauvegarde et mutations.   */
-/* Toute l'UI passe par useAppData(userId). Les données vivent sur le  */
+/* Toute l'UI passe par useAppData(...). Les données vivent sur le    */
 /* téléphone (fonctionne hors ligne) et sont synchronisées avec       */
 /* Supabase dès que le réseau est disponible.                         */
 /*                                                                    */
@@ -17,6 +18,9 @@ import { TABLES, pullAll, pushOps } from './sync.js';
 const dataKey = (userId) => `gestion-chantiers-data-v3:${userId}`;
 // Modifications faites sur ce téléphone et pas encore envoyées à Supabase.
 const pendingKey = (userId) => `gestion-chantiers-pending:${userId}`;
+// Entreprise à laquelle appartient la copie locale : si la personne change
+// d'entreprise, l'ancienne copie est écartée.
+const entKey = (userId) => `gestion-chantiers-data-entreprise:${userId}`;
 
 // Anciennes données (avant les comptes), importées dans le premier compte
 // qui se connecte sur ce téléphone. La clé v2 est conservée comme sauvegarde.
@@ -89,10 +93,19 @@ function overlay(remote, pendingOps) {
   return out;
 }
 
-function loadInitial(userId) {
+function loadInitial(userId, entrepriseId, role) {
+  const cachedEnt = localStorage.getItem(entKey(userId));
+  // Une copie sans entreprise date d'avant les entreprises : elle appartient
+  // à l'entreprise créée pour ce compte lors de la migration, on la garde.
+  if (cachedEnt && cachedEnt !== entrepriseId) {
+    localStorage.removeItem(dataKey(userId));
+    localStorage.removeItem(pendingKey(userId)); // ne jamais envoyer ces lignes dans la nouvelle entreprise
+  }
   const cached = readJSON(dataKey(userId));
   if (cached) return { data: cached, pending: readJSON(pendingKey(userId)) || {}, legacy: false };
-  const legacy = readLegacyData();
+  // Les données d'un téléphone datant d'avant les comptes ne vont que dans
+  // l'entreprise de son propriétaire, jamais dans celle où l'on est invité.
+  const legacy = role === 'proprietaire' ? readLegacyData() : null;
   if (legacy) {
     // Tout ce qui était sur le téléphone est à envoyer vers le compte.
     const pending = {};
@@ -107,14 +120,15 @@ export function clearLocalUserData(userId) {
   try {
     localStorage.removeItem(dataKey(userId));
     localStorage.removeItem(pendingKey(userId));
+    localStorage.removeItem(entKey(userId));
   } catch (e) {
     // rien à faire
   }
 }
 
 // syncStatus : 'syncing' | 'synced' | 'offline' | 'error'
-export function useAppData(userId) {
-  const [initial] = useState(() => loadInitial(userId));
+export function useAppData(userId, entrepriseId, role) {
+  const [initial] = useState(() => loadInitial(userId, entrepriseId, role));
   const [data, setData] = useState(initial.data);
   const [saveError, setSaveError] = useState(false);
   const [syncStatus, setSyncStatus] = useState('syncing');
@@ -145,7 +159,7 @@ export function useAppData(userId) {
     try {
       const ops = Object.values(pendingRef.current);
       if (ops.length) {
-        const { done, error } = await pushOps(ops, userId);
+        const { done, error } = await pushOps(ops, entrepriseId);
         const sent = new Map(ops.map((o) => [o.key, o]));
         // On ne retire que les opérations restées identiques pendant l'envoi.
         for (const key of done) if (pendingRef.current[key] === sent.get(key)) delete pendingRef.current[key];
@@ -181,6 +195,7 @@ export function useAppData(userId) {
   useEffect(() => {
     try {
       localStorage.setItem(dataKey(userId), JSON.stringify(data));
+      localStorage.setItem(entKey(userId), entrepriseId);
       setSaveError(false);
     } catch (e) {
       setSaveError(true);
@@ -190,7 +205,7 @@ export function useAppData(userId) {
     lastSeenRef.current = data;
     savePending();
     scheduleSync();
-  }, [data, userId]);
+  }, [data, userId, entrepriseId]);
 
   // Synchro au démarrage, au retour du réseau et quand l'app revient au premier plan.
   useEffect(() => {
@@ -231,13 +246,13 @@ export function useAppData(userId) {
         chantiers: mapById(d.chantiers, id, (c) => ({ ...c, statut, dateFinReelle: statut === 'Terminé' ? (c.dateFinReelle || today()) : '' })),
       })),
       updateDateFinReelle: (id, dateFinReelle) => update((d) => ({ chantiers: mapById(d.chantiers, id, (c) => ({ ...c, dateFinReelle })) })),
-      removeChantier: (id) => {
+      removeChantier: async (id) => {
         const d = current();
         const chantier = d.chantiers.find((c) => c.id === id);
         if (!chantier) return;
         const nbLignes = d.entrees.filter((e) => e.chantierId === id).length + d.sorties.filter((s) => s.chantierId === id).length;
-        const detail = nbLignes > 0 ? `\n\nSes ${nbLignes} entrée(s)/sortie(s) seront aussi supprimées.` : '';
-        if (!window.confirm(`Supprimer le chantier « ${chantier.nom} » ? Cette action est irréversible.${detail}`)) return;
+        const detail = nbLignes > 0 ? `\nSes ${nbLignes} entrée(s) et sortie(s) seront aussi supprimées.` : '';
+        if (!(await demanderConfirmation({ titre: `Supprimer « ${chantier.nom} » ?`, message: `Cette action est irréversible.${detail}` }))) return;
         update((d2) => ({
           chantiers: d2.chantiers.filter((c) => c.id !== id),
           entrees: d2.entrees.filter((e) => e.chantierId !== id),
@@ -247,10 +262,10 @@ export function useAppData(userId) {
 
       addEntree: (e) => update((d) => ({ entrees: [{ ...e, id: uid('e') }, ...d.entrees] })),
       updateEntree: (id, patch) => update((d) => ({ entrees: mapById(d.entrees, id, (e) => ({ ...e, ...patch })) })),
-      removeEntree: (id) => {
+      removeEntree: async (id) => {
         const entree = current().entrees.find((e) => e.id === id);
         if (!entree) return;
-        if (!window.confirm(`Supprimer cet encaissement de ${fcfa(entree.montant)} ? Cette action est irréversible.`)) return;
+        if (!(await demanderConfirmation({ titre: 'Supprimer cet encaissement ?', message: `${fcfa(entree.montant)}${entree.versePar ? ` versé par ${entree.versePar}` : ''}. Cette action est irréversible.` }))) return;
         update((d) => ({ entrees: d.entrees.filter((e) => e.id !== id) }));
       },
 
@@ -270,10 +285,10 @@ export function useAppData(userId) {
           return { ...current, ...patch, montantDu: nextMontantDu, paiements: nextPaiements };
         }),
       })),
-      removeSortie: (id) => {
+      removeSortie: async (id) => {
         const sortie = current().sorties.find((s) => s.id === id);
         if (!sortie) return;
-        if (!window.confirm(`Supprimer cette sortie de ${fcfa(sortie.montantDu)} pour « ${sortie.beneficiaire || 'ce bénéficiaire'} » ? Cette action est irréversible.`)) return;
+        if (!(await demanderConfirmation({ titre: 'Supprimer cette sortie ?', message: `${fcfa(sortie.montantDu)} pour « ${sortie.beneficiaire || 'ce bénéficiaire'} ». Cette action est irréversible.` }))) return;
         update((d) => ({ sorties: d.sorties.filter((s) => s.id !== id) }));
       },
 
@@ -283,10 +298,10 @@ export function useAppData(userId) {
       updatePaiement: (sortieId, paiementId, patch) => update((d) => ({
         sorties: mapById(d.sorties, sortieId, (s) => ({ ...s, paiements: mapById(s.paiements || [], paiementId, (p) => ({ ...p, ...patch })) })),
       })),
-      removePaiement: (sortieId, paiementId) => {
+      removePaiement: async (sortieId, paiementId) => {
         const paiement = current().sorties.find((s) => s.id === sortieId)?.paiements?.find((p) => p.id === paiementId);
         if (!paiement) return;
-        if (!window.confirm(`Supprimer ce versement de ${fcfa(paiement.montant)} ? Cette action est irréversible.`)) return;
+        if (!(await demanderConfirmation({ titre: 'Supprimer ce versement ?', message: `${fcfa(paiement.montant)}. Cette action est irréversible.` }))) return;
         update((d) => ({
           sorties: mapById(d.sorties, sortieId, (s) => ({ ...s, paiements: (s.paiements || []).filter((p) => p.id !== paiementId) })),
         }));
