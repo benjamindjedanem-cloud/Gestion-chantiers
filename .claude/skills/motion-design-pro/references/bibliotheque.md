@@ -202,3 +202,20 @@ Analyse du spectrogramme et des attaques (`scripts/analyse_son.py`) :
 - **Déroulé** : « Un **colis** à expédier ? » → « Une **agence près de vous** » (carte 3D, épingle, encart adresse) → logo + téléphone → « **À l'étranger** » (globe + avion) / « **Entre les communes** » → « Préparez votre envoi » → « **Estimez votre coût** » (encart « 96 250 FCFA ») → « Suivez votre colis » (barre de progression avec colis qui glisse) → « Une difficulté ? » → **pastilles d'avantages empilées** (« Tarifs avantageux », « Bonus », « Offres promotionnelles ») → « **Téléchargez** » + magasins → parrainage (visages) → « Le monde s'ouvre à vous. »
 - **Transition signature** : un **anneau blanc épais** s'ouvre depuis le centre, son trou grandit et révèle la scène suivante ; le téléphone **pivote sur lui-même** pour changer d'écran.
 - **Très proche d'un service de transfert/envoi** : agence sur la carte, globe international, tarifs.
+
+## REF-09 — Spot **Foire Internationale de Lomé 2026** (romuald.design, TikTok)
+
+- **Partagée le** : 2026-10-30 · 49 s, filmée sur l'écran d'After Effects (aperçu 16:9 en haut, planche Illustrator des plans en bas)
+- **Ce que Benjamin a dit** : « À partir de l'apparition de la foire Internationale… je crois à partir de la 7e seconde jusqu'à la fin j'aime bien pour ce style de spot publicitaire. »
+- **Planches** : `REF-09_vue-ensemble_foire-lome.jpg`, `REF-09_07-17s_logo-images-reelles-LOME.jpg`, `REF-09_17-27s_theme-chiffres-sur-images.jpg`, `REF-09_27-37s_dates-partenaire-roue-de-verbes.jpg`, `REF-09_37-44s_carton-final.jpg` (recadrées sur l'aperçu, 3 i/s, horodatage relatif au début de chaque planche)
+- **Univers** : couleurs du drapeau togolais (rouge, jaune, vert) + **fond crème lumineux** avec photo floue en transparence ; typo ronde très grasse ; vraies images (défilé, drapeaux, foule, officiels, stands).
+- **Déroulé (7 → 44 s)** :
+  - 7,0–8,7 s : logo « FOIRE INTERNATIONALE DE LOMÉ » — bloc jaune qui entre en biseau, lettres, pastille rouge « 21 » qui rebondit, étincelle, reflet qui balaie.
+  - 9,0–14,0 s : traînées jaune/rouge/vert → vraies séquences (danseuses, défilé, drapeaux, rollers), coupes sur les temps.
+  - 14,3–15,0 s : « En 2026 » (crème, lettres qui montent) → 15,0–17,0 s : « LOMÉ » géant, dégradé rouge → jaune, le monument doré monte entre les lettres.
+  - 17,0–21,3 s : rubans tricolores en arc qui balaient ; LOMÉ se replie en LO/MÉ à droite ; encadré fin « Thème » à gauche, texte ligne par ligne.
+  - 21,6–28,5 s : vidéo des stands et des officiels, bas fondu crème, chiffres qui comptent et s'ajoutent : +1 300 Exposants, +25 Pays, +800 000 Visiteurs.
+  - 28,7–32,5 s : bloc rouge qui pousse, « 27 NOV / 13 DEC / 2026 » s'écrit dedans ; logo CETEF TOGO-2000 glisse à côté.
+  - 33,3–38,3 s : pastille « 17 Jours » fixe avec onde ; verbes en roue : Découvrir, Échanger, Entreprendre, Saisir de nouvelles opportunités.
+  - 38,6–44,5 s : bloc date + logo assemblés, slogan « La foire de toutes les opportunités » qui s'écrit.
+- **Non retenu** : 0–7 s (texte blanc sur images vertes, début avant le logo).

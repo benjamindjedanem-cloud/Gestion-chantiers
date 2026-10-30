@@ -253,3 +253,18 @@ Leçon du projet Gestion Chantiers : une vidéo d'appli trop rapide reste incomp
 - **Entourer** (anneau de couleur) la valeur qui change au moment où la voix la nomme.
 - **Voix off** : écrire un texte court phrase par phrase ; une seule génération ElevenLabs (4 prises, ~600 crédits chacune pour 35 s), voix choisie avec `creative_list_voices` (fr, genre, `use_cases: advertisement`). Télécharger les prises (`content_url`, hébergées sur storage.googleapis.com, accessible), repérer les phrases avec `silencedetect=noise=-38dB:d=0.28`, choisir la prise qui respecte les silences voulus et ne sature pas, la **découper phrase par phrase** (`ffmpeg -nostdin`, fondus 30/60 ms) et placer **chaque phrase sur son image** (on peut réordonner).
 - **Mixage** : voix remontée (+9 dB avec `alimiter`), musique 0,5 hors voix et **0,11 sous la voix** (rampes de 8–10 images), effets × 0,7 ; viser la voix ≈ 10 dB au-dessus du lit musical, pic final < −0,5 dB.
+
+## 29. Logo en couches avec reflet (REF-09, 7,0–8,7 s)
+Bloc de fond entre en biseau (clip-path polygon qui s'ouvre d'un coin, 8 images, `ease.out`) → lettres décalées de 2 images (montée 30 px + fondu, 10 images) → pastille ronde en ressort `pose` (dépasse ≈ 1,15 puis se pose) → étincelle ✦ (échelle 0 → 1 → 0 en 10 images, rotation 45°) → **reflet** : bande blanche inclinée de 25°, opacité 0,6, largeur ≈ 15 % du logo, qui traverse de gauche à droite en 12 images, masquée par la forme du logo (`mix-blend-mode: overlay` ou masque).
+
+## 30. Traînées de couleur (REF-09, 8,7–9,3 s et 17,0–17,7 s)
+3 à 5 bandes floues (blur 20–40 px) aux couleurs de la marque, de largeurs différentes, qui traversent l'écran en diagonale avec des décalages de 2 images, en 10–14 images (`ease.inOut`) ; la scène suivante apparaît derrière la dernière bande. Variante « rubans » : arcs épais (stroke 60–90 px) qui se dessinent (`strokeDashoffset`) et repartent.
+
+## 31. Mot géant imbriqué avec un objet (REF-09, 15,0–21,3 s)
+Lettres une par une, montée par le bas avec léger dépassement (ressort `pose`), dégradé de couleur sur le mot. L'objet (détouré) monte du bas sur 20 images ; ordre des calques : lettres arrière → objet → lettres avant (ex. « LO » derrière, « MÉ » devant). Repli : le mot se coupe en deux lignes et glisse de 35 % vers la droite en 14 images (`ease.inOut`) ; à gauche, un cadre fin (2–3 px) se dessine en 12 images, puis son texte s'écrit ligne par ligne (décalage 4 images).
+
+## 32. Chiffres-clés sur la vidéo (REF-09, 21,6–28,5 s)
+Vidéo plein cadre avec léger zoom (1 → 1,04 sur la durée) ; dégradé crème du bas (40 % de la hauteur, opacité 0 → 0,95). Chaque chiffre : compteur de 0 à la valeur en 18 images (`ease.out`, entiers formatés « 1 300 »), libellé qui monte 6 images après ; chiffres suivants décalés de ≈ 1 s, alignés en ligne de gauche à droite.
+
+## 33. Bloc de date et roue de verbes (REF-09, 28,7–38,3 s)
+Bloc : rectangle plein qui pousse en `scaleY` depuis le bas (10 images), puis chaque ligne s'écrit (masque gauche → droite, 6 images, décalage 8 images). Roue de verbes : pastille fixe (onde radiale qui pulse toutes les 30 images) ; chaque verbe entre par le bas (translateY 60 → 0, blur vertical 8 → 0, 8 images) et sort par le haut de la même façon, ≈ 1,2 s par verbe ; le dernier (le plus long) reste et passe sur deux lignes.

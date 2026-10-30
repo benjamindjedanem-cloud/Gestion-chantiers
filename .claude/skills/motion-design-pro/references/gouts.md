@@ -120,6 +120,18 @@ Mettre à jour à chaque nouvelle référence ou retour de Benjamin.
 67. **Contexte africain assumé** : noms de villes et quartiers réels, visages africains, prix en FCFA. *(REF-05, 08)*
 68. **Fin d'appel à l'action** : logo + slogan + bouton/action (télécharger, rejoindre, venir en agence). *(REF-06, 07, 08)*
 
+### REF-09 · Spot « Foire Internationale de Lomé » (romuald.design, After Effects + Illustrator) — aimé de ~7 s à la fin
+
+69. **Images réelles + typographie** : vraies séquences filmées (défilé, drapeaux, foule, stands) alternées avec des plans de pure typographie sur fond crème lumineux ; **aucune illustration dessinée**. Confirme R-VISUELS. *(REF-09)*
+70. **Révélation du logo en couches** : un bloc de couleur entre en biseau, les lettres arrivent, une pastille ronde « rebondit » à sa place, une étincelle ✦ scintille et un **reflet lumineux balaie** le logo. ≈ 1,3 s. *(REF-09)*
+71. **Transition par traînées de couleur** : bandes floues aux couleurs de la marque/drapeau qui traversent l'écran et révèlent la vidéo suivante ; arcs de rubans tricolores qui balaient pour changer de plan. *(REF-09)*
+72. **Mot géant + objet emblématique imbriqués** : « LOMÉ » en très grandes lettres dégradées rouge → orange → jaune, le monument monte du bas **entre** les lettres (certaines devant, d'autres derrière) ; puis le mot se coupe en deux lignes (LO / MÉ) et glisse à droite pour laisser la place à un encadré fin (« Thème ») dont le texte s'écrit ligne par ligne. *(REF-09)*
+73. **Chiffres-clés sur la vidéo** : bas d'image fondu en crème, gros chiffres qui défilent en comptant (« +1 300 Exposants », « +25 Pays », « +800 000 Visiteurs »), arrivés un par un de gauche à droite, chiffre en rouge/orange, libellé en vert. *(REF-09)*
+74. **Bloc de date** : rectangle plein rouge qui pousse depuis le bas, les lignes (27 NOV / 13 DEC / 2026) s'écrivent dedans l'une après l'autre ; le logo partenaire glisse ensuite à côté. *(REF-09)*
+75. **Pastille fixe + roue de verbes** : un badge rond (« 17 Jours ») reste en place avec une onde qui pulse, pendant que les verbes défilent à côté un par un avec flou de mouvement vertical (Découvrir → Échanger → Entreprendre → Saisir de nouvelles opportunités). Confirme la roue de mots de REF-03 → **goût fort**. *(REF-03 + REF-09)*
+76. **Carton final = composition des éléments vus** : bloc date + logo assemblés côte à côte, slogan qui s'écrit dessous (« La foire de toutes les opportunités »), rien de nouveau n'est introduit à la fin. *(REF-09)*
+77. **Titres très gras, ronds, bicolores** pour ce type de spot événementiel/institutionnel (dans la lignée de DESIGN-01 à 03) ; la consigne « pas très gras » de Lyna-Transfert reste valable quand Benjamin la demande pour un projet. *(REF-09)*
+
 ---
 
 ## 🎨 DESIGN GRAPHIQUE — validé par Benjamin (affiches de référence DESIGN-01 à 03)
@@ -243,3 +255,4 @@ Planches : `assets/refs/REF-02_*_A-EVITER.jpg`.
 - 2026-10-25 — 16:9 jugé « trop petit, surtout la police » → en 16:9 : titres ≈ 80 px (7,5 % de la hauteur), sous-titres ≈ 58 px, visuels agrandis (échelle ≥ 0,85, un téléphone peut déborder en bas), contacts ≈ 46 px.
 - 2026-10-25 — Placement des textes en 16:9 : **phrases courtes → bloc recentré dans la zone libre, près de l'illustration** (sinon effet « coupé », texte isolé au bord) ; **phrases longues qui atteignent déjà l'illustration → garder l'alignement à gauche, sans couper les lignes davantage**. Ne pas renvoyer des mots à la ligne juste pour centrer.
 - 2026-10-26 — Storyboard ADN Créatif : charte respectée, mais **illustrations jugées « directement identifiables comme IA »** (œil dessiné, sphère en dégradé, publications grises de remplissage, icônes dans des ronds, affiche « fabriquée » en blocs, schéma œil → panier). Règle **R-VISUELS** : ne plus dessiner soi-même d'illustrations ni de faux visuels « exemple » ; utiliser les **vraies réalisations / vraies photos fournies par Benjamin** (affiches, extraits de spots, captures de sites, photos d'équipe), mises en scène (cadres, téléphone, cartes empilées, mouvements) ; quand on n'a pas de visuel réel, passer en **typographie pure** (mise en page de mots, chiffres, échelle, rythme) plutôt qu'en pictogrammes. Toujours demander ces visuels au brief.
+- 2026-10-30 — REF-09 (spot Foire Internationale de Lomé) : aime de ~7 s à la fin « pour ce style de spot publicitaire » → points 69–77 : images réelles + typographie, logo en couches avec reflet, traînées de couleur, mot géant imbriqué avec l'objet emblématique, chiffres-clés sur la vidéo, bloc de date, pastille + roue de verbes, carton final composé.
