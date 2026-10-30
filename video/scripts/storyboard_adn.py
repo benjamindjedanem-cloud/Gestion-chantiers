@@ -26,7 +26,7 @@ SCENES = [
      'Logo en couches (REF-09) : le A apparaît, le trait jaune glisse, étincelle et reflet ; « ADN Créatif » se tape. « On fabrique ces 3 secondes » en typographie géante. Puis le fil revient avec un vrai spot ADN (Gestion Chantiers) : le pouce s\'arrête, pastille « Arrêté ».',
      'Transition : cercle qui grandit depuis le centre (REF-10).'),
     ('05', '17 – 23 s', (540, 690), "« Des visuels de communication, des spots publicitaires et des sites qui arrêtent le regard, et qui donnent envie d'en savoir plus. »",
-     'Accordéon de services (REF-10) avec vos vraies réalisations : affiches Gestion Chantiers, spot Lyna-Transfert qui joue, site Tchad Immobilier qui défile ; le volet actif s\'ouvre, son nom se tape. Puis tous les volets s\'égalisent et « En savoir plus » est cliqué.',
+     'Accordéon de services (REF-10) avec vos vraies réalisations : affiches Gestion Chantiers, spot Lyna-Transfert qui joue, site Tchad Immobilier, puis un second site (parties sans le nom du client) qui défilent ; le volet actif s\'ouvre, son nom se tape. Puis tous les volets s\'égalisent et « En savoir plus » est cliqué.',
      'Transition : traînées de couleur.'),
     ('06', '23 – 26 s', (740, 790), "« Parce qu'un client qui s'arrête est un client qui peut acheter. »",
      'Typographie seule : « Un client qui » puis le mot géant « s\'arrête », qui roule et devient « achète » (roue de mots, REF-03/09/10), souligné du trait jaune.',

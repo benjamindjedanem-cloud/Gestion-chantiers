@@ -268,6 +268,7 @@ const SVC = [
   { at: v(16.22), label: 'Visuels de communication' },
   { at: v(17.9), label: 'Spots publicitaires' },
   { at: v(19.2), label: 'Sites web' },
+  { at: v(19.95), label: 'Sites web' }, // second site : parties sans le nom du client
 ];
 const MORE = v(21.14);
 const RECAP = v(19.4) + 30;
@@ -286,10 +287,11 @@ const Volet: React.FC<{ i: number; f: number }> = ({ i, f }) => {
     );
   }
   if (i === 1) return <OffthreadVideo src={staticFile('adn/spot-lyna.mp4')} startFrom={20} muted style={{ width: '100%', height: '100%', objectFit: 'cover' }} />;
-  const scroll = interpolate(f, [SVC[2].at + 8, SVC[2].at + 40, MORE, MORE + 20], [0, 900, 900, 1400], { ...clamp, easing: ease.inOut });
+  const s0 = SVC[i].at;
+  const scroll = i === 2 ? interpolate(f, [s0 + 6, s0 + 22], [0, 700], { ...clamp, easing: ease.inOut }) : interpolate(f, [s0 + 6, s0 + 30, MORE, MORE + 20], [0, 560, 560, 1100], { ...clamp, easing: ease.inOut });
   return (
-    <AbsoluteFill style={{ background: C.white, overflow: 'hidden' }}>
-      <Img src={staticFile('adn/site-immo.jpg')} style={{ position: 'absolute', left: '50%', width: 620, marginLeft: -310, top: -scroll }} />
+    <AbsoluteFill style={{ background: i === 3 ? '#1A0B26' : C.white, overflow: 'hidden' }}>
+      <Img src={staticFile(i === 2 ? 'adn/site-immo.jpg' : 'adn/site-telecom.jpg')} style={{ position: 'absolute', left: '50%', width: 620, marginLeft: -310, top: -scroll }} />
     </AbsoluteFill>
   );
 };
@@ -303,7 +305,7 @@ export const S5: React.FC<P> = ({ f }) => {
   const more = sp(f, MORE + 18, 'pose');
   const click = t(f, MORE + 34, MORE + 38) - t(f, MORE + 38, MORE + 46);
   const grow = SVC.map((_, i) => {
-    const active = interpolate(f, [SVC[i].at - 4, SVC[i].at + 10], [0, 1], { ...clamp, easing: ease.inOut }) * (i < 2 ? 1 - interpolate(f, [SVC[i + 1].at - 4, SVC[i + 1].at + 10], [0, 1], { ...clamp, easing: ease.inOut }) : 1);
+    const active = interpolate(f, [SVC[i].at - 4, SVC[i].at + 10], [0, 1], { ...clamp, easing: ease.inOut }) * (i < SVC.length - 1 ? 1 - interpolate(f, [SVC[i + 1].at - 4, SVC[i + 1].at + 10], [0, 1], { ...clamp, easing: ease.inOut }) : 1);
     return interpolate(eq, [0, 1], [0.35 + 4 * active, 1]);
   });
   return (
@@ -312,14 +314,14 @@ export const S5: React.FC<P> = ({ f }) => {
       <Title f={f} top={190} size={68} lines={[{ text: 'qui *arrêtent le regard*', at: RECAP }, { text: 'et donnent envie', at: MORE }, { text: "d'en *savoir plus.*", at: MORE + 12 }]} />
       <div style={{ position: 'absolute', left: 70, top: 520, width: 940, height: 1000, transform: `translateY(${(1 - cardIn) * 1200}px) scale(${1 - eq * 0.12})`, display: 'flex', gap: 12, padding: 12, borderRadius: 40, background: C.white, boxShadow: '0 30px 60px -20px rgba(5,8,60,0.35)' }}>
         {SVC.map((s, i) => (
-          <div key={s.label} style={{ flexGrow: grow[i], flexBasis: 0, position: 'relative', borderRadius: 28, overflow: 'hidden', background: C.line }}>
+          <div key={i} style={{ flexGrow: grow[i], flexBasis: 0, position: 'relative', borderRadius: 28, overflow: 'hidden', background: C.line }}>
             <Volet i={i} f={f} />
           </div>
         ))}
       </div>
       {/* libellé du service actif, tapé sous la carte */}
       <div style={{ position: 'absolute', left: 0, top: 1560, width: W, textAlign: 'center', fontFamily: FONT.title, fontWeight: 500, fontSize: 46, color: C.ink, opacity: 1 - eq }}>
-        {idx >= 0 ? <Typed f={f} at={SVC[idx].at + 2} text={SVC[idx].label} step={1.2} /> : null}
+        {idx >= 0 ? <Typed f={f} at={SVC[Math.min(idx, 2)].at + 2} text={SVC[idx].label} step={1.2} /> : null}
       </div>
       <div style={{ position: 'absolute', left: 540, top: 1560, transform: `translate(-50%, 0) scale(${more * (1 - click * 0.08)})`, display: 'flex', alignItems: 'center', gap: 16, padding: '26px 48px', borderRadius: 70, background: C.blue, color: C.white, fontFamily: FONT.title, fontWeight: 600, fontSize: 42 }}>
         En savoir plus <ArrowRight size={42} color={C.yellow} />
