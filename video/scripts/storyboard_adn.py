@@ -13,29 +13,29 @@ F = lambda w, s: ImageFont.truetype(os.path.join(FD, f'montserrat-latin-{w}-norm
 BLUE, YEL, INK, GREY = (10, 16, 200), (190, 150, 0), (11, 14, 58), (90, 95, 134)
 
 SCENES = [
-    ('01', '0 – 2 s', (30, 52), '« Trois secondes. »',
-     'Fond bleu du logo. Un grand « 3 s » apparaît, entouré d\'un anneau jaune qui se vide comme un minuteur.',
-     'Transition : on plonge dans le « 3 » (zoom), le fil d\'actualité apparaît.'),
+    ('01', '0 – 2 s', (20, 50), '« Trois secondes. »',
+     'Typographie seule sur le bleu du logo : un « 3 » géant monte, le trait jaune du logo passe dessous, « SECONDES » s\'écrit en capitales espacées.',
+     'Transition : traînées de couleur bleu et jaune (REF-09).'),
     ('02', '2 – 8 s', (100, 215), "« C'est le temps qu'il faut à un client pour décider de s'arrêter sur votre publication, ou de passer à la suivante. »",
-     'Téléphone, fil d\'actualité qui défile vite (publications ternes, marques fictives). Sur « s\'arrêter », le pouce stoppe le fil et un minuteur « 3 s » se vide. Sur « passer à la suivante », le pouce balaie et la publication s\'envole.',
-     'Transition : balayage bleu en diagonale.'),
-    ('03', '8 – 11 s', (262, 300), '« Alors, que voit-il en ces trois secondes ? »',
-     'Un œil s\'ouvre, regarde à gauche puis à droite, cligne ; trois petits repères 3-2-1 apparaissent autour.',
-     "Transition : l'œil se ferme, le logo naît à sa place."),
-    ('04', '11 – 17 s', (345, 470), '« Chez ADN Créatif, nous fabriquons ces trois secondes de sorte à faire arrêter votre potentiel client. »',
-     "Le « A » blanc se dessine, le trait jaune glisse en place, « ADN Créatif » s'écrit. Le logo monte en en-tête ; une publication se monte pièce par pièce (fond, visuel, titre, prix, bouton). Le pouce s'y pose : pastille jaune « Arrêté ».",
-     "Transition : anneau blanc qui s'ouvre."),
-    ('05', '17 – 23 s', (520, 690), '« Des visuels de communication, des spots publicitaires et des sites qui arrêtent le regard, et qui donnent envie d\'en savoir plus. »',
-     'Un service par temps de voix : affiche, puis lecteur vidéo (lecture, barre qui avance), puis site web qui se charge. Les cartes arrivent et s\'empilent. Sur « en savoir plus », un bouton « En savoir plus » est cliqué.',
-     'Transition : balayage bleu depuis la droite.'),
+     'Téléphone, fil d\'actualité fait de vraies photos floutées (contenu indistinct). Sur « s\'arrêter », le fil se pose et un minuteur 3 s se vide ; sur « passer », le pouce balaie et le fil repart.',
+     'Transition : traînées de couleur.'),
+    ('03', '8 – 11 s', (275, 322), '« Alors, que voit-il en ces trois secondes ? »',
+     'Barre de recherche (REF-10) : un point devient loupe, la barre s\'étire, « Que voit-il en 3 secondes ? » se tape. Puis la barre se referme en sphère.',
+     'Transition : la sphère devient le logo (REF-10).'),
+    ('04', '11 – 17 s', (360, 470), '« Chez ADN Créatif, nous fabriquons ces trois secondes de sorte à faire arrêter votre potentiel client. »',
+     'Logo en couches (REF-09) : le A apparaît, le trait jaune glisse, étincelle et reflet ; « ADN Créatif » se tape. « On fabrique ces 3 secondes » en typographie géante. Puis le fil revient avec un vrai spot ADN (Gestion Chantiers) : le pouce s\'arrête, pastille « Arrêté ».',
+     'Transition : cercle qui grandit depuis le centre (REF-10).'),
+    ('05', '17 – 23 s', (540, 690), "« Des visuels de communication, des spots publicitaires et des sites qui arrêtent le regard, et qui donnent envie d'en savoir plus. »",
+     'Accordéon de services (REF-10) avec vos vraies réalisations : affiches Gestion Chantiers, spot Lyna-Transfert qui joue, site Tchad Immobilier qui défile ; le volet actif s\'ouvre, son nom se tape. Puis tous les volets s\'égalisent et « En savoir plus » est cliqué.',
+     'Transition : traînées de couleur.'),
     ('06', '23 – 26 s', (740, 790), "« Parce qu'un client qui s'arrête est un client qui peut acheter. »",
-     "Fond bleu. « S'arrête » (œil) relié par un trait jaune en pointillés à « Achète » (sac). Puis une notification « Nouvelle commande » tombe.",
-     "Transition : anneau blanc qui s'ouvre."),
-    ('07', '26 – 29 s', (822, 868), '« Écrivez-nous maintenant sur nos différents réseaux sociaux. »',
-     'Conversation : le client écrit (points de saisie), « Bonjour ADN Créatif, je veux un spot pour ma boutique. », réponse « Avec plaisir ! On en parle ? ». Puis Facebook, Instagram, LinkedIn, WhatsApp apparaissent.',
-     'Transition : balayage bleu vers le haut.'),
-    ('08', '29 – 35 s', (940, 1030), '« ADN Créatif. Le catalyseur de croissance. »',
-     'Le logo se forme (le A, puis le trait jaune), « ADN Créatif » s\'écrit, puis le slogan. Une courbe de croissance jaune monte en bas de l\'écran.',
+     'Typographie seule : « Un client qui » puis le mot géant « s\'arrête », qui roule et devient « achète » (roue de mots, REF-03/09/10), souligné du trait jaune.',
+     'Transition : cercle qui grandit.'),
+    ('07', '26 – 29 s', (835, 880), '« Écrivez-nous maintenant sur nos différents réseaux sociaux. »',
+     '« Écrivez-nous maintenant. » Une pastille change de forme à chaque réseau (REF-10) : Facebook, Instagram, WhatsApp, LinkedIn. « sur nos réseaux sociaux » se tape.',
+     'Transition : traînées de couleur.'),
+    ('08', '29 – 35 s', (930, 1030), '« ADN Créatif. Le catalyseur de croissance. »',
+     'Logo en couches avec reflet, « ADN Créatif » tapé, « LE CATALYSEUR DE CROISSANCE » en capitales espacées, trait jaune.',
      'Fin.'),
 ]
 
@@ -47,7 +47,7 @@ def page(items, n, total):
     im = Image.new('RGB', (PAGE_W, TOP + ROW_H * len(items) + 40), (246, 247, 252))
     d = ImageDraw.Draw(im)
     d.text((60, 45), 'ADN Créatif · storyboard visuel', font=F(600, 46), fill=INK)
-    d.text((60, 102), f'9:16 · 35 s · voix off validée « 3 secondes » · page {n}/{total}', font=F(400, 26), fill=GREY)
+    d.text((60, 102), f'9:16 · 35 s · v2 · vraies réalisations + typographie · page {n}/{total}', font=F(400, 26), fill=GREY)
     for i, (num, tm, frames, voice, what, trans) in enumerate(items):
         y = TOP + i * ROW_H
         d.rounded_rectangle((40, y, PAGE_W - 40, y + ROW_H - 30), 30, fill=(255, 255, 255))
