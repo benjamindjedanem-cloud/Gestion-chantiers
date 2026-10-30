@@ -219,3 +219,21 @@ Analyse du spectrogramme et des attaques (`scripts/analyse_son.py`) :
   - 33,3–38,3 s : pastille « 17 Jours » fixe avec onde ; verbes en roue : Découvrir, Échanger, Entreprendre, Saisir de nouvelles opportunités.
   - 38,6–44,5 s : bloc date + logo assemblés, slogan « La foire de toutes les opportunités » qui s'écrit.
 - **Non retenu** : 0–7 s (texte blanc sur images vertes, début avant le logo).
+
+## REF-10 — Spot **BLESSINGLEO** (girvisioncreative, TikTok), services numériques à Bukavu
+
+- **Partagée le** : 2026-10-30 · 60 s · 16:9
+- **Ce que Benjamin a dit** : « Les 5 premières secondes et de 10–32 s (à partir de la partie service jusqu'à la localisation). »
+- **Planches** : `REF-10_vue-ensemble_blessingleo.jpg`, `REF-10_00-06s_barre-de-recherche-cartes-logo.jpg`, `REF-10_10-18s_services-accordeon.jpg`, `REF-10_18-26s_recap-logo-formes-qui-se-transforment.jpg`, `REF-10_26-34s_localisation-contact.jpg`
+- **Univers** : bleu nuit + bleu roi, blanc ; typo géométrique moyenne/grasse, capitales espacées pour le nom ; vraies photos du métier (télé avec appli de streaming, routeur, graphique de trading, robot).
+- **Déroulé** :
+  - 0,0–1,6 s : un point → bouton loupe → barre qui s'étire ; « Vous recherchez… » se tape lettre par lettre.
+  - 1,6–4,4 s : la barre monte et rétrécit ; cartes sombres arrondies (icône dans un rond bleu + mot) qui sortent une à une : Divertissement, Connexion fiable, Nouvelles compétences ; ligne de progression à points en dessous.
+  - 4,4–5,6 s : les cartes glissent l'une sur l'autre, se fondent en une sphère bleue → logo rond + « BLESSINGLEO » qui s'écrit.
+  - 10,0–10,8 s : « NOS SERVICES » qui s'écrit, soulignement ; balayage bleu/blanc par panneaux verticaux.
+  - 11,0–20,3 s : accordéon de 4 volets (IPTV, internet haut débit, trading Forex, intelligence artificielle) ; le volet actif s'élargit, libellé tapé dessous, ≈ 1,8–2,6 s par service.
+  - 20,3–24,8 s : les volets s'égalisent, la carte recule ; « Ainsi que bien d'autres solutions numériques et digitales » (mot-clé bleu) ; sortie par un disque bleu nuit qui grossit.
+  - 25,0–26,0 s : sphère → logo.
+  - 26,4–28,7 s : pastilles Apprenez → Innovez → Évoluez, la forme change à chaque mot (rond, hexagone, carré arrondi).
+  - 28,8–32,0 s : « Retrouvez-nous », cercle qui grandit → épingle rouge en volume sur un vrai plan, « Bukavu, Kadutu » puis l'adresse se tapent.
+  - (après 32 s, hors passage cité) « Pour plus d'informations », pilule de contact avec numéro.

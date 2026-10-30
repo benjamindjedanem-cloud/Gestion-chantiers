@@ -268,3 +268,15 @@ Vidéo plein cadre avec léger zoom (1 → 1,04 sur la durée) ; dégradé crèm
 
 ## 33. Bloc de date et roue de verbes (REF-09, 28,7–38,3 s)
 Bloc : rectangle plein qui pousse en `scaleY` depuis le bas (10 images), puis chaque ligne s'écrit (masque gauche → droite, 6 images, décalage 8 images). Roue de verbes : pastille fixe (onde radiale qui pulse toutes les 30 images) ; chaque verbe entre par le bas (translateY 60 → 0, blur vertical 8 → 0, 8 images) et sort par le haut de la même façon, ≈ 1,2 s par verbe ; le dernier (le plus long) reste et passe sur deux lignes.
+
+## 34. Barre de recherche d'ouverture (REF-10, 0–1,6 s)
+Point (8 px) → rond loupe en ressort `pose` (6 images) → la barre s'étire vers la gauche (largeur 0 → 100 %, 10 images, `ease.out`) → texte tapé à 1 caractère / 2 images avec curseur clignotant (15 images par cycle). Puis la barre monte et réduit à 60 % en 12 images (`ease.inOut`).
+
+## 35. Accordéon de services (REF-10, 11–24 s)
+Carte arrondie (rayon 28 px) contenant N volets en `display: flex` ; largeur du volet actif = 64 % de la carte, les autres se partagent le reste (≈ 12 % chacun) ; passage au suivant en 14 images (`ease.inOut`) en animant les `flex-grow`. Image de chaque volet en `object-fit: cover`, légèrement zoomée (1,08 → 1) quand il s'ouvre. Libellé tapé sous la carte. Récapitulatif : tous les `flex-grow` à 1 en 16 images, carte qui recule à 0,8.
+
+## 36. Forme qui se transforme (REF-10, 26–29 s)
+Une seule pastille dont le `border-radius` et la rotation s'animent entre formes (50 % → 30 % + rotation 10° → 24 %), 10 images par changement, couleur qui alterne ; icône + verbe à l'intérieur remplacés avec flou (sortie 4 images, entrée 6 images) ; anneau fin (2 px) qui suit la forme avec 3 images de retard.
+
+## 37. Pilule de contact (REF-10, après 32 s)
+Point → rond (ressort) → pilule qui s'étire (12 images) avec l'icône téléphone à gauche ; numéro tapé chiffre par chiffre (1 / 2 images) ; étiquette en capitales espacées (letter-spacing 0,3 em) qui s'écrit au-dessus.
