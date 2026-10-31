@@ -132,7 +132,6 @@ export const S1: React.FC<P> = ({ f }) => {
         <div style={{ transform: `translateY(${(1 - k) * 900}px)` }}>3</div>
       </div>
       {/* trait jaune du logo qui passe sous le chiffre */}
-      <div style={{ position: 'absolute', left: 300, top: 1230, width: 480 * t(f, 10, 24, 0, 1, ease.out), height: 34, background: C.yellow, transform: 'skewX(-24deg)' }} />
       <div style={{ position: 'absolute', left: 0, top: 1330, width: W, textAlign: 'center', fontFamily: FONT.title, fontWeight: 500, fontSize: 64, letterSpacing: '0.32em', color: C.white }}>
         <Typed f={f} at={v(0.2)} text="SECONDES" step={1.6} caret={false} />
       </div>
@@ -338,7 +337,6 @@ export const S6: React.FC<P> = ({ f }) => {
         {big('s’arrête', sp(f, v(23.6), 'pose'), w1)}
         {big('achète', w2, 0)}
       </div>
-      <div style={{ position: 'absolute', left: 340, top: 1010, width: 400 * t(f, swap + 10, swap + 22, 0, 1, ease.out), height: 26, background: C.yellow, transform: 'skewX(-24deg)' }} />
     </AbsoluteFill>
   );
 };
@@ -393,7 +391,6 @@ export const S8: React.FC<P> = ({ f }) => {
       <div style={{ position: 'absolute', left: 0, top: 1190, width: W, textAlign: 'center', fontFamily: FONT.title, fontWeight: 500, fontSize: 40, letterSpacing: '0.24em', color: 'rgba(255,255,255,0.9)' }}>
         <Typed f={f} at={v(30.6)} text="LE CATALYSEUR DE CROISSANCE" step={1.2} caret={false} />
       </div>
-      <div style={{ position: 'absolute', left: 540 - 130, top: 1270, width: 260 * t(f, v(31.5), v(32.0), 0, 1, ease.out), height: 12, background: C.yellow, transform: 'skewX(-24deg)' }} />
     </AbsoluteFill>
   );
 };

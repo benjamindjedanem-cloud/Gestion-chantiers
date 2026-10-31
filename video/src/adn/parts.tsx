@@ -42,9 +42,11 @@ export const Title: React.FC<{
         return (
           <div key={li}>
             {words.map((w, i) => {
-              if (w.startsWith('*')) inKey = true;
+              const first = w.startsWith('*');
+              if (first) inKey = true;
               const key = inKey;
               if (w.replace(/[.,…;!?]+$/, '').endsWith('*')) inKey = false;
+              const joined = key && inKey; // le mot suivant est aussi dans l'étiquette
               const at = ln.at + i * 3;
               const p = t(f, at, at + 14);
               const o = t(f, at, at + 8);
@@ -53,28 +55,28 @@ export const Title: React.FC<{
                   key={i}
                   style={{
                     display: 'inline-block',
-                    marginRight: '0.26em',
+                    marginRight: key && !joined ? '0.4em' : '0.26em',
+                    marginLeft: first ? '0.12em' : 0,
                     position: 'relative',
                     transform: `translateY(${(1 - p) * 0.55 * size}px)`,
                     opacity: o,
                     filter: `blur(${(1 - o) * 6}px)`,
                     fontWeight: key ? 600 : 400,
-                    color: key ? (onBlue ? C.white : C.blue) : undefined,
+                    color: key ? (onBlue ? C.blue : C.white) : undefined,
                   }}
                 >
                   {w.replace(/\*/g, '')}
                   {key ? (
-                    // le trait jaune du logo souligne le mot-clé
+                    // mot-clé posé sur une étiquette pleine, comme les bandeaux des affiches d'ADN (propre à ce spot)
                     <span
                       style={{
                         position: 'absolute',
-                        left: '-0.04em',
-                        right: '-0.04em',
-                        bottom: '0.04em',
-                        height: '0.12em',
-                        background: C.yellow,
-                        borderRadius: 3,
-                        transform: `skewX(-18deg) scaleX(${t(f, at + 8, at + 20)})`,
+                        left: first ? '-0.12em' : '-0.02em',
+                        right: joined ? '-0.28em' : '-0.12em',
+                        top: '0.06em',
+                        bottom: '0.02em',
+                        background: onBlue ? C.white : C.blue,
+                        transform: `scaleX(${t(f, at - 2, at + 8)})`,
                         transformOrigin: 'left',
                         zIndex: -1,
                       }}

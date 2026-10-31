@@ -29,13 +29,13 @@ SCENES = [
      'Accordéon de services (REF-10) avec vos vraies réalisations : vos affiches (Miss N\'Djamena, Design graphique & montage vidéo, Le Procès de Noël), spot Lyna-Transfert qui joue, site Tchad Immobilier, puis un second site (parties sans le nom du client) qui défilent ; le volet actif s\'ouvre, son nom se tape. Puis tous les volets s\'égalisent et « En savoir plus » est cliqué.',
      'Transition : traînées de couleur.'),
     ('06', '23 – 26 s', (740, 790), "« Parce qu'un client qui s'arrête est un client qui peut acheter. »",
-     'Typographie seule : « Un client qui » puis le mot géant « s\'arrête », qui roule et devient « achète » (roue de mots, REF-03/09/10), souligné du trait jaune.',
+     'Typographie seule : « Un client qui » puis le mot géant « s\'arrête », qui roule et devient « achète » (roue de mots, REF-03/09/10).',
      'Transition : cercle qui grandit.'),
     ('07', '26 – 29 s', (835, 880), '« Écrivez-nous maintenant sur nos différents réseaux sociaux. »',
      '« Écrivez-nous maintenant. » Une pastille change de forme à chaque réseau (REF-10) : Facebook, Instagram, WhatsApp, LinkedIn. « sur nos réseaux sociaux » se tape.',
      'Transition : traînées de couleur.'),
     ('08', '29 – 35 s', (930, 1030), '« ADN Créatif. Le catalyseur de croissance. »',
-     'Logo en couches avec reflet, « ADN Créatif » tapé, « LE CATALYSEUR DE CROISSANCE » en capitales espacées, trait jaune.',
+     'Logo en couches avec reflet, « ADN Créatif » tapé, « LE CATALYSEUR DE CROISSANCE » en capitales espacées.',
      'Fin.'),
 ]
 
