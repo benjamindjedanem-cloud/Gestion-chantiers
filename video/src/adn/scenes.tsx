@@ -102,8 +102,8 @@ const Name: React.FC<{ f: number; at: number; size?: number; color?: string }> =
 
 // Publication du fil : photo réelle floutée (contenu indistinct, qu'on fait défiler) ou vraie réalisation ADN.
 const POST_H = 820;
-const FeedPost: React.FC<{ w: number; img?: string; children?: React.ReactNode }> = ({ w, img, children }) => (
-  <div style={{ width: w, height: POST_H, background: C.white, borderBottom: `10px solid ${C.paper}` }}>
+const FeedPost: React.FC<{ w: number; img?: string; ratio?: number; children?: React.ReactNode }> = ({ w, img, ratio = 1, children }) => (
+  <div style={{ width: w, height: POST_H + w * (ratio - 1), background: C.white, borderBottom: `10px solid ${C.paper}` }}>
     <div style={{ display: 'flex', alignItems: 'center', gap: 16, padding: '22px 26px' }}>
       <div style={{ width: 58, height: 58, borderRadius: 58, background: C.line }} />
       <div>
@@ -111,7 +111,7 @@ const FeedPost: React.FC<{ w: number; img?: string; children?: React.ReactNode }
         <div style={{ width: 110, height: 14, borderRadius: 7, background: C.line, marginTop: 10 }} />
       </div>
     </div>
-    <div style={{ position: 'relative', width: w, height: w, overflow: 'hidden', background: C.line }}>
+    <div style={{ position: 'relative', width: w, height: w * ratio, overflow: 'hidden', background: C.line }}>
       {children ?? <Img src={staticFile(img!)} style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'blur(14px) saturate(0.55) brightness(1.08)', transform: 'scale(1.15)' }} />}
     </div>
     <div style={{ display: 'flex', gap: 30, padding: '22px 28px' }}>
@@ -146,13 +146,13 @@ const STOP_AT = 132;
 const SKIP_AT = 192;
 const feedY = (f: number) => {
   const stop = 3 * POST_H - 40;
-  if (f < STOP_AT) return t(f, CUT.feed - 6, STOP_AT, 0, 1, ease.out) * stop;
+  if (f < STOP_AT) return t(f, 0, STOP_AT, 0, 1, ease.out) * stop;
   if (f < SKIP_AT) return stop;
   return stop + t(f, SKIP_AT, SKIP_AT + 20, 0, 1, ease.inOut) * POST_H * 1.6 + Math.max(0, f - SKIP_AT - 20) * 14;
 };
 
 export const S2: React.FC<P> = ({ f }) => {
-  if (f < CUT.feed - 2 || f > CUT.question + 2) return null;
+  if (f > CUT.question + 2) return null;
   const pw = 680;
   const sw = pw * 0.94;
   const y = feedY(f);
@@ -161,9 +161,10 @@ export const S2: React.FC<P> = ({ f }) => {
   const swipe = t(f, SKIP_AT - 4, SKIP_AT + 8);
   return (
     <AbsoluteFill style={{ background: C.paper }}>
+      <Title f={f} top={200} size={84} out={v(1.05)} lines={[{ text: 'Trois *secondes.*', at: v(0.1) }]} />
       <Title f={f} top={200} size={72} out={SKIP_AT - 8} lines={[{ text: "C'est le temps qu'il faut", at: v(1.45) }, { text: 'pour *s’arrêter*…', at: STOP_AT - 8 }]} />
       <Title f={f} top={200} size={72} lines={[{ text: '…ou *passer*', at: SKIP_AT }, { text: 'à la suivante.', at: SKIP_AT + 12 }]} />
-      <div style={{ position: 'absolute', left: W / 2 - pw / 2, top: 520 + (1 - sp(f, CUT.feed - 4, 'doux')) * 900 }}>
+      <div style={{ position: 'absolute', left: W / 2 - pw / 2, top: 520 + (1 - sp(f, 0, 'doux')) * 900 }}>
         <Phone w={pw}>
           <div style={{ position: 'absolute', left: 0, top: 110 - y, filter: `blur(${Math.min(10, vel * 0.25)}px)` }}>
             {FEED.map((img, i) => (
@@ -181,7 +182,7 @@ export const S2: React.FC<P> = ({ f }) => {
             </div>
           ) : null}
         </Phone>
-        <Touch x={pw / 2 + 60} y={1100 - swipe * 420} press={f >= STOP_AT && f < SKIP_AT ? 1 : swipe} visible={t(f, CUT.feed, CUT.feed + 8) * (1 - t(f, SKIP_AT + 10, SKIP_AT + 16))} />
+        <Touch x={pw / 2 + 60} y={1100 - swipe * 420} press={f >= STOP_AT && f < SKIP_AT ? 1 : swipe} visible={t(f, 6, 14) * (1 - t(f, SKIP_AT + 10, SKIP_AT + 16))} />
       </div>
     </AbsoluteFill>
   );
@@ -219,7 +220,7 @@ const HOLD = v(14.4);
 export const S4: React.FC<P> = ({ f }) => {
   if (f < CUT.logo - 12 || f > CUT.services + 2) return null;
   const up = t(f, BUILD - 14, BUILD + 4, 0, 1, ease.inOut);
-  const phoneIn = sp(f, HOLD - 18, 'doux');
+  const phoneIn = sp(f, BUILD + 20, 'doux');
   const hold = sp(f, HOLD, 'pose');
   const pw = 600;
   return (
@@ -230,25 +231,13 @@ export const S4: React.FC<P> = ({ f }) => {
       <div style={{ position: 'absolute', left: interpolate(up, [0, 1], [540 - 300, 240]), top: interpolate(up, [0, 1], [1060, 145]), transform: `scale(${interpolate(up, [0, 1], [1, 0.8])})`, transformOrigin: 'left top' }}>
         <Name f={f} at={CUT.logo + 12} size={100} />
       </div>
-      {/* mot géant (REF-09) : « 3 SECONDES » qu'on fabrique */}
-      <div style={{ position: 'absolute', left: 90, top: 340, fontFamily: FONT.title, color: C.white, opacity: 1 - t(f, HOLD - 16, HOLD - 6) }}>
-        <div style={{ fontSize: 56, fontWeight: 400 }}>
-          <Typed f={f} at={BUILD} text="On fabrique ces" step={1.4} caret={false} />
-        </div>
-        <div style={{ display: 'flex', alignItems: 'baseline', gap: 26, marginTop: 10 }}>
-          <span style={{ fontSize: 330, fontWeight: 600, lineHeight: 1, display: 'inline-block', transform: `translateY(${(1 - sp(f, BUILD + 20, 'pose')) * 200}px)`, opacity: t(f, BUILD + 20, BUILD + 26) }}>3</span>
-          <span style={{ fontSize: 110, fontWeight: 600, letterSpacing: -2, position: 'relative' }}>
-            <Typed f={f} at={BUILD + 26} text="secondes" step={1.6} caret={false} />
-            <span style={{ position: 'absolute', left: 0, bottom: 6, height: 14, width: `${t(f, BUILD + 36, BUILD + 50) * 100}%`, background: C.yellow, transform: 'skewX(-20deg)', zIndex: -1 }} />
-          </span>
-        </div>
-      </div>
+      <Title f={f} onBlue top={330} size={70} out={HOLD + 60} lines={[{ text: 'On fabrique', at: BUILD }, { text: 'ces *3 secondes*', at: BUILD + 9 }]} />
       {/* la vraie réalisation ADN dans le fil : le spot Gestion Chantiers arrête le pouce */}
-      <div style={{ position: 'absolute', left: W / 2 - pw / 2, top: 560 + (1 - phoneIn) * 1500 }}>
+      <div style={{ position: 'absolute', left: W / 2 - pw / 2, top: 600 + (1 - phoneIn) * 1500 }}>
         <Phone w={pw}>
           <div style={{ position: 'absolute', left: 0, top: 110 }}>
-            <FeedPost w={pw * 0.94}>
-              {f >= HOLD - 20 ? <OffthreadVideo src={staticFile('adn/spot-gc.mp4')} startFrom={30} muted style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> : <div />}
+            <FeedPost w={pw * 0.94} ratio={1.25}>
+              <Img src={staticFile('adn/affiche-1.jpg')} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
             </FeedPost>
             <FeedPost w={pw * 0.94} img="adn/feed-2.jpg" />
           </div>
@@ -276,7 +265,7 @@ const RECAP = v(19.4) + 30;
 const Volet: React.FC<{ i: number; f: number }> = ({ i, f }) => {
   if (i === 0) {
     // affiches Gestion Chantiers qui se succèdent
-    const imgs = ['gc-S1.jpg', 'gc-S4.jpg', 'gc-S10.jpg'];
+    const imgs = ['affiche-2.jpg', 'affiche-4.jpg', 'affiche-1.jpg'];
     const k = Math.min(2, Math.max(0, Math.floor((f - SVC[0].at) / 16)));
     return (
       <AbsoluteFill>

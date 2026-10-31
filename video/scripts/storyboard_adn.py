@@ -14,8 +14,8 @@ BLUE, YEL, INK, GREY = (10, 16, 200), (190, 150, 0), (11, 14, 58), (90, 95, 134)
 
 SCENES = [
     ('01', '0 – 2 s', (20, 50), '« Trois secondes. »',
-     'Typographie seule sur le bleu du logo : un « 3 » géant monte, le trait jaune du logo passe dessous, « SECONDES » s\'écrit en capitales espacées.',
-     'Transition : traînées de couleur bleu et jaune (REF-09).'),
+     'Pas de plan à part : la vidéo s\'ouvre directement sur le téléphone et le fil d\'actualité qui défile ; « Trois secondes. » s\'écrit au-dessus pendant que la voix le dit.',
+     'Enchaîne sans coupure sur le plan suivant (même téléphone).'),
     ('02', '2 – 8 s', (100, 215), "« C'est le temps qu'il faut à un client pour décider de s'arrêter sur votre publication, ou de passer à la suivante. »",
      'Téléphone, fil d\'actualité fait de vraies photos floutées (contenu indistinct). Sur « s\'arrêter », le fil se pose et un minuteur 3 s se vide ; sur « passer », le pouce balaie et le fil repart.',
      'Transition : traînées de couleur.'),
@@ -23,10 +23,10 @@ SCENES = [
      'Barre de recherche (REF-10) : un point devient loupe, la barre s\'étire, « Que voit-il en 3 secondes ? » se tape. Puis la barre se referme en sphère.',
      'Transition : la sphère devient le logo (REF-10).'),
     ('04', '11 – 17 s', (360, 470), '« Chez ADN Créatif, nous fabriquons ces trois secondes de sorte à faire arrêter votre potentiel client. »',
-     'Logo en couches (REF-09) : le A apparaît, le trait jaune glisse, étincelle et reflet ; « ADN Créatif » se tape. « On fabrique ces 3 secondes » en typographie géante. Puis le fil revient avec un vrai spot ADN (Gestion Chantiers) : le pouce s\'arrête, pastille « Arrêté ».',
+     'Logo en couches (REF-09) : le A apparaît, le trait jaune glisse, étincelle et reflet ; « ADN Créatif » se tape. « On fabrique ces 3 secondes » s\'écrit (texte fin, pas de chiffre géant), et le fil revient avec une vraie affiche ADN (« Le Procès de Noël ») : le pouce s\'arrête, pastille « Arrêté ».',
      'Transition : cercle qui grandit depuis le centre (REF-10).'),
     ('05', '17 – 23 s', (540, 690), "« Des visuels de communication, des spots publicitaires et des sites qui arrêtent le regard, et qui donnent envie d'en savoir plus. »",
-     'Accordéon de services (REF-10) avec vos vraies réalisations : affiches Gestion Chantiers, spot Lyna-Transfert qui joue, site Tchad Immobilier, puis un second site (parties sans le nom du client) qui défilent ; le volet actif s\'ouvre, son nom se tape. Puis tous les volets s\'égalisent et « En savoir plus » est cliqué.',
+     'Accordéon de services (REF-10) avec vos vraies réalisations : vos affiches (Miss N\'Djamena, Design graphique & montage vidéo, Le Procès de Noël), spot Lyna-Transfert qui joue, site Tchad Immobilier, puis un second site (parties sans le nom du client) qui défilent ; le volet actif s\'ouvre, son nom se tape. Puis tous les volets s\'égalisent et « En savoir plus » est cliqué.',
      'Transition : traînées de couleur.'),
     ('06', '23 – 26 s', (740, 790), "« Parce qu'un client qui s'arrête est un client qui peut acheter. »",
      'Typographie seule : « Un client qui » puis le mot géant « s\'arrête », qui roule et devient « achète » (roue de mots, REF-03/09/10), souligné du trait jaune.',
