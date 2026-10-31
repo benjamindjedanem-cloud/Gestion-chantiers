@@ -33,11 +33,11 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 LEX = os.path.join(HERE, "slop.json")
 
 SENT_RE = re.compile(r"[^.!?\n]+[.!?]*")
-WORD_RE = re.compile(r"[A-Za-z']+")
+WORD_RE = re.compile(r"[^\W\d_]+(?:'[^\W\d_]+)?")
 CONTRACTIONS = re.compile(r"\b\w+'(?:s|t|re|ve|ll|d|m)\b", re.IGNORECASE)
 PRONOUNS = re.compile(r"\b(i|me|my|mine|we|us|our|you|your)\b", re.IGNORECASE)
 NUMBERS = re.compile(r"\b\d[\d,.]*%?\b|\$\d")
-PROPER = re.compile(r"(?<![.!?]\s)(?<!^)\b[A-Z][a-z]{2,}\b", re.MULTILINE)
+PROPER = re.compile(r"(?<![.!?]\s)(?<!^)\b[A-ZÀ-Ý][a-zà-ÿ]{2,}\b", re.MULTILINE)
 
 
 def clamp(n):
@@ -124,8 +124,10 @@ def check_voice(text, lex):
     if len(w) < 25:
         return 50.0, "too short to judge"
     per100 = 100 / len(w)
-    contractions = len(CONTRACTIONS.findall(text)) * per100
-    person = len(PRONOUNS.findall(text)) * per100
+    contr_re = re.compile(lex["contractions_regex"], re.IGNORECASE) if "contractions_regex" in lex else CONTRACTIONS
+    pron_re = re.compile(lex["pronouns_regex"], re.IGNORECASE) if "pronouns_regex" in lex else PRONOUNS
+    contractions = len(contr_re.findall(text)) * per100
+    person = len(pron_re.findall(text)) * per100
     tells = 0
     names = []
     for s in lex["structures"]:
@@ -195,10 +197,11 @@ def main():
     ap.add_argument("input", nargs="?", default="-", help="file, or - for stdin")
     ap.add_argument("compare", nargs="?", help="second file, to show before/after")
     ap.add_argument("--json", action="store_true")
-    ap.add_argument("--lexicon", default=LEX)
+    ap.add_argument("--lang", choices=["en", "fr"], default="en", help="fr : lexique français (slop-fr.json)")
+    ap.add_argument("--lexicon", default=None)
     args = ap.parse_args()
 
-    lex = json.load(open(args.lexicon, encoding="utf-8"))
+    lex = json.load(open(args.lexicon or (os.path.join(HERE, "slop-fr.json") if args.lang == "fr" else LEX), encoding="utf-8"))
     read = lambda p: sys.stdin.read() if p == "-" else open(p, encoding="utf-8").read()
 
     targets = [(args.input, read(args.input))]

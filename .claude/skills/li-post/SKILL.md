@@ -16,7 +16,7 @@ posted it.
 
 ## Before you write
 
-1. Read `~/.claude/linkedin/voice.md` if it exists. That file is the user's
+1. Read `~/.claude/linkedin/voice.md` (à défaut : `.claude/skills/li-post/voice-benjamin.md` dans ce projet) if it exists. That file is the user's
    voice profile: how they talk, what they never say, who they are talking to.
    If it does not exist, ask for **three of their own past posts**, infer the
    voice from those, and write the file. Do not skip this and do not invent a

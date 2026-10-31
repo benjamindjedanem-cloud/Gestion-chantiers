@@ -233,11 +233,12 @@ def main():
     ap.add_argument("-o", "--out", help="write cleaned text here instead of stdout")
     ap.add_argument("--report", action="store_true", help="print what changed, to stderr")
     ap.add_argument("--json", action="store_true", help="emit {text, report} as JSON")
-    ap.add_argument("--lexicon", default=LEX, help="path to slop.json")
+    ap.add_argument("--lang", choices=["en", "fr"], default="en", help="fr : lexique français (slop-fr.json)")
+    ap.add_argument("--lexicon", default=None, help="path to slop.json")
     args = ap.parse_args()
 
     raw = sys.stdin.read() if args.input == "-" else open(args.input, encoding="utf-8").read()
-    lex = load_lexicon(args.lexicon)
+    lex = load_lexicon(args.lexicon or (os.path.join(HERE, "slop-fr.json") if args.lang == "fr" else LEX))
     clean, report = humanize(raw, lex)
 
     if args.json:

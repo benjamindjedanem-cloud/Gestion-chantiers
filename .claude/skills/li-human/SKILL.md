@@ -14,6 +14,8 @@ description: >-
 Two tools live in this folder and they both actually run. Use them. Do not
 eyeball this.
 
+**Texte en français (Benjamin) : toujours ajouter `--lang fr`** (lexique `slop-fr.json`, garde les guillemets « » et les espaces insécables du français).
+
 ```bash
 python3 humanize.py draft.txt --report        # clean it, show what changed
 python3 detect.py draft.txt                    # score it, five checks

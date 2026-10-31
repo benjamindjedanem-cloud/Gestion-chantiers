@@ -14,7 +14,7 @@ gets executed. Run it once a week, on the same day.
 
 ## Input
 
-If `~/.claude/linkedin/voice.md` and `log.md` exist, read them - the plan
+If `~/.claude/linkedin/voice.md` (à défaut : `.claude/skills/li-post/voice-benjamin.md` dans ce projet) and `log.md` exist, read them - the plan
 should not repeat a theme from the last fortnight. If they do not exist, ask
 for four things and write them down:
 

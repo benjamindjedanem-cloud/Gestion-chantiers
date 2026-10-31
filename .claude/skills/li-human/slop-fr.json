@@ -1,0 +1,443 @@
+{
+  "version": "1.0-fr",
+  "note": "Lexique français pour humanize.py et detect.py (--lang fr). Adapté au style de Benjamin : phrases courtes, vocabulaire simple, zéro jargon. À enrichir librement.",
+  "invisible": [
+    {
+      "cp": "U+200B",
+      "name": "ZERO WIDTH SPACE",
+      "action": "delete"
+    },
+    {
+      "cp": "U+200C",
+      "name": "ZERO WIDTH NON-JOINER",
+      "action": "delete"
+    },
+    {
+      "cp": "U+200D",
+      "name": "ZERO WIDTH JOINER",
+      "action": "delete"
+    },
+    {
+      "cp": "U+2060",
+      "name": "WORD JOINER",
+      "action": "delete"
+    },
+    {
+      "cp": "U+FEFF",
+      "name": "ZERO WIDTH NO-BREAK SPACE / BOM",
+      "action": "delete"
+    },
+    {
+      "cp": "U+00AD",
+      "name": "SOFT HYPHEN",
+      "action": "delete"
+    },
+    {
+      "cp": "U+180E",
+      "name": "MONGOLIAN VOWEL SEPARATOR",
+      "action": "delete"
+    },
+    {
+      "cp": "U+061C",
+      "name": "ARABIC LETTER MARK",
+      "action": "delete"
+    },
+    {
+      "cp": "U+200E",
+      "name": "LEFT-TO-RIGHT MARK",
+      "action": "delete"
+    },
+    {
+      "cp": "U+200F",
+      "name": "RIGHT-TO-LEFT MARK",
+      "action": "delete"
+    },
+    {
+      "cp": "U+E0000-U+E007F",
+      "name": "TAG CHARACTERS (invisible ASCII smuggling)",
+      "action": "delete"
+    },
+    {
+      "cp": "U+2009",
+      "name": "THIN SPACE",
+      "action": "space"
+    },
+    {
+      "cp": "U+2007",
+      "name": "FIGURE SPACE",
+      "action": "space"
+    },
+    {
+      "cp": "U+2003",
+      "name": "EM SPACE",
+      "action": "space"
+    },
+    {
+      "cp": "U+2002",
+      "name": "EN SPACE",
+      "action": "space"
+    }
+  ],
+  "typographic": [
+    {
+      "from": "—",
+      "name": "EM DASH",
+      "to": ", "
+    },
+    {
+      "from": "–",
+      "name": "EN DASH",
+      "to": "-"
+    },
+    {
+      "from": "…",
+      "name": "HORIZONTAL ELLIPSIS",
+      "to": "..."
+    },
+    {
+      "from": "′",
+      "name": "PRIME",
+      "to": "'"
+    },
+    {
+      "from": "•",
+      "name": "BULLET",
+      "to": "-"
+    },
+    {
+      "from": "→",
+      "name": "RIGHTWARDS ARROW",
+      "to": "->"
+    }
+  ],
+  "words": [
+    {
+      "find": "crucial",
+      "replace": "important",
+      "family": "adjectifs"
+    },
+    {
+      "find": "cruciale",
+      "replace": "importante",
+      "family": "adjectifs"
+    },
+    {
+      "find": "essentiel",
+      "replace": "important",
+      "family": "adjectifs"
+    },
+    {
+      "find": "essentielle",
+      "replace": "importante",
+      "family": "adjectifs"
+    },
+    {
+      "find": "incontournable",
+      "replace": "utile",
+      "family": "adjectifs"
+    },
+    {
+      "find": "primordial",
+      "replace": "important",
+      "family": "adjectifs"
+    },
+    {
+      "find": "robuste",
+      "replace": "solide",
+      "family": "adjectifs"
+    },
+    {
+      "find": "holistique",
+      "replace": "global",
+      "family": "adjectifs"
+    },
+    {
+      "find": "synergie",
+      "replace": "collaboration",
+      "family": "noms"
+    },
+    {
+      "find": "synergies",
+      "replace": "collaborations",
+      "family": "noms"
+    },
+    {
+      "find": "levier",
+      "replace": "moyen",
+      "family": "noms"
+    },
+    {
+      "find": "leviers",
+      "replace": "moyens",
+      "family": "noms"
+    },
+    {
+      "find": "booster",
+      "replace": "augmenter",
+      "family": "verbes"
+    },
+    {
+      "find": "optimiser",
+      "replace": "améliorer",
+      "family": "verbes"
+    },
+    {
+      "find": "révolutionner",
+      "replace": "changer",
+      "family": "verbes"
+    },
+    {
+      "find": "propulser",
+      "replace": "faire avancer",
+      "family": "verbes"
+    },
+    {
+      "find": "sublimer",
+      "replace": "mettre en valeur",
+      "family": "verbes"
+    },
+    {
+      "find": "véritablement",
+      "replace": "vraiment",
+      "family": "adverbes"
+    },
+    {
+      "find": "indéniablement",
+      "replace": "clairement",
+      "family": "adverbes"
+    },
+    {
+      "find": "fondamentalement",
+      "replace": "au fond",
+      "family": "adverbes"
+    },
+    {
+      "find": "significativement",
+      "replace": "nettement",
+      "family": "adverbes"
+    },
+    {
+      "find": "assurément",
+      "replace": "oui",
+      "family": "adverbes"
+    },
+    {
+      "find": "paradigme",
+      "replace": "modèle",
+      "family": "noms"
+    },
+    {
+      "find": "écosystème",
+      "replace": "milieu",
+      "family": "noms"
+    },
+    {
+      "find": "disruptif",
+      "replace": "nouveau",
+      "family": "adjectifs"
+    },
+    {
+      "find": "disruptive",
+      "replace": "nouvelle",
+      "family": "adjectifs"
+    },
+    {
+      "find": "impactant",
+      "replace": "marquant",
+      "family": "adjectifs"
+    },
+    {
+      "find": "impactante",
+      "replace": "marquante",
+      "family": "adjectifs"
+    },
+    {
+      "find": "game changer",
+      "replace": "tournant",
+      "family": "anglicismes"
+    },
+    {
+      "find": "mindset",
+      "replace": "état d'esprit",
+      "family": "anglicismes"
+    }
+  ],
+  "phrases": [
+    {
+      "find": "dans un monde en constante évolution",
+      "replace": "aujourd'hui",
+      "family": "ouvertures"
+    },
+    {
+      "find": "dans le monde d'aujourd'hui",
+      "replace": "aujourd'hui",
+      "family": "ouvertures"
+    },
+    {
+      "find": "à l'ère du numérique",
+      "replace": "aujourd'hui",
+      "family": "ouvertures"
+    },
+    {
+      "find": "dans le paysage actuel",
+      "replace": "aujourd'hui",
+      "family": "ouvertures"
+    },
+    {
+      "find": "plus que jamais",
+      "replace": "",
+      "family": "remplissage"
+    },
+    {
+      "find": "il est crucial de",
+      "replace": "il faut",
+      "family": "remplissage"
+    },
+    {
+      "find": "il est essentiel de",
+      "replace": "il faut",
+      "family": "remplissage"
+    },
+    {
+      "find": "il est important de noter que",
+      "replace": "",
+      "family": "remplissage"
+    },
+    {
+      "find": "force est de constater que",
+      "replace": "",
+      "family": "remplissage"
+    },
+    {
+      "find": "en somme",
+      "replace": "bref",
+      "family": "remplissage"
+    },
+    {
+      "find": "en définitive",
+      "replace": "au fond",
+      "family": "remplissage"
+    },
+    {
+      "find": "de manière significative",
+      "replace": "nettement",
+      "family": "remplissage"
+    },
+    {
+      "find": "tirer parti de",
+      "replace": "utiliser",
+      "family": "verbes"
+    },
+    {
+      "find": "plonger dans",
+      "replace": "regarder",
+      "family": "verbes"
+    },
+    {
+      "find": "plongeons dans",
+      "replace": "regardons",
+      "family": "verbes"
+    },
+    {
+      "find": "explorons ensemble",
+      "replace": "voyons",
+      "family": "verbes"
+    },
+    {
+      "find": "naviguer dans",
+      "replace": "avancer dans",
+      "family": "verbes"
+    },
+    {
+      "find": "jouer un rôle clé",
+      "replace": "compter",
+      "family": "verbes"
+    },
+    {
+      "find": "joue un rôle clé",
+      "replace": "compte",
+      "family": "verbes"
+    },
+    {
+      "find": "un véritable atout",
+      "replace": "un atout",
+      "family": "remplissage"
+    },
+    {
+      "find": "la pierre angulaire",
+      "replace": "la base",
+      "family": "noms"
+    },
+    {
+      "find": "au cœur de",
+      "replace": "au centre de",
+      "family": "remplissage"
+    },
+    {
+      "find": "faire la différence",
+      "replace": "compter",
+      "family": "remplissage"
+    },
+    {
+      "find": "changer la donne",
+      "replace": "tout changer",
+      "family": "remplissage"
+    },
+    {
+      "find": "passer au niveau supérieur",
+      "replace": "progresser",
+      "family": "remplissage"
+    },
+    {
+      "find": "libérer tout son potentiel",
+      "replace": "progresser",
+      "family": "remplissage"
+    }
+  ],
+  "structures": [
+    {
+      "id": "pas-seulement",
+      "regex": "(?i)\\bce n'?est pas (?:seulement|juste|qu'?un[e]?) [^.!?\\n]{2,60}[,.] c'?est\\b",
+      "name": "« Ce n'est pas seulement X, c'est Y »",
+      "fix": "Dis la seule chose que tu veux dire. Supprime la première moitié."
+    },
+    {
+      "id": "non-seulement",
+      "regex": "(?i)\\bnon seulement\\b[^.!?\\n]{2,80}\\bmais (?:aussi|également)\\b",
+      "name": "« Non seulement X mais aussi Y »",
+      "fix": "Coupe en deux phrases, ou garde la plus forte."
+    },
+    {
+      "id": "triade",
+      "regex": "(?i)\\b(\\w+), (\\w+) et (\\w+)\\b",
+      "name": "Énumération en trois (règle de trois)",
+      "fix": "Garde deux éléments, ou un seul, précis."
+    },
+    {
+      "id": "hashtags",
+      "regex": "(?:#\\w+\\s*){4,}",
+      "name": "Mur de hashtags",
+      "fix": "Trois hashtags maximum, ou aucun."
+    },
+    {
+      "id": "appat",
+      "regex": "(?i)\\b(likez|commentez|partagez) (?:si|pour)\\b",
+      "name": "Appât à engagement",
+      "fix": "Supprime. Pose plutôt une vraie question précise."
+    },
+    {
+      "id": "nhesitez",
+      "regex": "(?i)\\bn'?h[ée]sit(?:ez|e) pas\\b",
+      "name": "« N'hésitez pas à… »",
+      "fix": "Remplace par l'action directe : « Écrivez-nous. »"
+    },
+    {
+      "id": "qu-en-pensez",
+      "regex": "(?i)\\bqu'?en pens(?:ez|es)[- ](?:vous|tu)\\s*\\?",
+      "name": "« Qu'en pensez-vous ? » en fin de post",
+      "fix": "Pose une question précise que seul ce post peut poser, ou termine sur la chute."
+    }
+  ],
+  "contractions_regex": "\\b(?:j|t|c|qu|n|l|d|s)'\\w+",
+  "pronouns_regex": "\\b(je|j'|moi|mon|ma|mes|nous|notre|nos|tu|toi|ton|ta|tes|vous|votre|vos)\\b"
+}
