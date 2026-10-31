@@ -122,7 +122,78 @@ const FeedPost: React.FC<{ w: number; img?: string; ratio?: number; children?: R
   </div>
 );
 
-// ================= S1 · « Trois secondes. » — typographie seule =================
+// Mur de vraies affiches qui défile en fond (profondeur et matière, jamais un aplat vide).
+const WALL = ['affiche-1.jpg', 'affiche-2.jpg', 'affiche-4.jpg', 'affiche-3.jpg', 'affiche-5.jpg', 'gc-S4.jpg', 'gc-S10.jpg', 'gc-S1.jpg'];
+export const PosterWall: React.FC<{ f: number; opacity?: number; blur?: number; speed?: number }> = ({ f, opacity = 0.22, blur = 3, speed = 3 }) => (
+  <AbsoluteFill style={{ overflow: 'hidden', opacity }}>
+    <div style={{ position: 'absolute', left: -260, top: -500, width: 1600, transform: 'rotate(-10deg)', display: 'flex', gap: 28, filter: `blur(${blur}px)` }}>
+      {[0, 1, 2, 3].map((c) => {
+        const dir = c % 2 ? 1 : -1;
+        const y = ((f * speed * dir) % 2240) - (dir > 0 ? 2240 : 0);
+        return (
+          <div key={c} style={{ width: 380, display: 'flex', flexDirection: 'column', gap: 28, transform: `translateY(${y}px)` }}>
+            {[...WALL, ...WALL].map((src, i) => (
+              <Img key={i} src={staticFile(`adn/${WALL[(i + c * 3) % WALL.length]}`)} style={{ width: 380, height: 475, objectFit: 'cover', borderRadius: 14 }} />
+            ))}
+          </div>
+        );
+      })}
+    </div>
+  </AbsoluteFill>
+);
+
+// Ouverture-choc : vos affiches plein écran, coupées très vite (le défilement d'un fil en accéléré),
+// puis l'image rétrécit et se range dans l'écran du téléphone.
+const HOOK = ['affiche-1.jpg', 'affiche-2.jpg', 'affiche-4.jpg', 'affiche-5.jpg', 'affiche-3.jpg', 'affiche-1.jpg', 'affiche-2.jpg', 'affiche-4.jpg', 'affiche-5.jpg'];
+export const S0: React.FC<P> = ({ f }) => {
+  if (f > 50) return null;
+  const idx = Math.min(HOOK.length - 1, Math.floor(f / 5));
+  const local = f - idx * 5;
+  const shrink = t(f, 34, 48, 0, 1, ease.inOut);
+  return (
+    <AbsoluteFill style={{ transformOrigin: '540px 1220px', transform: `translateY(${shrink * 0}px) scale(${1 - shrink * 0.42})`, opacity: 1 - t(f, 44, 50), borderRadius: shrink * 60, overflow: 'hidden' }}>
+      <Img src={staticFile(`adn/${HOOK[idx]}`)} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', transform: `scale(${1.14 - 0.1 * t(local, 0, 5)}) translateY(${(1 - t(local, 0, 3)) * 60}px)`, filter: `blur(${(1 - t(local, 0, 2)) * 8}px)` }} />
+      <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(2,3,60,0.85) 0%, rgba(2,3,60,0.2) 30%, rgba(2,3,60,0) 55%)' }} />
+      <Title f={f} onBlue top={200} size={92} lines={[{ text: 'Trois *secondes.*', at: v(0.1) }]} />
+    </AbsoluteFill>
+  );
+};
+
+// Éclat : à l'apparition du logo, les affiches jaillissent du centre et partent vers les bords (en 3D, avec flou).
+const Burst: React.FC<{ f: number; at: number }> = ({ f, at }) => {
+  if (f < at || f > at + 40) return null;
+  const imgs = ['affiche-1.jpg', 'affiche-2.jpg', 'affiche-4.jpg', 'affiche-3.jpg', 'affiche-5.jpg', 'gc-S10.jpg'];
+  return (
+    <AbsoluteFill style={{ perspective: 1400 }}>
+      {imgs.map((src, i) => {
+        const p = t(f, at + i, at + 30 + i, 0, 1, ease.out);
+        const a = (i / imgs.length) * Math.PI * 2 - Math.PI / 2;
+        const r = 120 + p * 900;
+        return (
+          <Img
+            key={i}
+            src={staticFile(`adn/${src}`)}
+            style={{
+              position: 'absolute',
+              left: 540 + Math.cos(a) * r - 160,
+              top: 760 + Math.sin(a) * r - 200,
+              width: 320,
+              height: 400,
+              objectFit: 'cover',
+              borderRadius: 16,
+              transform: `rotate(${(i % 2 ? 1 : -1) * p * 25}deg) rotateY(${p * 30}deg) scale(${0.3 + p * 0.9})`,
+              opacity: Math.min(1, p * 4) * (1 - t(f, at + 24, at + 40)),
+              filter: `blur(${Math.sin(p * Math.PI) * 6}px)`,
+              boxShadow: '0 20px 40px rgba(0,0,40,0.5)',
+            }}
+          />
+        );
+      })}
+    </AbsoluteFill>
+  );
+};
+
+// ================= S1 · « Trois secondes. » — typographie seule (remplacé par S0) =================
 export const S1: React.FC<P> = ({ f }) => {
   if (f > CUT.feed + 2) return null;
   const k = sp(f, 2, 'pose');
@@ -160,7 +231,6 @@ export const S2: React.FC<P> = ({ f }) => {
   const swipe = t(f, SKIP_AT - 4, SKIP_AT + 8);
   return (
     <AbsoluteFill style={{ background: C.paper }}>
-      <Title f={f} top={200} size={84} out={v(1.05)} lines={[{ text: 'Trois *secondes.*', at: v(0.1) }]} />
       <Title f={f} top={200} size={72} out={SKIP_AT - 8} lines={[{ text: "C'est le temps qu'il faut", at: v(1.45) }, { text: 'pour *s’arrêter*…', at: STOP_AT - 8 }]} />
       <Title f={f} top={200} size={72} lines={[{ text: '…ou *passer*', at: SKIP_AT }, { text: 'à la suivante.', at: SKIP_AT + 12 }]} />
       <div style={{ position: 'absolute', left: W / 2 - pw / 2, top: 520 + (1 - sp(f, 0, 'doux')) * 900 }}>
@@ -198,6 +268,7 @@ export const S3: React.FC<P> = ({ f }) => {
   const bh = 120 + 110 * toSphere;
   return (
     <AbsoluteFill style={{ background: BLUE_BG }}>
+      <PosterWall f={f} opacity={0.2} blur={4} />
       <div style={{ position: 'absolute', left: 540 - bw / 2, top: 760 - bh / 2, width: bw, height: bh, borderRadius: bh, background: C.white, transform: `scale(${dot})`, boxShadow: '0 20px 50px rgba(0,0,40,0.35)', display: 'flex', alignItems: 'center', overflow: 'hidden' }}>
         <div style={{ flex: 1, padding: '0 44px', fontFamily: FONT.body, fontSize: 46, color: C.ink, whiteSpace: 'nowrap', opacity: 1 - toSphere }}>
           <Typed f={f} at={v(7.85)} text="Que voit-il en 3 secondes ?" step={1.9} />
@@ -224,6 +295,8 @@ export const S4: React.FC<P> = ({ f }) => {
   const pw = 600;
   return (
     <AbsoluteFill style={{ background: BLUE_BG }}>
+      <PosterWall f={f} opacity={0.12 * t(f, CUT.logo + 20, CUT.logo + 40)} blur={5} />
+      <Burst f={f} at={CUT.logo} />
       <div style={{ position: 'absolute', left: interpolate(up, [0, 1], [540, 150]), top: interpolate(up, [0, 1], [760, 190]), transform: `scale(${interpolate(up, [0, 1], [1, 0.34])})` }}>
         <LogoReveal f={f} at={CUT.logo} size={460} />
       </div>
@@ -325,17 +398,19 @@ export const S6: React.FC<P> = ({ f }) => {
   const swap = v(24.7);
   const w1 = t(f, swap - 4, swap + 6, 0, 1, ease.in);
   const w2 = t(f, swap + 2, swap + 12, 0, 1, ease.out);
+  const shake = Math.sin(f * 2.3) * 14 * Math.exp(-Math.max(0, f - swap - 6) / 5) * (f >= swap + 6 ? 1 : 0);
   const big = (txt: string, k: number, out: number) => (
-    <div style={{ position: 'absolute', left: 0, top: 0, width: W, textAlign: 'center', transform: `translateY(${(1 - k) * 160 - out * 160}px)`, opacity: Math.min(k, 1 - out), filter: `blur(${(1 - k + out) * 10}px)` }}>{txt}</div>
+    <div style={{ position: 'absolute', left: 0, top: 0, width: W, textAlign: 'center', transform: `translateY(${-out * 160}px) scale(${1 + (1 - k) * 0.6})`, opacity: Math.min(k, 1 - out), filter: `blur(${(1 - k + out) * 10}px)` }}>{txt}</div>
   );
   return (
-    <AbsoluteFill style={{ background: BLUE_BG }}>
+    <AbsoluteFill style={{ background: BLUE_BG, transform: `translateX(${shake}px)` }}>
+      <PosterWall f={f} opacity={0.18} blur={3} speed={5} />
       <div style={{ position: 'absolute', left: 0, top: 640, width: W, textAlign: 'center', fontFamily: FONT.title, fontSize: 60, color: 'rgba(255,255,255,0.85)' }}>
         <Typed f={f} at={v(23.05)} text={f < swap ? 'Un client qui' : 'est un client qui'} step={1.4} caret={false} />
       </div>
       <div style={{ position: 'absolute', left: 0, top: 760, width: W, height: 260, fontFamily: FONT.title, fontWeight: 600, fontSize: 190, letterSpacing: -6, color: C.white, lineHeight: '220px' }}>
         {big('s’arrête', sp(f, v(23.6), 'pose'), w1)}
-        {big('achète', w2, 0)}
+        {big('achète', sp(f, swap + 2, 'pose'), 0)}
       </div>
     </AbsoluteFill>
   );
@@ -382,6 +457,8 @@ export const S8: React.FC<P> = ({ f }) => {
   if (f < CUT.fin - 2) return null;
   return (
     <AbsoluteFill style={{ background: BLUE_BG }}>
+      <PosterWall f={f} opacity={0.2 * t(f, CUT.fin + 6, CUT.fin + 30)} blur={2} speed={2} />
+      <Burst f={f} at={CUT.fin + 4} />
       <div style={{ position: 'absolute', left: 540, top: 720 }}>
         <LogoReveal f={f} at={CUT.fin + 4} size={460} />
       </div>
