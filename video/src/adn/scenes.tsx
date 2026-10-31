@@ -218,7 +218,7 @@ export const S3: React.FC<P> = ({ f }) => {
 const BUILD = v(12.2);
 const HOLD = v(14.4);
 export const S4: React.FC<P> = ({ f }) => {
-  if (f < CUT.logo - 12 || f > CUT.services + 2) return null;
+  if (f < CUT.logo - 2 || f > CUT.services + 2) return null;
   const up = t(f, BUILD - 14, BUILD + 4, 0, 1, ease.inOut);
   const phoneIn = sp(f, BUILD + 20, 'doux');
   const hold = sp(f, HOLD, 'pose');
