@@ -9,6 +9,9 @@ description: >-
 
 # li-repurpose
 
+> **Benjamin (ADN Créatif)** : avant d'écrire, lire `~/.claude/linkedin/voice.md` (à défaut `.claude/skills/li-post/voice-benjamin.md`) et appliquer ses skills `benjamin-style` / `marketing-ben` en priorité. Écrire en français. Nettoyer le texte final avec li-human en `--lang fr`.
+
+
 One good long asset contains four to six posts. Most people extract one and
 throw the rest away.
 

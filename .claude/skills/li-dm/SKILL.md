@@ -9,6 +9,9 @@ description: >-
 
 # li-dm
 
+> **Benjamin (ADN Créatif)** : avant d'écrire, lire `~/.claude/linkedin/voice.md` (à défaut `.claude/skills/li-post/voice-benjamin.md`) et appliquer ses skills `benjamin-style` / `marketing-ben` en priorité. Écrire en français. Nettoyer le texte final avec li-human en `--lang fr`.
+
+
 The invite note is 200 characters. The first DM decides whether there is a
 second one. Neither is a pitch.
 

@@ -9,6 +9,9 @@ description: >-
 
 # li-carousel
 
+> **Benjamin (ADN Créatif)** : avant d'écrire, lire `~/.claude/linkedin/voice.md` (à défaut `.claude/skills/li-post/voice-benjamin.md`) et appliquer ses skills `benjamin-style` / `marketing-ben` en priorité. Écrire en français. Nettoyer le texte final avec li-human en `--lang fr`.
+
+
 Document posts are the highest-dwell format on LinkedIn, because a swipe is
 counted and a scroll is not. The format rewards one idea broken into steps.
 It punishes a text post cut into pieces.

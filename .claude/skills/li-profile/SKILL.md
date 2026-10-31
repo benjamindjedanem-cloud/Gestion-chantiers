@@ -10,6 +10,9 @@ description: >-
 
 # li-profile
 
+> **Benjamin (ADN Créatif)** : avant d'écrire, lire `~/.claude/linkedin/voice.md` (à défaut `.claude/skills/li-post/voice-benjamin.md`) et appliquer ses skills `benjamin-style` / `marketing-ben` en priorité. Écrire en français. Nettoyer le texte final avec li-human en `--lang fr`.
+
+
 A profile is not a resume. A resume answers "what have you done". A profile
 answers "should I message this person", and it answers it in about four
 seconds, from the headline and the first two lines of the about.

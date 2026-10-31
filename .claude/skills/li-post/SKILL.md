@@ -11,6 +11,9 @@ description: >-
 
 # li-post
 
+> **Benjamin (ADN Créatif)** : avant d'écrire, lire `~/.claude/linkedin/voice.md` (à défaut `.claude/skills/li-post/voice-benjamin.md`) et appliquer ses skills `benjamin-style` / `marketing-ben` en priorité. Écrire en français. Nettoyer le texte final avec li-human en `--lang fr`.
+
+
 Turns one raw idea into a LinkedIn post that sounds like the person who
 posted it.
 

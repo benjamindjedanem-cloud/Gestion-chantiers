@@ -10,6 +10,9 @@ description: >-
 
 # li-reply
 
+> **Benjamin (ADN Créatif)** : avant d'écrire, lire `~/.claude/linkedin/voice.md` (à défaut `.claude/skills/li-post/voice-benjamin.md`) et appliquer ses skills `benjamin-style` / `marketing-ben` en priorité. Écrire en français. Nettoyer le texte final avec li-human en `--lang fr`.
+
+
 The reply thread under your own post is where reach is actually decided. Every
 reply is a second engagement event on the post, and the first hour of replies
 does most of the work. But the value is not equal across comments, so this

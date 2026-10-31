@@ -9,6 +9,9 @@ description: >-
 
 # li-comment
 
+> **Benjamin (ADN Créatif)** : avant d'écrire, lire `~/.claude/linkedin/voice.md` (à défaut `.claude/skills/li-post/voice-benjamin.md`) et appliquer ses skills `benjamin-style` / `marketing-ben` en priorité. Écrire en français. Nettoyer le texte final avec li-human en `--lang fr`.
+
+
 Commenting is the highest-leverage thing on LinkedIn and the easiest to do
 badly. A comment on a post with 400 reactions gets seen by more people than
 most of your own posts. A generic one gets seen by nobody and costs you
